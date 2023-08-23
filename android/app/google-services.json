@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "649572822721",
+    "project_id": "stressducer",
+    "storage_bucket": "stressducer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649572822721:android:dd4a96d67ec8f7738bae40",
+        "android_client_info": {
+          "package_name": "com.example.stress_ducer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "649572822721-sm8fusbhq2tcrmbhn3j4dj3a47gg4b46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxv2b6152xzz_rSwhNJCk-EpEuXkzCbKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "649572822721-sm8fusbhq2tcrmbhn3j4dj3a47gg4b46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
