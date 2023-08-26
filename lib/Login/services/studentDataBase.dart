@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:stress_ducer/student/model/student.dart';
-import 'package:stress_ducer/student/model/studentFirstModel.dart';
+import 'package:stress_ducer/Login/model/UserModel.dart';
+import 'package:stress_ducer/Login/model/student.dart';
+import 'package:stress_ducer/Login/model/studentFirstModel.dart';
 
 class dataAuthServices {
-
-
   static Stream<List<Student>> read() {
     final userCollection = FirebaseFirestore.instance.collection("students");
     return userCollection.snapshots().map((quesrySnapshot) =>
@@ -58,10 +57,10 @@ Future delete(String documentId) async {
 
 
   Future create(StudentFirstModel studentFirstModel, String subjects,
-      String priority) async {
+      String priority,String id) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
-    final docRef = userColection.doc();
+    final docRef = userColection.doc(id);
 
     final newStudent = Student(
             studentName: studentFirstModel.studentName,

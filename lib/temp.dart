@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stress_ducer/student/model/student.dart';
-import 'package:stress_ducer/student/remote_data_source/studentDataBase.dart';
+import 'package:provider/provider.dart';
+import 'package:stress_ducer/Login/model/UserModel.dart';
+import 'package:stress_ducer/Login/model/student.dart';
+import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
 /// Flutter code sample for [ListTile].
 
@@ -71,7 +73,7 @@ class _ListTileExampleState extends State<ListTileExample>
     return Scaffold(
         appBar: AppBar(title: const Text('ListTile Samples')),
         body: StreamBuilder<Student?>(
-          stream: dataAuthServices.readSpecificDocument("iKjCeqeWyR7ZOPtIKix9"),
+          stream: dataAuthServices.readSpecificDocument(Provider.of<UserModel?>(context)!.uid),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
