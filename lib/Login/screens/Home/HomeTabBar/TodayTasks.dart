@@ -8,8 +8,17 @@ class TodayTasks extends StatefulWidget {
 }
 
 class _TodayTasksState extends State<TodayTasks> {
-  bool _selected = false;
-  bool _enabled = false;
+
+  List<String> todaySubjectsList = ['A','B','C','d','t','A','B','C','d','t'];
+  List<bool> _enable=[];
+
+  @override
+  void initState() {
+    for (int i=0; i<todaySubjectsList.length; i++){
+    _enable.add(false);
+  }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,38 +35,45 @@ class _TodayTasksState extends State<TodayTasks> {
           const SizedBox(
             height: 20,
           ),
-          ListTile(
-            enabled: _enabled,
-            // This sets text color and icon color to red when list tile is disabled and
-            // green when list tile is selected, otherwise sets it to black.
-            iconColor:
-                MaterialStateColor.resolveWith((Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) {
-                return Colors.red;
-              }
-              return Colors.black;
-            }),
-            // This sets text color and icon color to red when list tile is disabled and
-            // green when list tile is selected, otherwise sets it to black.
-            textColor:
-                MaterialStateColor.resolveWith((Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) {
-                return Colors.red;
-              }
-              return Colors.black;
-            }),
-            leading: const Icon(Icons.person),
-            title: const Text('Subject'),
-            subtitle: Text('Enabled: $_enabled'),
-            trailing: Switch(
-              onChanged: (bool? value) {
-                setState(() {
-                  _enabled = value!;
-                });
+          Expanded(
+            child: ListView.builder(
+              itemCount: todaySubjectsList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  enabled: _enable[index],
+                  // This sets text color and icon color to red when list tile is disabled and
+                  // green when list tile is selected, otherwise sets it to black.
+                  iconColor:
+                      MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                    if (states.contains(MaterialState.disabled)) {
+                      return Colors.red;
+                    }
+                    return Colors.black;
+                  }),
+                  // This sets text color and icon color to red when list tile is disabled and
+                  // green when list tile is selected, otherwise sets it to black.
+                  textColor:
+                      MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                    if (states.contains(MaterialState.disabled)) {
+                      return Colors.red;
+                    }
+                    return Colors.black;
+                  }),
+                  leading: const Icon(Icons.person),
+                  title: const Text('Subject'),
+                  subtitle: Text('Enabled: ${_enable[index]}'),
+                  trailing: Switch(
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _enable[index] = value!;
+                      });
+                    },
+                    value: _enable[index],
+                  ),
+                );
               },
-              value: _enabled,
             ),
-          ),
+          )
         ],
       ),
     );
