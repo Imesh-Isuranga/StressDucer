@@ -1,73 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
-import 'package:stress_ducer/Login/model/UserModel.dart';
-import 'package:stress_ducer/Login/model/student.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Games.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/Profile.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
-import 'package:stress_ducer/Login/services/auth.dart';
-import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
-class MainPlace extends StatelessWidget {
-  const MainPlace({super.key});
+class MainPlace extends StatefulWidget {
+  const MainPlace({Key? key}) : super(key: key);
+
+
+  @override
+  _MainPlaceState createState() => _MainPlaceState();
+}
+
+class _MainPlaceState extends State<MainPlace> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 5, vsync: this);
+  }
+
+  void _changeTabIndex(int index) {
+    _tabController.animateTo(index);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final AuthServices _auth = AuthServices();
-    final dataAuthServices _authData = dataAuthServices();
-
     return Scaffold(
       body: DefaultTabController(
         initialIndex: 0,
         length: 5,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'StressDucer',
-              style: TextStyle(color: appBarTextColor),
-            ),
             backgroundColor: mainAppBarColor,
-            bottom: const TabBar(
-              unselectedLabelColor:
-                  unselectedLabelColor, // Change the unselected icon color
-              labelColor: indicatorColor,
-              indicatorColor: indicatorColor,
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(Icons.home_filled),
-                ),
-                Tab(
-                  icon: Icon(Icons.today),
-                ),
-                Tab(
-                  icon: Icon(Icons.gamepad),
-                ),
-                Tab(
-                  icon: Icon(Icons.calendar_month),
-                ),
-                Tab(
-                  icon: Icon(Icons.person),
-                ),
+            title: const Text('StressDucer',style: TextStyle(color: appBarTextColor),),
+            bottom: TabBar(
+              controller: _tabController,
+              labelColor: Colors.blue,
+              indicatorColor: Colors.blue,
+              unselectedLabelColor: Colors.black,
+              tabs: const <Widget>[
+                Tab(icon: Icon(Icons.home_filled),),
+                Tab(icon: Icon(Icons.today)),
+                Tab(icon: Icon(Icons.gamepad)),
+                Tab(icon: Icon(Icons.calendar_month)),
+                Tab(icon: Icon(Icons.person)),
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
+            controller: _tabController,
             children: <Widget>[
-              SingleChildScrollView(
-                child: Home(),
-              ),
-              Center(
-                child: TodayTasks(),
-              ),
-              Center(
-                child: Text("It's sunny here"),
-              ),
-              Center(
-                child: Text("It's sunny here"),
-              ),
-              Center(
-                child: Text("It's sunny here"),
-              ),
+              SingleChildScrollView(child: Home(_changeTabIndex)),
+              Center(child: TodayTasks()),
+              const Center(child: Games()),
+              const Center(child: Calender()),
+               Center(child: Profile()),
             ],
           ),
         ),

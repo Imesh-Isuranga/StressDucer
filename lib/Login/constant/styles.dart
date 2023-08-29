@@ -8,6 +8,12 @@ const TextStyle descriptionStyle = TextStyle(
 );
 
 
+const TextStyle studentDetailsProfile = TextStyle(
+  fontSize: 20,
+  color:Colors.black,
+  fontWeight: FontWeight.w300
+);
+
 const textInputDecoration = InputDecoration(
                           hintText: "Email",
                           fillColor: bgBlack,

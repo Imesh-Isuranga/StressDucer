@@ -68,7 +68,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                         _authDataBase.create(
                             widget.studentFirstModel,
                             controllerStudentSubjects.text,
-                            controllerStudentPriority.text,widget.idNum);
+                            controllerStudentPriority.text,widget.idNum,"3","");
                       },
                       style: ButtonStyle(
                           backgroundColor:

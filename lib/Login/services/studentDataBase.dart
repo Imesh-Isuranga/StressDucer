@@ -31,10 +31,40 @@ Future delete(String documentId) async {
     
   }
 
+Future updateEnables(String documentId,String list) async {
+    final userColection = FirebaseFirestore.instance.collection("students");
+
+    final docRef = userColection.doc(documentId);
+
+    
+    try {
+      await docRef.update({
+            "enableStatus": list
+      });
+    } catch (error) {
+      print("Some error occure $error");
+    }
+  }
+
+
+Future updateHowManySubjects(String documentId,String num) async {
+    final userColection = FirebaseFirestore.instance.collection("students");
+
+    final docRef = userColection.doc(documentId);
+
+    
+    try {
+      await docRef.update({
+            "howManySubjects": num
+      });
+    } catch (error) {
+      print("Some error occure $error");
+    }
+  }
 
 
   Future update(String documentId,StudentFirstModel studentFirstModel, String subjects,
-      String priority) async {
+      String priority,String num,String enable) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(documentId);
@@ -47,7 +77,9 @@ Future delete(String documentId) async {
             "studentCurrentSem": studentFirstModel.studentCurrentSem,
             "studentNumOfSubjects": studentFirstModel.studentNumOfSubjects,
             "studentSubjects": subjects,
-            "studentSubjectsPriority": priority
+            "studentSubjectsPriority": priority,
+            "howManySubjects": num,
+            "enableStatus": enable
       });
     } catch (error) {
       print("Some error occure $error");
@@ -57,7 +89,7 @@ Future delete(String documentId) async {
 
 
   Future create(StudentFirstModel studentFirstModel, String subjects,
-      String priority,String id) async {
+      String priority,String id,String num,String enable) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(id);
@@ -68,7 +100,9 @@ Future delete(String documentId) async {
             studentCurrentSem: studentFirstModel.studentCurrentSem,
             studentNumOfSubjects: studentFirstModel.studentNumOfSubjects,
             studentSubjects: subjects,
-            studentSubjectsPriority: priority)
+            studentSubjectsPriority: priority,
+            howManySubjects: num,
+            enableStatus: enable)
         .toJson();
 
     try {
@@ -77,4 +111,5 @@ Future delete(String documentId) async {
       print("Some error occure $error");
     }
   }
+
 }
