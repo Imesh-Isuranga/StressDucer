@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/model/student.dart';
@@ -35,8 +34,7 @@ class TodayTasksState extends State<TodayTasks> {
   static List<String> saturdayList = [];
   static List<String> sundayList = [];
   static List<Map<String, dynamic>> tableDataList = [];
-  int howManySubjects = 9;
-  static int num = 1;
+  static int howManySubjects = 19;
 
   static List<String> enabledList = [];
   List<String> temp = [];
@@ -77,7 +75,7 @@ class TodayTasksState extends State<TodayTasks> {
                 print("Error parsing howManySubjects: $e");
               }
 
-              if(!enabledListString.isEmpty){
+             if(!enabledListString.isEmpty){
                 for(int i=0; i<temp.length; i++){
                   _enable[int.parse(temp[i])]=true;
                 }
@@ -87,6 +85,7 @@ class TodayTasksState extends State<TodayTasks> {
         }
       });
     }
+    enableInstall();
   }
 
 void enableInstall(){
@@ -97,11 +96,6 @@ for (int i = 0; i < howManySubjects; i++) {
     print(_enable);
 }
 
-  @override
-  void dispose() {
-    // Cancel the stream subscription
-    super.dispose();
-  }
 
   void getTodaySubjects() {
     DateTime now = DateTime.now();
@@ -505,115 +499,120 @@ for (int i = 0; i < howManySubjects; i++) {
     sundayList.clear();
     getTodaySubjects();
 
-    
 
-    return Center(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            "Today Tasks",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: updateTodaySubjectsList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  enabled: _enable[index],
-                  // This sets text color and icon color to red when list tile is disabled and
-                  // green when list tile is selected, otherwise sets it to black.
-                  iconColor: MaterialStateColor.resolveWith(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.disabled)) {
-                        return Colors.red;
-                      }
-                      return Colors.black;
-                    },
-                  ),
-                  // This sets text color and icon color to red when list tile is disabled and
-                  // green when list tile is selected, otherwise sets it to black.
-                  textColor: MaterialStateColor.resolveWith(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.disabled)) {
-                        return Colors.red;
-                      }
-                      return Colors.black;
-                    },
-                  ),
-                  leading: const Icon(Icons.person),
-                  title: Text(updateTodaySubjectsList[index].toString()),
-                  subtitle: Text('Done: ${_enable[index]}'),
-                  trailing: Switch(
-                    onChanged: (bool? value) {
-                      setState(() {
-                        if (value == true) {
-                          enabledList.add(index.toString());
-                        } else {
-                          enabledList.remove(index.toString());
-                        }
-                        authStudent.updateEnables(
-                            auth.currentUser!.uid, enabledList.toString());
-                        _enable[index] = value!;
-
-                        int j=0;
-                        for(int i=0; i<howManySubjects; i++){
-                          if(_enable[i]==false){
-                            j++;
-                          }
-                        }
-                        if(j==0){
-                        _alertMsg();
-                        }
-
-                      });
-                    },
-                    value: _enable[index],
-                  ),
-                );
-              },
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          Expanded(
-            child: Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(label: Text('Monday')),
-                      DataColumn(label: Text('Tuesday')),
-                      DataColumn(label: Text('Wednesday')),
-                      DataColumn(label: Text('Thursday')),
-                      DataColumn(label: Text('Friday')),
-                      DataColumn(label: Text('Saturday')),
-                      DataColumn(label: Text('Sunday')),
-                    ],
-                    rows: tableDataList.map((data) {
-                      return DataRow(
-                        cells: [
-                          DataCell(Text(data['Monday'])),
-                          DataCell(Text(data['Tuesday'])),
-                          DataCell(Text(data['Wednesday'])),
-                          DataCell(Text(data['Thursday'])),
-                          DataCell(Text(data['Friday'])),
-                          DataCell(Text(data['Saturday'])),
-                          DataCell(Text(data['Sunday'])),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                ),
+
+            const Text(
+              "Today Tasks",
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
+            
+            Container(
+              height: 300, // Set a bounded height
+              child: ListView.builder(
+                itemCount: updateTodaySubjectsList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    enabled: _enable[index],
+                    // This sets text color and icon color to red when list tile is disabled and
+                    // green when list tile is selected, otherwise sets it to black.
+                    iconColor: MaterialStateColor.resolveWith(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.red;
+                        }
+                        return Colors.black;
+                      },
+                    ),
+                    // This sets text color and icon color to red when list tile is disabled and
+                    // green when list tile is selected, otherwise sets it to black.
+                    textColor: MaterialStateColor.resolveWith(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.disabled)) {
+                          return Colors.red;
+                        }
+                        return Colors.black;
+                      },
+                    ),
+                    leading: const Icon(Icons.person),
+                    title: Text(updateTodaySubjectsList[index].toString()),
+                    subtitle: Text('Done: ${_enable[index]}'),
+                    trailing: Switch(
+                      onChanged: (bool? value) {
+                        setState(() {
+                          if (value == true) {
+                            enabledList.add(index.toString());
+                          } else {
+                            enabledList.remove(index.toString());
+                          }
+                          authStudent.updateEnables(
+                              auth.currentUser!.uid, enabledList.toString());
+                          _enable[index] = value!;
+    
+                          int j=0;
+                          for(int i=0; i<howManySubjects; i++){
+                            if(_enable[i]==false){
+                              j++;
+                            }
+                          }
+                          if(j==0){
+                          _alertMsg();
+                          }
+    
+                        });
+                      },
+                      value: _enable[index],
+                    ),
+                  );
+                },
               ),
             ),
-          ),
-        ],
+             
+            Container(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Monday')),
+                        DataColumn(label: Text('Tuesday')),
+                        DataColumn(label: Text('Wednesday')),
+                        DataColumn(label: Text('Thursday')),
+                        DataColumn(label: Text('Friday')),
+                        DataColumn(label: Text('Saturday')),
+                        DataColumn(label: Text('Sunday')),
+                      ],
+                      rows: tableDataList.map((data) {
+                        return DataRow(
+                          cells: [
+                            DataCell(Text(data['Monday'])),
+                            DataCell(Text(data['Tuesday'])),
+                            DataCell(Text(data['Wednesday'])),
+                            DataCell(Text(data['Thursday'])),
+                            DataCell(Text(data['Friday'])),
+                            DataCell(Text(data['Saturday'])),
+                            DataCell(Text(data['Sunday'])),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Games.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
@@ -35,9 +36,11 @@ class _HomeState extends State<Home> {
             height: 300,
             fit: BoxFit.cover,
           ),
+
           const SizedBox(
             height: 4,
           ),
+
           Container(
             margin: const EdgeInsets.all(10),
             child: Card(
@@ -92,6 +95,42 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: Card(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const ListTile(
+                    leading: Icon(Icons.waving_hand_rounded),
+                    title: Text('Add Task',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w400)),
+                    subtitle: Text("Add Task")
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text('Login'),
+                        onPressed: () {},
+                      ),
+                      const SizedBox(width: 8),
+                      TextButton(
+                        child: const Text('Sign Up'),
+                        onPressed: () {
+                          AddTasks().modelBottomPanelSettings(context);
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
           Container(
             margin: const EdgeInsets.all(8),
             child: Card(
@@ -122,6 +161,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+
           Container(
             margin: const EdgeInsets.all(10),
             child: Card(

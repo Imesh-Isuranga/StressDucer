@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Games.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Home.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/Profile.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
 
