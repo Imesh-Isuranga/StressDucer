@@ -102,13 +102,11 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
     }
   }
 
-    bool isButtonEnabled = true;
   @override
   Widget build(BuildContext context) {
     String id = Provider.of<UserModel?>(context)!.uid;
     final AuthServices _auth = AuthServices();
     final dataAuthServices _authData = dataAuthServices();
-
 
     for (int i = 0; i < listAllFull.length; i++) {
       DateTime b = DateTime.parse(listAllFull[i][1]);
@@ -140,6 +138,34 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
 
     String textGetter() {
       return text;
+    }
+
+    void showAlert() {
+      Widget okButton = TextButton(
+        child: const Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop();
+          ;
+        },
+      );
+
+      AlertDialog alert = AlertDialog(
+        title: const Text(
+          "Error",
+          style: TextStyle(color: Colors.red, fontSize: 20),
+        ),
+        content: const Text("Please Enter Task Name"),
+        actions: [
+          okButton,
+        ],
+      );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
     }
 
     return Container(
@@ -234,82 +260,84 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
                                   NotificationButton(
                                     text: "Add Scheduled",
                                     onPressed: () async {
-                                      taskNameController.clear();
-                                      FocusScope.of(context).unfocus();
-                                      await NotificationService.showNotification(
-                                          id: count,
-                                          title: "You Have to Start your Task.",
-                                          body: textGetter(),
-                                          scheduled: true,
-                                          date: pickedDateGetter(),
-                                          time: pickedTimeeGetter());
-                                      List<String?> temp = [
-                                        textGetter(),
-                                        pickedDateGetter().toString(),
-                                        ('${pickedTimeeGetter().hour}:${pickedTimeeGetter().minute}'),
-                                        count.toString()
-                                      ];
-                                      listAll.add(temp.toString());
-                                      listAllFull.add(temp);
-                                      addTasks.create(AddedTasks(list: listAll),
-                                          auth.currentUser!.uid);
-                                      setCount();
-                                      print("===============================");
-                                      print(temp);
-                                      print(listAllFull);
-                                      print(count);
+                                      if (text != "") {
+                                        FocusScope.of(context).unfocus();
+                                        await NotificationService.showNotification(
+                                            id: count,
+                                            title:
+                                                "You Have to Start your Task.",
+                                            body: textGetter(),
+                                            scheduled: true,
+                                            date: pickedDateGetter(),
+                                            time: pickedTimeeGetter());
+                                        List<String?> temp = [
+                                          textGetter(),
+                                          pickedDateGetter().toString(),
+                                          ('${pickedTimeeGetter().hour}:${pickedTimeeGetter().minute}'),
+                                          count.toString()
+                                        ];
+                                        setState(() {
+                                          taskNameController.clear();
+                                          listAll.add(temp.toString());
+                                          listAllFull.add(temp);
+                                          addTasks.create(
+                                              AddedTasks(list: listAll),
+                                              auth.currentUser!.uid);
+                                          setCount();
+                                          text = "";
+                                          pickedDate = DateTime.now();
+                                          pickedTime = TimeOfDay.now();
+                                        });
+                                      } else {
+                                        showAlert();
+                                      }
                                     },
                                   ),
+                                  const SizedBox(height: 20,),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.6,
                                     child: ListView.builder(
                                       itemCount: count,
                                       itemBuilder: (context, index) {
-                                        return Center(
-                                          child: Card(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                ListTile(
-                                                  leading:
-                                                      const Icon(Icons.alarm),
-                                                  title: Text(
-                                                      listAllFull[index][0]),
-                                                  subtitle: const Text(
-                                                      'DO better things'),
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: <Widget>[
-                                                    const SizedBox(width: 8),
-                                                    TextButton(
-                                                      child:
-                                                          Text(isButtonEnabled ? "Remove" : "Removed"),
-                                                      onPressed: isButtonEnabled ? () async {
-                                                        ScaffoldMessenger.of(context).showSnackBar(
-                                                          const SnackBar(
-                                                            content: Text(
-                                                                'Deleted your Task'),
-                                                          ),
-                                                        );
-                                                        await NotificationService
-                                                            .cancelScheduledNotification(
-                                                                index);
-                                                        setState(() {
-                                                          isButtonEnabled = false;
-                                                          listAll.removeAt(index);
-                                                          authAddNewTask.create(
-                                                              AddedTasks(list:listAll),auth.currentUser!.uid);
-                                                          count--;
-                                                        });
-                                                      }: null,
+                                        return Dismissible(
+                                          key: Key(index.toString()),
+                                          onDismissed: (direction) async {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content:
+                                                    Text('Deleted your Task'),
+                                              ),
+                                            );
+                                            await NotificationService
+                                                .cancelScheduledNotification(
+                                                    index);
+                                            setState(() {
+                                              listAll.removeAt(index);
+                                              authAddNewTask.create(
+                                                  AddedTasks(list: listAll),
+                                                  auth.currentUser!.uid);
+                                              count--;
+                                            });
+                                          },
+                                          child: Center(
+                                            child: Card(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(20.0),
+                                                    child: ListTile(
+                                                      leading:
+                                                          const Icon(Icons.alarm),
+                                                      title: Text(
+                                                          listAllFull[index][0]),
+                                                      subtitle: Text('Date : ${DateTime.parse(listAllFull[index][1]).year}:${DateTime.parse(listAllFull[index][1]).month}:${DateTime.parse(listAllFull[index][1]).day}\nTime : ${(listAllFull[index][2])}'),
                                                     ),
-                                                    const SizedBox(width: 8),
-                                                  ],
-                                                ),
-                                              ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         );

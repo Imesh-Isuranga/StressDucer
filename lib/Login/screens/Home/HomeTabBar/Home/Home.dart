@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/AddTasks.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Games.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/HomeDisplayQuotes.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/motivational_api.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
 import 'package:stress_ducer/Login/services/addTasksDataBase.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
@@ -23,18 +24,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-
+    final api = MotivationalApi();
 
     ListTileTitleAlignment? titleAlignment;
-
 
     return Center(
       child: Column(
         children: [
+          QuoteDisplay(),
           Image.asset(
             "assets/cover_img.jpg",
             width: double.infinity,
@@ -56,7 +57,8 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w400)),
                     subtitle: StreamBuilder<Student?>(
-                      stream: dataAuthServices.readSpecificDocument(_auth.currentUser!.uid),
+                      stream: dataAuthServices
+                          .readSpecificDocument(_auth.currentUser!.uid),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -98,38 +100,44 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
               ),
             ),
           ),
-          
-          AddedTasksCards()
-          
-          ,
+          AddedTasksCards(),
           Container(
             margin: const EdgeInsets.all(8),
             child: Card(
-              child: Column(
-                children: <Widget>[
-                  const ListTile(
-                    leading: Icon(Icons.schedule),
-                    title: Text('Today Tasks',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400)),
-                    subtitle: Text("Study Schedule"),
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                          child: ListTile(
-                        title: Text("Daily Goals"),
-                        subtitle: Text(
-                            "Plan your day with achievable goals. Break tasks into manageable steps to stay organized and reduce stress."),
-                      )),
-                      Image.asset(
-                        "assets/cover_img.jpg",
-                        width: 150,
-                        height: 150,
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  widget.changeTabtoGame(1);;
+                },
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: <Widget>[
+                      const ListTile(
+                        leading: Icon(Icons.schedule),
+                        title: Text('Today Tasks',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w400)),
+                        subtitle: Text("Study Schedule"),
                       ),
+                      Row(
+                        children: [
+                          const Expanded(
+                              child: ListTile(
+                            title: Text("Daily Goals"),
+                            subtitle: Text(
+                                "Plan your day with achievable goals. Break tasks into manageable steps to stay organized and reduce stress."),
+                          )),
+                          Image.asset(
+                            "assets/cover_img.jpg",
+                            width: 150,
+                            height: 150,
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
             ),
           ),
