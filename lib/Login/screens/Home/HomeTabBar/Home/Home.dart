@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/AddTasks.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Games.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
+import 'package:stress_ducer/Login/services/addTasksDataBase.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +23,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
-    String id = Provider.of<UserModel?>(context)!.uid;
-    final AuthServices _auth = AuthServices();
-    final dataAuthServices _authData = dataAuthServices();
+
 
     ListTileTitleAlignment? titleAlignment;
+
 
     return Center(
       child: Column(
@@ -36,11 +41,9 @@ class _HomeState extends State<Home> {
             height: 300,
             fit: BoxFit.cover,
           ),
-
           const SizedBox(
             height: 4,
           ),
-
           Container(
             margin: const EdgeInsets.all(10),
             child: Card(
@@ -53,7 +56,7 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w400)),
                     subtitle: StreamBuilder<Student?>(
-                      stream: dataAuthServices.readSpecificDocument(id),
+                      stream: dataAuthServices.readSpecificDocument(_auth.currentUser!.uid),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -95,42 +98,10 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const ListTile(
-                    leading: Icon(Icons.waving_hand_rounded),
-                    title: Text('Add Task',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400)),
-                    subtitle: Text("Add Task")
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      TextButton(
-                        child: const Text('Login'),
-                        onPressed: () {},
-                      ),
-                      const SizedBox(width: 8),
-                      TextButton(
-                        child: const Text('Sign Up'),
-                        onPressed: () {
-                          AddTasks().modelBottomPanelSettings(context);
-                        },
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-
+          
+          AddedTasksCards()
+          
+          ,
           Container(
             margin: const EdgeInsets.all(8),
             child: Card(
@@ -148,7 +119,8 @@ class _HomeState extends State<Home> {
                       const Expanded(
                           child: ListTile(
                         title: Text("Daily Goals"),
-                        subtitle: Text("Plan your day with achievable goals. Break tasks into manageable steps to stay organized and reduce stress."),
+                        subtitle: Text(
+                            "Plan your day with achievable goals. Break tasks into manageable steps to stay organized and reduce stress."),
                       )),
                       Image.asset(
                         "assets/cover_img.jpg",
@@ -161,7 +133,6 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-
           Container(
             margin: const EdgeInsets.all(10),
             child: Card(

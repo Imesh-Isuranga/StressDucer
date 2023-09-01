@@ -1,24 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class AddedTasks {
-  AddedTasks(
-      {required this.date,
-      required this.time});
+  AddedTasks({
+    required this.list,
+  });
 
-  final DateTime? date;
-  final TimeOfDay? time;
+  final List<String?> list;
 
   factory AddedTasks.fromSnapshot(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return AddedTasks(
-        date: snapshot['date'],
-        time: snapshot['time']);
+      list: List<String?>.from(snapshot['list'] ?? []),
+    );
   }
 
-  Map<String,dynamic> toJson()=>{
-    "date":date,
-    "time":time
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      "list": list,
+    };
+  }
 }

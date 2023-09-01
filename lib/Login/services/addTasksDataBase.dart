@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stress_ducer/Login/model/addedTasks.dart';
 import 'package:stress_ducer/Login/model/timeTable.dart';
 
-class AddTasks {
+class AddTasksDatabase {
   static Stream<List<AddedTasks>> read() {
     final userCollection = FirebaseFirestore.instance.collection("Added Tasks");
     return userCollection.snapshots().map((quesrySnapshot) =>
@@ -33,8 +33,7 @@ class AddTasks {
 
     try {
       await docRef.update({
-        "date": addedTasks.date,
-        "time": addedTasks.time,
+        "list": addedTasks.list,
       });
     } catch (error) {
       print("Some error occure $error");
@@ -47,8 +46,7 @@ class AddTasks {
     final docRef = userColection.doc(id);
 
     final newTask = AddedTasks(
-            date: addedTasks.date,
-            time:addedTasks.time)
+            list:addedTasks.list)
         .toJson();
 
     try {
