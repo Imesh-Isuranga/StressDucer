@@ -87,6 +87,45 @@ Future updateHowManySubjects(String documentId,String num) async {
   }
 
 
+  Future updateWithName(String documentId,String name, String uni) async {
+    final userColection = FirebaseFirestore.instance.collection("students");
+
+    final docRef = userColection.doc(documentId);
+
+    
+    try {
+      await docRef.update({
+          "studentName": name,
+            "studentUniName": uni,
+      });
+    } catch (error) {
+      print("Some error occure $error");
+    }
+  }
+
+
+
+  Future updateWithoutName(String documentId,String currentSem,String numOfSub, String subjects,
+      String priority) async {
+    final userColection = FirebaseFirestore.instance.collection("students");
+
+    final docRef = userColection.doc(documentId);
+
+    
+    try {
+      await docRef.update({
+            "studentCurrentSem": currentSem,
+            "studentNumOfSubjects": numOfSub,
+            "studentSubjects": subjects,
+            "studentSubjectsPriority": priority
+      });
+    } catch (error) {
+      print("Some error occure $error");
+    }
+  }
+
+
+
 
   Future create(StudentFirstModel studentFirstModel, String subjects,
       String priority,String id,String num,String enable) async {

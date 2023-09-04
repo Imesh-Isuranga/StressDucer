@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       value: AuthServices().user,
       initialData: UserModel(uid: ""),
       child: MaterialApp(
+        title: "StressDucer",
         home: Wrapper(),
       ),
     );

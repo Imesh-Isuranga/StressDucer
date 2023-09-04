@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stress_ducer/Login/Transition/maintransition.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/screens/authentication/authenticate.dart';
 import 'package:provider/provider.dart';
@@ -22,16 +23,36 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
-    print(user==null);
-    if (user == null) {
-      return Authenticate(pressed: setStudentDetails);
-    } else {
-      if (isSetDetails) {
-        return StudentWrapper(Pressed: setStudentDetails,id:user.uid);
-      } else {
-        return MainPlace();
-      }
-    }
+
+    return FutureBuilder(
+      future: fetchData(user), // Replace fetchData with your data loading logic
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Show a circular progress indicator while loading
+          return TextTransitionNew();
+        } else if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        } else {
+          // Depending on your data, conditionally return different widgets
+          if (user == null) {
+            return Authenticate(pressed: setStudentDetails);
+          } else {
+            if (isSetDetails) {
+              return StudentWrapper(Pressed: setStudentDetails, id: user.uid);
+            } else {
+              return MainPlace();
+            }
+          }
+        }
+      },
+    );
+  }
+
+  Future fetchData(UserModel? user) async {
+    // Simulate loading data with a delay for demonstration purposes
+    await Future.delayed(Duration(seconds: 2));
+
+    // Replace this with your actual data loading logic
+    // You can fetch data, perform computations, etc.
   }
 }
-

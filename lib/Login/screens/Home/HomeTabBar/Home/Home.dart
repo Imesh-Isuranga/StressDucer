@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stress_ducer/Login/Transition/maintransition.dart';
+import 'package:stress_ducer/Login/Transition/sub_transition.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Games.dart';
@@ -35,13 +37,15 @@ class _HomeState extends State<Home> {
     return Center(
       child: Column(
         children: [
-          QuoteDisplay(),
+          Stack(children: [
           Image.asset(
             "assets/cover_img.jpg",
             width: double.infinity,
             height: 300,
             fit: BoxFit.cover,
           ),
+            QuoteDisplay(),
+          ]),
           const SizedBox(
             height: 4,
           ),
@@ -62,7 +66,7 @@ class _HomeState extends State<Home> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
+                          return TextTransitionSubNew();
                         } else if (snapshot.hasError) {
                           return Text("Error: ${snapshot.error}");
                         } else if (snapshot.hasData) {

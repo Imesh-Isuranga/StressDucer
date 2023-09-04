@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
@@ -13,12 +14,12 @@ import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
 class Profile extends StatefulWidget {
   Profile({super.key});
 
-
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  String imageUrl = '';
 
   final _authData = dataAuthServices();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -99,9 +100,13 @@ class _ProfileState extends State<Profile> {
                       ),
                       TextButton(
                           onPressed: () {
-                            _authData.updateEnables(auth.currentUser!.uid,[].toString());
+                            _authData.updateEnables(
+                                auth.currentUser!.uid, [].toString());
                             _authData.updateHowManySubjects(
-                                auth.currentUser!.uid, howManySubjectsPerDayController.text!="" ? howManySubjectsPerDayController.text:"1");
+                                auth.currentUser!.uid,
+                                howManySubjectsPerDayController.text != ""
+                                    ? howManySubjectsPerDayController.text
+                                    : "1");
                           },
                           child: Text("Save"))
                     ],
@@ -116,11 +121,36 @@ class _ProfileState extends State<Profile> {
   }
 
   @override
-void dispose() {
-  howManySubjectsPerDayController.dispose();
-  super.dispose();
-}
+  void dispose() {
+    howManySubjectsPerDayController.dispose();
+    super.dispose();
+  }
 
+  @override
+  void initState() {
+    super.initState();
+    _initImageUrl();
+  }
+
+  Future<void> _initImageUrl() async {
+    try {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      Reference storageRef =
+          FirebaseStorage.instance.ref().child('user_images/$uid/profile.jpg');
+
+      // Get the download URL of the image
+      String imageUrlnew = await storageRef.getDownloadURL();
+
+      if (mounted == true) {
+        setState(() {
+          imageUrl = imageUrlnew;
+        });
+      }
+    } catch (error) {
+      // Handle any potential errors, e.g., display a default image or an error message.
+      print('Error loading image: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,17 +167,23 @@ void dispose() {
           ])),
           child: Row(
             children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(55),
-                  child: Image.asset(
-                    "assets/man.png",
-                    width: 100,
-                    height: 100,
-                  )),
-              const SizedBox(
-                width: 50,
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: imageUrl.isNotEmpty
+                        ? DecorationImage(
+                            image: NetworkImage(imageUrl),
+                          )
+                        : null, // Handle the case where imageUrl is empty or invalid
+                  ),
+                ),
               ),
-              StreamBuilder<Student?>(
+              const SizedBox(width: 100,),
+              
+              Expanded(child: StreamBuilder<Student?>(
                 stream: dataAuthServices.readSpecificDocument(id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -168,7 +204,7 @@ void dispose() {
                     return const Text("No data available");
                   }
                 },
-              )
+              ))
             ],
           ),
         ),
@@ -203,7 +239,9 @@ void dispose() {
                 ),
               ),
               GestureDetector(
-                onTap:  (){_auth.signOut();},
+                onTap: () {
+                  _auth.signOut();
+                },
                 child: Card(
                   child: ListTile(
                     leading: Icon(Icons.logout),
