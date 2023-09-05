@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Games.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Home.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/Profile.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/TodayTasks.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/pop_upMenu.dart';
 
 class MainPlace extends StatefulWidget {
@@ -75,7 +74,7 @@ class _MainPlaceState extends State<MainPlace>
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Color.fromARGB(255, 253, 253, 253),
+                        Color.fromARGB(255, 255, 255, 255),
                         Color.fromARGB(255, 255, 255, 255)
                       ], // Replace with your gradient colors
                     ),
@@ -122,7 +121,7 @@ class _MainPlaceState extends State<MainPlace>
               const Center(child: Calender()),
               Center(child: Profile()),
             ],
-          ),drawer: Drawer(child: Container(child: Column(children: [PopUpScreen()]),)),
+          ),endDrawer: Drawer(child: Container(child: Column(children: [PopUpScreen()]),)),
         ),
       ),
     );

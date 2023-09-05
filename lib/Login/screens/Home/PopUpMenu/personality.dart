@@ -23,6 +23,7 @@ class _PersonalityState extends State<Personality> {
   late TextEditingController nameTxt;
   late TextEditingController uniTxt;
   String imageUrl = '';
+  String imageUrlCover = '';
 
   bool setEditName = false;
   bool setEditUni = false;
@@ -42,13 +43,17 @@ class _PersonalityState extends State<Personality> {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       Reference storageRef =
           FirebaseStorage.instance.ref().child('user_images/$uid/profile.jpg');
+      Reference storageRefCover =
+          FirebaseStorage.instance.ref().child('cover_images/$uid/profile.jpg');
 
       // Get the download URL of the image
       String imageUrlnew = await storageRef.getDownloadURL();
+      String imageUrlnewCover = await storageRefCover.getDownloadURL();
 
       if (mounted == true) {
         setState(() {
           imageUrl = imageUrlnew;
+          imageUrlCover = imageUrlnewCover;
         });
       }
     } catch (error) {
@@ -71,6 +76,24 @@ class _PersonalityState extends State<Personality> {
     ref.getDownloadURL().then((value) {
       setState(() {
         imageUrl = value;
+      });
+    });
+  }
+
+  void saveCoverProfileImage(String id) async {
+    final image = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        maxHeight: 500,
+        maxWidth: 500,
+        imageQuality: 75);
+
+    Reference refCover =
+        FirebaseStorage.instance.ref().child("cover_images/$id/profile.jpg");
+
+    await refCover.putFile(File(image!.path));
+    refCover.getDownloadURL().then((value) {
+      setState(() {
+        imageUrlCover = value;
       });
     });
   }
@@ -191,16 +214,28 @@ class _PersonalityState extends State<Personality> {
                           height: 20,
                         ),
                         ElevatedButton(
-                            onPressed: setEditSave
-                                ? () {
-                                    _authDataBase.updateWithName(
-                                      id,
-                                      nameTxt.text,
-                                      uniTxt.text,
-                                    );
-                                  }
-                                : null,
-                            child: Text("Save"))
+                          onPressed: setEditSave
+                              ? () {
+                                  _authDataBase.updateWithName(
+                                    id,
+                                    nameTxt.text,
+                                    uniTxt.text,
+                                  );
+                                }
+                              : null,
+                          child: Text("Save"),
+                        ),
+
+                        imageUrl.isEmpty
+                            ? Image.asset("assets/cover_img.jpg")
+                            : Image.network(imageUrlCover),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            saveCoverProfileImage(id);
+                          },
+                          child: Text("Save"),
+                        ),
                       ],
                     )),
                   ),

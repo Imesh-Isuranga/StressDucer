@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
-import 'package:stress_ducer/Login/model/timeTable.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/StudentProfile.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
@@ -177,7 +175,9 @@ class _ProfileState extends State<Profile> {
                         ? DecorationImage(
                             image: NetworkImage(imageUrl),
                           )
-                        : null, // Handle the case where imageUrl is empty or invalid
+                        : DecorationImage(
+                                    image: AssetImage("assets/man.png"),
+                                  ), // Handle the case where imageUrl is empty or invalid
                   ),
                 ),
               ),

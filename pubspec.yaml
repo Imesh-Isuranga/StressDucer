@@ -53,6 +53,7 @@ dependencies:
   googleapis: ^11.4.0
   firebase_storage: ^11.2.6
   image_picker: ^1.0.4
+  intl: ^0.17.0
 
 
 dev_dependencies:
@@ -83,6 +84,11 @@ flutter:
   - assets/G.png
   - assets/man.png
   - assets/logo.png
+  - assets/todo.jpg
+  - assets/todayTasks.jpg
+  - assets/games.jpg
+  - assets/game-1.png
+  - assets/game-2.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

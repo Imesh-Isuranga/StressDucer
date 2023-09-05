@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/Transition/sub_transition.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/TodayTasks.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Profile_In_Menu/profile_menu.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/personality.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';

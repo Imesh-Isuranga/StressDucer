@@ -9,7 +9,8 @@ class Student {
       required this.studentSubjects,
       required this.studentSubjectsPriority,
       required this.howManySubjects,
-      required this.enableStatus});
+      required this.enableStatus,
+      required this.flag});
 
   final String? studentName;
   final String? studentUniName;
@@ -19,6 +20,7 @@ class Student {
   final String? studentSubjectsPriority;
   final String? howManySubjects;
   final String? enableStatus;
+  final List<bool> flag;
 
   factory Student.fromSnapshot(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -31,7 +33,8 @@ class Student {
         studentSubjects: snapshot['studentSubjects'],
         studentSubjectsPriority: snapshot['studentSubjectsPriority'],
         howManySubjects: snapshot['howManySubjects'],
-        enableStatus: snapshot['enableStatus']);
+        enableStatus: snapshot['enableStatus'],
+        flag: (snapshot['flag'] as List<dynamic>).cast<bool>());
   }
 
   Map<String,dynamic> toJson()=>{
@@ -42,6 +45,7 @@ class Student {
     "studentSubjects":studentSubjects,
     "studentSubjectsPriority":studentSubjectsPriority,
     "howManySubjects":howManySubjects,
-    "enableStatus":enableStatus
+    "enableStatus":enableStatus,
+    "flag":flag,
   };
 }

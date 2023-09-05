@@ -177,12 +177,24 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
             const SizedBox(
               height: 20,
             ),
-            const ListTile(
-                leading: Icon(Icons.task),
-                title: Text('Add Task',
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
-                subtitle: Text("Add Task")),
+            Row(children: [
+              Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                "assets/todayTasks.jpg",
+                width: 200,
+                height: 200,
+              ),
+            ),
+            Expanded(
+              child: const ListTile(
+                  title: Text('Add Task',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
+                  subtitle: Text("Add Task")),
+            ),
+            ],),
+            
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -293,7 +305,9 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
                                       }
                                     },
                                   ),
-                                  const SizedBox(height: 20,),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.6,
@@ -327,13 +341,17 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: <Widget>[
                                                   Padding(
-                                                    padding: const EdgeInsets.all(20.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            20.0),
                                                     child: ListTile(
-                                                      leading:
-                                                          const Icon(Icons.alarm),
+                                                      leading: const Icon(
+                                                          Icons.alarm),
                                                       title: Text(
-                                                          listAllFull[index][0]),
-                                                      subtitle: Text('Date : ${DateTime.parse(listAllFull[index][1]).year}:${DateTime.parse(listAllFull[index][1]).month}:${DateTime.parse(listAllFull[index][1]).day}\nTime : ${(listAllFull[index][2])}'),
+                                                          listAllFull[index]
+                                                              [0]),
+                                                      subtitle: Text(
+                                                          'Date : ${DateTime.parse(listAllFull[index][1]).year}:${DateTime.parse(listAllFull[index][1]).month}:${DateTime.parse(listAllFull[index][1]).day}\nTime : ${(listAllFull[index][2])}'),
                                                     ),
                                                   ),
                                                 ],

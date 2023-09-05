@@ -31,6 +31,23 @@ Future delete(String documentId) async {
     
   }
 
+Future updateFlag(String documentId,List<bool> flag) async {
+    final userColection = FirebaseFirestore.instance.collection("students");
+
+    final docRef = userColection.doc(documentId);
+
+    
+    try {
+      await docRef.update({
+            "flag": flag
+      });
+    } catch (error) {
+      print("Some error occure $error");
+    }
+  }
+
+
+
 Future updateEnables(String documentId,String list) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
@@ -64,7 +81,7 @@ Future updateHowManySubjects(String documentId,String num) async {
 
 
   Future update(String documentId,StudentFirstModel studentFirstModel, String subjects,
-      String priority,String num,String enable) async {
+      String priority,String num,String enable,List<bool> flag) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(documentId);
@@ -79,7 +96,8 @@ Future updateHowManySubjects(String documentId,String num) async {
             "studentSubjects": subjects,
             "studentSubjectsPriority": priority,
             "howManySubjects": num,
-            "enableStatus": enable
+            "enableStatus": enable,
+            "flag":flag
       });
     } catch (error) {
       print("Some error occure $error");
@@ -128,7 +146,7 @@ Future updateHowManySubjects(String documentId,String num) async {
 
 
   Future create(StudentFirstModel studentFirstModel, String subjects,
-      String priority,String id,String num,String enable) async {
+      String priority,String id,String num,String enable,List<bool> flag) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(id);
@@ -141,7 +159,8 @@ Future updateHowManySubjects(String documentId,String num) async {
             studentSubjects: subjects,
             studentSubjectsPriority: priority,
             howManySubjects: num,
-            enableStatus: enable)
+            enableStatus: enable,
+            flag: flag,)
         .toJson();
 
     try {
