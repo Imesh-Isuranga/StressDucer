@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/HomeDisplayQuotes.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/motivational_api.dart';
+import 'package:stress_ducer/Login/constant/colors.dart';
+
 
 class Home extends StatefulWidget {
   const Home(this.changeTabtoGame, {super.key});
@@ -73,12 +75,13 @@ class _HomeState extends State<Home> {
               QuoteDisplay(),
             ]),
             const SizedBox(
-              height: 4,
+              height: 1,
             ),
             AddedTasksCards(),
             Container(
-              margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.only(top: 3,bottom: 3,left: 0,right: 0),
               child: Card(
+                margin: const EdgeInsets.all(0),
                 child: InkWell(
                   splashColor: Colors.blue.withAlpha(30),
                   onTap: () {
@@ -115,8 +118,8 @@ class _HomeState extends State<Home> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.all(10),
               child: Card(
+                margin: const EdgeInsets.only(top: 0,bottom: 3,left: 0,right: 0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

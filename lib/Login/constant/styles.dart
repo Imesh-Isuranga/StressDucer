@@ -14,6 +14,13 @@ const TextStyle studentDetailsProfile = TextStyle(
   fontWeight: FontWeight.w300
 );
 
+
+const TextStyle studentDetailsProfileSub = TextStyle(
+  fontSize: 20,
+  color:Color.fromARGB(255, 21, 7, 180),
+  fontWeight: FontWeight.w300
+);
+
 const textInputDecoration = InputDecoration(
                           hintText: "Email",
                           fillColor: bgBlack,

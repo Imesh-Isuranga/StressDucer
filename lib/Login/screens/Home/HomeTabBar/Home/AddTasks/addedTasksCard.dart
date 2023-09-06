@@ -169,8 +169,8 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
     }
 
     return Container(
-      margin: const EdgeInsets.all(10),
       child: Card(
+        margin: const EdgeInsets.only(top: 3,bottom: 0,left: 0,right: 0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

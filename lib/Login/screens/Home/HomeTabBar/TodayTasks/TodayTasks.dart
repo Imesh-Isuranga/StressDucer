@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/model/timeTable.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/getTodayData.dart';
@@ -153,10 +154,7 @@ class TodayTasksState extends State<TodayTasks> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color.fromARGB(255, 255, 255, 255),
-            Color.fromARGB(255, 158, 158, 158)
-          ], // Replace with your gradient colors
+          colors: background, // Replace with your gradient colors
         ),
       ),
         child: Center(

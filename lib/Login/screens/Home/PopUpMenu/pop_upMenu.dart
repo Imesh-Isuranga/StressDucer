@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stress_ducer/Login/Transition/sub_transition.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/TodayTasks.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Profile_In_Menu/profile_menu.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/personality.dart';
+import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Test/testMain.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
 class PopUpScreen extends StatefulWidget {
@@ -54,14 +56,18 @@ class _PopUpScreenState extends State<PopUpScreen> {
       child: Column(
         children: [
           Container(
-            color: Colors.green,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+            Color(0xFF0e6ba8),
+            Color(0xFF0a2472)
+          ])),
             child: Column(
               children: [
                 SizedBox(
                   height: 60,
                 ),Container(
                   margin: EdgeInsets.only(bottom: 10),
-                  height: 100,
+                  height: 80,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: imageUrl.isNotEmpty
@@ -78,7 +84,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                   height: 20,
                 ),
                 
-                Text("Hi"),
+                Text("Hi",style: GoogleFonts.roboto(fontSize: 10,color: Colors.white),),
 
                 StreamBuilder<Student?>(
                       stream: dataAuthServices
@@ -93,7 +99,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                           final student = snapshot.data;
                           if (student != null) {
                             return Text(student
-                                .studentName!); // Return your actual widget
+                                .studentName!,style: GoogleFonts.roboto(fontSize: 20,color: Colors.white),); // Return your actual widget
                           } else {
                             return const Text("Student not found");
                           }
@@ -120,19 +126,19 @@ class _PopUpScreenState extends State<PopUpScreen> {
                   ListTile(
                     leading: Icon(Icons.alarm),
                     title: Text("Today Task"),
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialApp(home: Scaffold(appBar: AppBar(title: Text("Today Tasks"),),body: TodayTasks(),))));},
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialApp(home:TodayTasks(),)));},
                   ),
                   Divider(height: 1,),
                   ListTile(
-                    leading: Icon(Icons.abc),
+                    leading: Icon(Icons.image_aspect_ratio),
                     title: Text("Personality"),
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Personality()));},
                   ),
                   Divider(height: 1,),
                   ListTile(
-                    leading: Icon(Icons.abc),
-                    title: Text("data"),
-                    onTap: (){},
+                    leading: Icon(Icons.book_online),
+                    title: Text("Take A Test"),
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => TestMain()));},
                   )
                 ],
               ),

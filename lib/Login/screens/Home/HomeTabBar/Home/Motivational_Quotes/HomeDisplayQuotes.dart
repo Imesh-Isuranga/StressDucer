@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/motivational_api.dart';
 
 class QuoteDisplay extends StatefulWidget {
@@ -23,13 +24,13 @@ class _QuoteDisplayState extends State<QuoteDisplay> {
   Widget build(BuildContext context) {
     return Center(
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(0),
         child: Card(
           margin: EdgeInsets.only(top: 230),
-          elevation: 0,
+          elevation: 20,
           color: Theme.of(context).colorScheme.onPrimaryContainer,
           child: Container(
-            decoration: BoxDecoration(gradient: LinearGradient(colors: [Color.fromARGB(248, 255, 255, 255),Color(0xFF0e3e3e3)])),
+            decoration: BoxDecoration(gradient: LinearGradient(colors: [Color.fromARGB(255, 255, 255, 255),Color.fromARGB(255, 255, 255, 255)])),
             child: Padding(
               padding: const EdgeInsets.all(35),
               child: SizedBox(

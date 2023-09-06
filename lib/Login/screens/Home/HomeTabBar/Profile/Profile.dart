@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
@@ -106,7 +107,7 @@ class _ProfileState extends State<Profile> {
                                     ? howManySubjectsPerDayController.text
                                     : "1");
                           },
-                          child: Text("Save"))
+                          child: const Text("Save"))
                     ],
                   )
                 ],
@@ -157,17 +158,17 @@ class _ProfileState extends State<Profile> {
     return Center(
       child: Column(children: [
         Container(
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.all(20),
+          decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-            Color.fromARGB(255, 232, 230, 229),
-            Color.fromARGB(255, 248, 195, 4)
+            Color(0xFF0e6ba8),
+            Color(0xFF0a2472)
           ])),
           child: Row(
             children: [
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   height: 100,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -175,7 +176,7 @@ class _ProfileState extends State<Profile> {
                         ? DecorationImage(
                             image: NetworkImage(imageUrl),
                           )
-                        : DecorationImage(
+                        : const DecorationImage(
                                     image: AssetImage("assets/man.png"),
                                   ), // Handle the case where imageUrl is empty or invalid
                   ),
@@ -195,7 +196,7 @@ class _ProfileState extends State<Profile> {
                     if (student != null) {
                       return Text(
                         student.studentName!,
-                        style: TextStyle(fontSize: 30),
+                        style: GoogleFonts.roboto(fontSize: 30,color: Colors.white),
                       ); // Return your actual widget
                     } else {
                       return const Text("Student not found");
@@ -213,7 +214,7 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               GestureDetector(
                 onTap: modelBottomPanelProfile,
-                child: Card(
+                child: const Card(
                   child: ListTile(
                     leading: Icon(Icons.person),
                     title: Text('Profile'),
@@ -222,7 +223,7 @@ class _ProfileState extends State<Profile> {
               ),
               GestureDetector(
                 onTap: modelBottomPanelSettings,
-                child: Card(
+                child: const Card(
                   child: ListTile(
                     leading: Icon(Icons.settings),
                     title: Text('Settings'),
@@ -231,7 +232,7 @@ class _ProfileState extends State<Profile> {
               ),
               GestureDetector(
                 onTap: modelBottomPanelProfile,
-                child: Card(
+                child: const Card(
                   child: ListTile(
                     leading: Icon(Icons.help_center),
                     title: Text('Help & Support'),
@@ -242,13 +243,18 @@ class _ProfileState extends State<Profile> {
                 onTap: () {
                   _auth.signOut();
                 },
-                child: Card(
+                child: const Card(
                   child: ListTile(
                     leading: Icon(Icons.logout),
                     title: Text('Log Out'),
                   ),
                 ),
               ),
+              const SizedBox(height: 100,),
+              Column(children: [
+              Image.asset("assets/logo.png",width: 50,height: 50,),
+              const SizedBox(height: 10,),
+              Text("StressDucer",style: GoogleFonts.roboto(fontSize: 15,color: Color.fromARGB(255, 143, 143, 143)),)],)
             ],
           ),
         ),

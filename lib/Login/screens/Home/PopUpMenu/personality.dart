@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/Transition/sub_transition.dart';
@@ -8,6 +9,7 @@ import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'dart:io';
+import 'package:stress_ducer/Login/screens/error.dart';
 
 class Personality extends StatefulWidget {
   const Personality({super.key});
@@ -96,6 +98,13 @@ class _PersonalityState extends State<Personality> {
         imageUrlCover = value;
       });
     });
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Error().msg(context, "Saved");
+      },
+    );
   }
 
   @override
@@ -104,7 +113,12 @@ class _PersonalityState extends State<Personality> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Personality"),
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+          title: Text(
+            "Personality",
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         body: StreamBuilder<Student?>(
           stream: dataAuthServices.readSpecificDocument(id),
@@ -119,126 +133,181 @@ class _PersonalityState extends State<Personality> {
                 nameTxt.text = student.studentName ?? '';
                 uniTxt.text = student.studentUniName ?? '';
 
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: SingleChildScrollView(
-                    child: Container(
-                        child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(bottom: 10),
-                          height: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: imageUrl.isNotEmpty
-                                ? DecorationImage(
-                                    image: NetworkImage(imageUrl),
-                                  )
-                                : DecorationImage(
-                                    image: AssetImage("assets/man.png"),
-                                  ), // Handle the case where imageUrl is empty or invalid
+                return SingleChildScrollView(
+                  child: Container(
+                      child: Column(
+                    children: [
+                      Card(
+                          margin: EdgeInsets.all(0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(30.0),
+                            child: Column(
+                              children: [
+                                Text("Profile Photo",style: GoogleFonts.roboto(fontSize: 18),),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: imageUrl.isNotEmpty
+                                        ? DecorationImage(
+                                            image: NetworkImage(imageUrl),
+                                          )
+                                        : DecorationImage(
+                                            image: AssetImage("assets/man.png"),
+                                          ), // Handle the case where imageUrl is empty or invalid
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                //   Image.network(imageUrl,scale: 1.0,),
+                                TextButton(
+                                  onPressed: () {
+                                    saveProfileImage(id);
+                                    _initImageUrl();
+                                  },
+                                  child: const Text("Edit"),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextField(
+                                        enabled: setEditName,
+                                        controller: nameTxt,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Name',
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 40,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          setEditName = true;
+                                          setEditSave = true;
+                                        });
+                                      },
+                                      child: const Text("Edit"),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextField(
+                                        enabled: setEditUni,
+                                        controller: uniTxt,
+                                        decoration: const InputDecoration(
+                                          labelText: 'University',
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 40,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          setEditUni = true;
+                                          setEditSave = true;
+                                        });
+                                      },
+                                      child: const Text("Edit"),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                                  onPressed: setEditSave
+                                      ? () {
+                                          try {
+                                            _authDataBase.updateWithName(
+                                              id,
+                                              nameTxt.text,
+                                              uniTxt.text,
+                                            );
+
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return Error()
+                                                    .msg(context, "Saved");
+                                              },
+                                            );
+                                          } catch (e) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return Error().errorMsg(context,
+                                                    "Something went wrong!");
+                                              },
+                                            );
+                                          }
+                                        }
+                                      : null,
+                                  child: Text("Save"),
+                                )
+                              ],
+                            ),
+                          )),
+                      const SizedBox(height: 3),
+                      Card(
+                        margin: EdgeInsets.all(0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(30.0),
+                            child: Column(
+                              children: [
+                                Text("Cover Photo",style: GoogleFonts.roboto(fontSize: 18),),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                imageUrl.isEmpty
+                                    ? Image.asset("assets/cover_img.jpg")
+                                    : Image.network(imageUrlCover),
+                                const SizedBox(height: 20),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                                  onPressed: () {
+                                    try {
+                                      saveCoverProfileImage(id);
+                                    } catch (e) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Error().errorMsg(
+                                              context, "Something went wrong!");
+                                        },
+                                      );
+                                    }
+                                  },
+                                  child: Text("Save"),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        //   Image.network(imageUrl,scale: 1.0,),
-                        TextButton(
-                          onPressed: () {
-                            saveProfileImage(id);
-                            _initImageUrl();
-                          },
-                          child: const Text("Edit"),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                enabled: setEditName,
-                                controller: nameTxt,
-                                decoration: const InputDecoration(
-                                  labelText: 'Name',
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 40,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  setEditName = true;
-                                  setEditSave = true;
-                                });
-                              },
-                              child: const Text("Edit"),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                enabled: setEditUni,
-                                controller: uniTxt,
-                                decoration: const InputDecoration(
-                                  labelText: 'University',
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 40,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  setEditUni = true;
-                                  setEditSave = true;
-                                });
-                              },
-                              child: const Text("Edit"),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: setEditSave
-                              ? () {
-                                  _authDataBase.updateWithName(
-                                    id,
-                                    nameTxt.text,
-                                    uniTxt.text,
-                                  );
-                                }
-                              : null,
-                          child: Text("Save"),
-                        ),
-
-                        imageUrl.isEmpty
-                            ? Image.asset("assets/cover_img.jpg")
-                            : Image.network(imageUrlCover),
-
-                        ElevatedButton(
-                          onPressed: () {
-                            saveCoverProfileImage(id);
-                          },
-                          child: Text("Save"),
-                        ),
-                      ],
-                    )),
-                  ),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
+                  )),
                 );
               } else {
                 return const Text("Student not found");

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender.dart';
@@ -16,6 +18,7 @@ class MainPlace extends StatefulWidget {
 
 class _MainPlaceState extends State<MainPlace>
     with SingleTickerProviderStateMixin {
+  String imageUrl = '';
   final Map<int, double> tabHeights = {
     0: 100, // Home
     1: 60, // TodayTasks (customize the height as needed)
@@ -31,6 +34,7 @@ class _MainPlaceState extends State<MainPlace>
 
   @override
   void initState() {
+    _initImageUrl();
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
 
@@ -53,6 +57,26 @@ class _MainPlaceState extends State<MainPlace>
     super.dispose();
   }
 
+  Future<void> _initImageUrl() async {
+    try {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      Reference storageRef =
+          FirebaseStorage.instance.ref().child('user_images/$uid/profile.jpg');
+
+      // Get the download URL of the image
+      String imageUrlnew = await storageRef.getDownloadURL();
+
+      if (mounted == true) {
+        setState(() {
+          imageUrl = imageUrlnew;
+        });
+      }
+    } catch (error) {
+      // Handle any potential errors, e.g., display a default image or an error message.
+      print('Error loading image: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,11 +87,36 @@ class _MainPlaceState extends State<MainPlace>
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(height),
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                  //   bottomLeft: Radius.circular(20.0), // Adjust the bottom-left radius
-                  //    bottomRight: Radius.circular(20.0), // Adjust the bottom-right radius
-                  ),
+              borderRadius: const BorderRadius.only(
+                //   bottomLeft: Radius.circular(20.0), // Adjust the bottom-left radius
+                //    bottomRight: Radius.circular(20.0), // Adjust the bottom-right radius
+              ),
               child: AppBar(
+                actions: [
+                  Builder(
+                    builder: (context) => IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                      icon: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 3,color: Color.fromARGB(255, 148, 147, 147)),
+                            shape: BoxShape.circle,
+                            image: imageUrl.isNotEmpty
+                                ? DecorationImage(
+                                    image: NetworkImage(imageUrl),
+                                  )
+                                : const DecorationImage(
+                                    image: AssetImage("assets/man.png"),
+                                  ), // Handle the case where imageUrl is empty or invalid
+                          ),
+                        ),
+                      
+                    ),
+                  ),
+                  const SizedBox(width: 20,)
+                ],
+                iconTheme: IconThemeData(color: Colors.blue),
                 flexibleSpace: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -121,7 +170,10 @@ class _MainPlaceState extends State<MainPlace>
               const Center(child: Calender()),
               Center(child: Profile()),
             ],
-          ),endDrawer: Drawer(child: Container(child: Column(children: [PopUpScreen()]),)),
+          ),
+          endDrawer: Drawer(
+            child: Container(child: Column(children: [PopUpScreen()])),
+          ),
         ),
       ),
     );

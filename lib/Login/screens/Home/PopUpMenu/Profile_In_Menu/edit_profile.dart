@@ -4,6 +4,7 @@ import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/StudentProfile.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
+import 'package:stress_ducer/Login/screens/error.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -35,14 +36,20 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+
+
     String id = Provider.of<UserModel?>(context)!.uid;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        title: Text(
+          "Profile",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: StreamBuilder<Student?>(
-        stream: dataAuthServices
-            .readSpecificDocument(id),
+        stream: dataAuthServices.readSpecificDocument(id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
@@ -79,10 +86,14 @@ class _EditProfileState extends State<EditProfile> {
                           const SizedBox(
                             width: 40,
                           ),
-                          TextButton(onPressed: () {setState(() {
-                            setEditSem = true;
-                            setEditSave = true;
-                          });}, child: const Text("Edit"))
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  setEditSem = true;
+                                  setEditSave = true;
+                                });
+                              },
+                              child: const Text("Edit"))
                         ],
                       ),
                       const SizedBox(
@@ -102,11 +113,14 @@ class _EditProfileState extends State<EditProfile> {
                           const SizedBox(
                             width: 40,
                           ),
-                          TextButton(onPressed: () {
-                            setState(() {
-                            setEditNumSub = true;
-                            setEditSave = true;
-                          });}, child: const Text("Edit"))
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  setEditNumSub = true;
+                                  setEditSave = true;
+                                });
+                              },
+                              child: const Text("Edit"))
                         ],
                       ),
                       const SizedBox(
@@ -119,17 +133,21 @@ class _EditProfileState extends State<EditProfile> {
                               child: TextField(
                                 enabled: setEditSub,
                                 controller: _subTxt,
-                                decoration:const InputDecoration(
+                                decoration: const InputDecoration(
                                   labelText: 'Subjects',
                                 ),
                               )),
                           const SizedBox(
                             width: 40,
                           ),
-                          TextButton(onPressed: () {setState(() {
-                            setEditSub = true;
-                            setEditSave = true;
-                          });}, child: const Text("Edit"))
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  setEditSub = true;
+                                  setEditSave = true;
+                                });
+                              },
+                              child: const Text("Edit"))
                         ],
                       ),
                       const SizedBox(
@@ -146,27 +164,51 @@ class _EditProfileState extends State<EditProfile> {
                                   labelText: 'Priority',
                                 ),
                               )),
-                         const SizedBox(
+                          const SizedBox(
                             width: 40,
                           ),
-                          TextButton(onPressed: () {setState(() {
-                            setEditPri = true;
-                            setEditSave = true;
-                          });}, child: const Text("Edit"))
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  setEditPri = true;
+                                  setEditSave = true;
+                                });
+                              },
+                              child: const Text("Edit"))
                         ],
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       ElevatedButton(
-                          onPressed: setEditSave ? () {
-                            _authDataBase.updateWithoutName(
-                                id,
-                                _semTxt.text,
-                                _numSubTxt.text,
-                                _subTxt.text,
-                                _priTxt.text);
-                          } : null,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black),
+                          onPressed: setEditSave
+                              ? () {
+                                  try {
+                                    _authDataBase.updateWithoutName(
+                                        id,
+                                        _semTxt.text,
+                                        _numSubTxt.text,
+                                        _subTxt.text,
+                                        _priTxt.text);
+
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Error().msg(context,"Saved");
+                                      },
+                                    );
+                                  } catch (e) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Error().errorMsg(context,"Something went wrong!");
+                                      },
+                                    );
+                                  }
+                                }
+                              : null,
                           child: Text("Save"))
                     ],
                   ),

@@ -14,7 +14,12 @@ class _ProfileMenuState extends State<ProfileMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        title: Text(
+          "Profile",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -30,8 +35,16 @@ class _ProfileMenuState extends State<ProfileMenu> {
             StudentProfile(text: "Subjects : "),
             Divider(height: 1),
             StudentProfile(text: "Priorities : "),
-            SizedBox(height: 20,),
-            ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile()));}, child: Text("Edit"))
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EditProfile()));
+                },
+                child: Text("Edit"))
           ],
         )),
       ),
