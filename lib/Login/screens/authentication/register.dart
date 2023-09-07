@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/constant/styles.dart';
@@ -30,7 +31,10 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Register",style: TextStyle(color: appBarTextColor),),
+        title: const Text(
+          "Register",
+          style: TextStyle(color: appBarTextColor),
+        ),
         backgroundColor: mainAppBarColor,
       ),
       body: SingleChildScrollView(
@@ -105,6 +109,7 @@ class _RegisterState extends State<Register> {
                           error,
                           style:
                               const TextStyle(color: Colors.red, fontSize: 12),
+                          textAlign: TextAlign.center,
                         ),
                         const SizedBox(
                           height: 60,
@@ -117,7 +122,17 @@ class _RegisterState extends State<Register> {
                           height: 10,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            final user = await _auth.handleGoogleSignIn();
+                            if (user == "0") {
+                              print('Logged in');
+                            } else if (user == "1") {
+                              widget.isPressed();
+                              print('Registered');
+                            } else {
+                              print('Sign-in failed.');
+                            }
+                          },
                           child: Center(
                             child: Image.asset(
                               "assets/G.png",
@@ -148,11 +163,24 @@ class _RegisterState extends State<Register> {
                           height: 20,
                         ),
                         ElevatedButton(
-                          onPressed: ()async {
-                            widget.isPressed();
-                            dynamic result = await _auth
-                                .registerWithEmailAndPassword(email, password);
-                            if (result == null) {
+                          onPressed: () async {
+                            final user = await _auth.checkIfEmailExists(email);
+                            if (user == "0") {
+                              setState(() {
+                                error =
+                                    "Email is already associated with a Google Sign-In account.Please use google sign in.";
+                              });
+                            } else if (user == "1") {
+                              widget.isPressed();
+                              dynamic result =
+                                  await _auth.registerWithEmailAndPassword(
+                                      email, password);
+                              if (result == null) {
+                                setState(() {
+                                  error = "Please enter a valid email!";
+                                });
+                              }
+                            } else {
                               setState(() {
                                 error = "Please enter a valid email!";
                               });
@@ -161,7 +189,7 @@ class _RegisterState extends State<Register> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: loginButtonColors,
                             padding: const EdgeInsets.only(left: 15, right: 15),
-                            minimumSize: Size(300,40),
+                            minimumSize: Size(300, 40),
                           ),
                           child: const Text(
                             "REGISTER",

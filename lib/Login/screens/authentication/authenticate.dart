@@ -28,7 +28,7 @@ class _Authenticate extends State<Authenticate>{
   @override
   Widget build(BuildContext context) {
     if(signinPage==true){
-      return Sign_In(toggle:switchPages);
+      return Sign_In(toggle:switchPages, isPressed:widget.pressed);
     }else{
       return Register(toggle:switchPages, isPressed:widget.pressed);
     }

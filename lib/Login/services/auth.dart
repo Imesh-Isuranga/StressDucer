@@ -17,11 +17,32 @@ class AuthServices {
     return _auth.authStateChanges().map(_userWithFirebaseUserUid);
   }
 
-  Future handleSignIn() async {
+//check only google sign in emails
+  Future checkIfEmailExists(String email) async {
+    try {
+      List<String> signInMethods =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+
+      if (signInMethods.contains("google.com")) {
+        print("Email is already associated with a Google Sign-In account.");
+        return "0";
+      } else {
+        print("Email is not associated with any account.");
+        return "1";
+      }
+    } catch (error) {
+      return "Error checking email existence: $error";
+    }
+  }
+
+//This is for google sign in
+  Future handleGoogleSignIn() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
 
+      List<String> signInMethods = await FirebaseAuth.instance
+          .fetchSignInMethodsForEmail(googleSignInAccount!.email);
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
@@ -32,8 +53,14 @@ class AuthServices {
 
         final UserCredential authResult =
             await _auth.signInWithCredential(credential);
-        final User? user = authResult.user;
-        return _userWithFirebaseUserUid(user);
+      }
+
+      if (signInMethods.contains("google.com")) {
+        print("Email is already associated with a Google Sign-In account.");
+        return "0";
+      } else {
+        print("Email is not associated with any account.");
+        return "1";
       }
     } catch (error) {
       print("Error during Google sign-in: $error");
@@ -77,8 +104,6 @@ class AuthServices {
       return null;
     }
   }
-
-  //sign in using gmail
 
   //signout
   Future signOut() async {

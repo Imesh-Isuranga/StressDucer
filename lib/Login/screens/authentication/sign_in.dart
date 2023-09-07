@@ -5,9 +5,10 @@ import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:email_validator/email_validator.dart';
 
 class Sign_In extends StatefulWidget {
-  const Sign_In({super.key, required this.toggle});
+  const Sign_In({super.key, required this.toggle,required this.isPressed});
 
   final Function toggle;
+  final void Function() isPressed;
 
   @override
   State<Sign_In> createState() => _SignInState();
@@ -110,11 +111,14 @@ class _SignInState extends State<Sign_In> {
                           height: 20,
                         ),
                         GestureDetector(
-                          onTap: () async {
-                            final user = await _auth.handleSignIn();
-                            if (user != null) {
-                              print('Signed in: ${user.displayName}');
-                            } else {
+                          onTap: () async{
+                            final user = await _auth.handleGoogleSignIn();
+                            if(user == "0"){
+                              print('Logged in');
+                            }else if(user == "1"){
+                              widget.isPressed();
+                              print('Registered');
+                            }else{
                               print('Sign-in failed.');
                             }
                           },
@@ -149,12 +153,10 @@ class _SignInState extends State<Sign_In> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            dynamic result = await _auth
-                                .signInUsingEmailAndPassword(email, password);
+                            dynamic result = await _auth.signInUsingEmailAndPassword(email, password);
                             if (result == null) {
                               setState(() {
-                                error =
-                                    "Could not sign in with those credential";
+                                error ="Could not sign in with those credential";
                               });
                             }
                           },
