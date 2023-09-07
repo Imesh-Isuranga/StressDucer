@@ -108,7 +108,7 @@ class _PersonalityState extends State<Personality> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context1) {
     String id = Provider.of<UserModel?>(context)!.uid;
     return MaterialApp(
       home: Scaffold(
@@ -313,7 +313,34 @@ class _PersonalityState extends State<Personality> {
                 return const Text("Student not found");
               }
             } else {
-              return const Text("No data available");
+              return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You are loged as a guest",
+                    style: GoogleFonts.roboto(
+                        fontSize: 15, fontWeight: FontWeight.w400),
+                  ),
+                  Image.asset(
+                    "assets/guest.jpg",
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    height: MediaQuery.of(context).size.width,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.pop(context1);
+                    },
+                    child: Text(
+                      "Back to Login",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.black)),
+                  )
+                ],
+              ),
+            );
             }
           },
         ),

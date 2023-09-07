@@ -25,6 +25,10 @@ class _CalenderState extends State<Calender> {
   void initState() {
     getData();
     super.initState();
+  }
+
+  void getData() {
+    
     DateTime currentDate = DateTime.now();
     for (int i = 1; i < currentDate.day; i++) {
       invalidNumbers.add(i);
@@ -34,9 +38,8 @@ class _CalenderState extends State<Calender> {
     for (int i = 0; i < daysInCurrentMonth; i++) {
       flag.add(false);
     }
-  }
 
-  void getData() {
+
     String? studentDocumentId = auth.currentUser!.uid;
     if (studentDocumentId != null) {
       Stream<Student?> studentStream =
@@ -47,7 +50,9 @@ class _CalenderState extends State<Calender> {
           if (mounted == true) {
             setState(() {
               try {
+                if(student.flag.isNotEmpty){
                 flag = student.flag;
+                }
               } catch (e) {
                 // Handle the parsing error
                 print("Error parsing howManySubjects: $e");
@@ -79,7 +84,7 @@ class _CalenderState extends State<Calender> {
                 Row(children: [
                   const SizedBox(width: 20,),
                   Text(
-                  "Calender",
+                  "Magic Calender",
                   style: GoogleFonts.roboto(
                       color: Colors.black,
                       fontSize: 25,
@@ -161,7 +166,7 @@ class _CalenderState extends State<Calender> {
                                       Icons.clear,
                                       color: Colors.red,
                                     ),
-                                  if (flag[index] == true)
+                                  if ((flag[index] == true) && isValidNumber)
                                     Expanded(
                                       child: const Icon(
                                         Icons.flag,

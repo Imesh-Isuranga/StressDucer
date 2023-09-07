@@ -1,13 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Home.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/Profile.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/StudentProfile.dart';
+import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:stress_ducer/Login/screens/error.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  const EditProfile({super.key,required this.guestFunction});
+
+  final void Function() guestFunction;
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -36,8 +43,6 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-
-
     String id = Provider.of<UserModel?>(context)!.uid;
     return Scaffold(
       appBar: AppBar(
@@ -196,14 +201,15 @@ class _EditProfileState extends State<EditProfile> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return Error().msg(context,"Saved");
+                                        return Error().msg(context, "Saved");
                                       },
                                     );
                                   } catch (e) {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return Error().errorMsg(context,"Something went wrong!");
+                                        return Error().errorMsg(
+                                            context, "Something went wrong!");
                                       },
                                     );
                                   }
@@ -218,7 +224,35 @@ class _EditProfileState extends State<EditProfile> {
               return Text("data");
             }
           } else {
-            return Text("data");
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "You are loged as a guest",
+                    style: GoogleFonts.roboto(
+                        fontSize: 15, fontWeight: FontWeight.w400),
+                  ),
+                  Image.asset(
+                    "assets/guest.jpg",
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    height: MediaQuery.of(context).size.width,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      widget.guestFunction();
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Back",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.black)),
+                  )
+                ],
+              ),
+            );
           }
         },
       ),

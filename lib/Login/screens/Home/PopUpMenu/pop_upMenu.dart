@@ -9,6 +9,7 @@ import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/TodayTasks
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Profile_In_Menu/profile_menu.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/personality.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Test/testMain.dart';
+import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
 class PopUpScreen extends StatefulWidget {
@@ -104,7 +105,17 @@ class _PopUpScreenState extends State<PopUpScreen> {
                             return const Text("Student not found");
                           }
                         } else {
-                          return const Text("No data available");
+                          return OutlinedButton(
+                    onPressed: () {
+                      AuthServices().signOut();
+                    },
+                    child: Text(
+                      "Login",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.white)),
+                  );
                         }
                       },
                     ),
@@ -139,7 +150,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                     leading: Icon(Icons.book_online),
                     title: Text("Take A Test"),
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => TestMain()));},
-                  )
+                  ),
                 ],
               ),
             

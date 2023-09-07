@@ -5,11 +5,21 @@ import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Profile_In_Menu/edit_p
 class ProfileMenu extends StatefulWidget {
   const ProfileMenu({super.key});
 
+
   @override
   State<ProfileMenu> createState() => _ProfileMenuState();
 }
 
 class _ProfileMenuState extends State<ProfileMenu> {
+  String text = "Edit";
+
+void guestFunction(){
+  print("2222222222222222222222");
+  setState(() {
+    text = "Back to Login";
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,10 +51,14 @@ class _ProfileMenuState extends State<ProfileMenu> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                 onPressed: () {
+                  if(text == "Edit"){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EditProfile()));
+                      MaterialPageRoute(builder: (context) => EditProfile(guestFunction: guestFunction,)));
+                  }else{
+                    Navigator.pop(context);
+                  }
                 },
-                child: Text("Edit"))
+                child: Text(text))
           ],
         )),
       ),
