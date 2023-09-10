@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/HomeDisplayQuotes.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/motivational_api.dart';
-import 'package:stress_ducer/Login/constant/colors.dart';
-
 
 class Home extends StatefulWidget {
   const Home(this.changeTabtoGame, {super.key});
@@ -18,11 +16,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String imageUrl = '';
+  static String imageUrl = '';
+  static String imageUrlTodayTasks = 'assets/todo.jpg';
+  static String imageUrlPlayGames = 'assets/games.jpg';
 
   Future<void> _initImageUrl() async {
     try {
-      String uid = FirebaseAuth.instance.currentUser!.uid;
+      String uid = _auth.currentUser!.uid;
       Reference storageRef =
           FirebaseStorage.instance.ref().child('cover_images/$uid/profile.jpg');
 
@@ -52,123 +52,120 @@ class _HomeState extends State<Home> {
 
     ListTileTitleAlignment? titleAlignment;
 
-    return Container(
-      child: Center(
-        child: Column(
-          children: [
-            Stack(children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  child: imageUrl.isEmpty ? Image.asset("assets/cover_img.jpg",
-                    width: double.infinity,
-                    height: 250,
-                    fit: BoxFit.cover,
-                  ) : Image.network(imageUrl,
-                    width: double.infinity,
-                    height: 250,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              QuoteDisplay(),
-            ]),
-            const SizedBox(
-              height: 1,
-            ),
-            AddedTasksCards(),
-            Container(
-              margin: const EdgeInsets.only(top: 3,bottom: 3,left: 0,right: 0),
-              child: Card(
-                margin: const EdgeInsets.all(0),
-                child: InkWell(
-                  splashColor: Colors.blue.withAlpha(30),
-                  onTap: () {
-                    widget.changeTabtoGame(1);
-                    ;
-                  },
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: [
-                           const Expanded(
-                             child: ListTile(
-                                title: Text("Today Tasks"),
-                                subtitle: Text(
-                                    "Plan your day with achievable goals. Break tasks into manageable steps to stay organized and reduce stress."),
-                              ),
-                           ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                "assets/todo.jpg",
-                                width: 200,
-                                height: 200,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              child: Card(
-                margin: const EdgeInsets.only(top: 0,bottom: 3,left: 0,right: 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.polymer_sharp),
-                      title: Text(
-                        'Play Games',
-                        style:
-                            TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+    return Center(
+      child: Column(
+        children: [
+          Stack(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: imageUrl.isEmpty
+                    ? Image.asset(
+                        "assets/cover_img.jpg",
+                        width: double.infinity,
+                        height: 250,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        imageUrl,
+                        width: double.infinity,
+                        height: 250,
+                        fit: BoxFit.cover,
                       ),
-                      subtitle: Text("Relaxation Recess"),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Image.asset(
-                          "assets/games.jpg",
-                          width: 150,
-                          height: 150,
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                const Divider(),
-                                ListTile(
-                                  titleAlignment: titleAlignment,
-                                  title: const Text('Mindful Playgrounds'),
-                                  subtitle: const Text(
-                                      'Engage in games designed for relaxation. Immerse yourself in soothing gameplay to unwind and de-stress.'),
-                                ),
-                                const Divider(),
-                                TextButton(
-                                    onPressed: () {
-                                      widget.changeTabtoGame(2);
-                                    },
-                                    child: Text("Play"))
-                              ],
+              ),
+            ),
+            const QuoteDisplay(),
+          ]),
+          const SizedBox(
+            height: 1,
+          ),
+          AddedTasksCards(),
+          Container(
+            margin: const EdgeInsets.only(top: 3, bottom: 3, left: 0, right: 0),
+            child: Card(
+              margin: const EdgeInsets.all(0),
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: () {
+                  widget.changeTabtoGame(1);
+                  ;
+                },
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: ListTile(
+                              title: Text("Today Tasks"),
+                              subtitle: Text(
+                                  "Plan your day with achievable goals. Break tasks into manageable steps to stay organized and reduce stress."),
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              imageUrlTodayTasks,
+                              width: 200,
+                              height: 200,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Card(
+            margin: const EdgeInsets.only(top: 0, bottom: 3, left: 0, right: 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const ListTile(
+                  leading: Icon(Icons.polymer_sharp),
+                  title: Text(
+                    'Play Games',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                  ),
+                  subtitle: Text("Relaxation Recess"),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Image.asset(
+                      imageUrlPlayGames,
+                      width: 150,
+                      height: 150,
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          const Divider(),
+                          ListTile(
+                            titleAlignment: titleAlignment,
+                            title: const Text('Mindful Playgrounds'),
+                            subtitle: const Text(
+                                'Engage in games designed for relaxation. Immerse yourself in soothing gameplay to unwind and de-stress.'),
+                          ),
+                          const Divider(),
+                          TextButton(
+                              onPressed: () {
+                                widget.changeTabtoGame(2);
+                              },
+                              child: const Text("Play"))
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-            )
-          ],
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

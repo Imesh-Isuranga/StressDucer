@@ -18,7 +18,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String imageUrl = '';
+  User? user = FirebaseAuth.instance.currentUser;
+  String imageUrl = "";
 
   final _authData = dataAuthServices();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -127,6 +128,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
+    setState(() {
+      imageUrl = user!.photoURL==null ? "" : user!.photoURL.toString();
+    });
     super.initState();
     _initImageUrl();
   }
@@ -182,7 +186,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
-              const SizedBox(width: 100,),
+              const SizedBox(width: 50,),
               
               Expanded(child: StreamBuilder<Student?>(
                 stream: dataAuthServices.readSpecificDocument(id),
@@ -196,7 +200,7 @@ class _ProfileState extends State<Profile> {
                     if (student != null) {
                       return Text(
                         student.studentName!,
-                        style: GoogleFonts.roboto(fontSize: 30,color: Colors.white),
+                        style: GoogleFonts.roboto(fontSize: 25,color: Color.fromARGB(255, 196, 203, 255)),textAlign: TextAlign.center,
                       ); // Return your actual widget
                     } else {
                       return const Text("Student not found");

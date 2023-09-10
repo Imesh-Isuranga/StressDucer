@@ -30,6 +30,7 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
 
   List<List> listAllFull = [];
   static int count = 0;
+  static String imageUrlAddTask = 'assets/todayTasks.jpg';
 
   @override
   void initState() {
@@ -181,13 +182,13 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
               Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                "assets/todayTasks.jpg",
+                imageUrlAddTask,
                 width: 200,
                 height: 200,
               ),
             ),
-            Expanded(
-              child: const ListTile(
+           const Expanded(
+              child: ListTile(
                   title: Text('Add Task',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),

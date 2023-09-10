@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/studentFirstModel.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
-import 'package:stress_ducer/Login/screens/studentDetails/StudentDetailsSecond.dart';
-import 'package:stress_ducer/Login/screens/studentDetails/studentDetails.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/wrapper.dart';
 

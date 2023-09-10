@@ -22,10 +22,14 @@ class PopUpScreen extends StatefulWidget {
 class _PopUpScreenState extends State<PopUpScreen> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? user = FirebaseAuth.instance.currentUser;
   String imageUrl = '';
 
   @override
   void initState() {
+    setState(() {
+      imageUrl = user!.photoURL==null ? "" : user!.photoURL.toString();
+    });
     super.initState();
     _initImageUrl();
   }

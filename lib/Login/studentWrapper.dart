@@ -7,7 +7,7 @@ class StudentWrapper extends StatefulWidget {
   const StudentWrapper({super.key,required this.Pressed,required this.id});
 
   final String id; 
-  final void Function() Pressed;
+  final void Function(bool) Pressed;
 
   @override
   State<StudentWrapper> createState() => _StudentWrapperState();

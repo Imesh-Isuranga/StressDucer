@@ -3,12 +3,15 @@ import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/constant/styles.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:stress_ducer/Login/services/error.dart';
 
 class Sign_In extends StatefulWidget {
-  const Sign_In({super.key, required this.toggle,required this.isPressed});
+  const Sign_In(
+      {super.key,
+      required this.toggle,required this.setDetails});
 
   final Function toggle;
-  final void Function() isPressed;
+  final void Function(bool) setDetails;
 
   @override
   State<Sign_In> createState() => _SignInState();
@@ -30,7 +33,10 @@ class _SignInState extends State<Sign_In> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Sign In", style: TextStyle(color: appBarTextColor),),
+        title: const Text(
+          "Sign In",
+          style: TextStyle(color: appBarTextColor),
+        ),
         backgroundColor: mainAppBarColor,
       ),
       body: SingleChildScrollView(
@@ -96,12 +102,14 @@ class _SignInState extends State<Sign_In> {
                           ),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 18,
                         ),
-                        Text(
-                          error,
-                          style:
-                              const TextStyle(color: Colors.red, fontSize: 12),
+                        Text(error,
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 12),
+                            textAlign: TextAlign.center),
+                        const SizedBox(
+                          height: 5,
                         ),
                         const Text(
                           "Login with social accounts",
@@ -111,14 +119,14 @@ class _SignInState extends State<Sign_In> {
                           height: 20,
                         ),
                         GestureDetector(
-                          onTap: () async{
+                          onTap: () async {
                             final user = await _auth.handleGoogleSignIn();
-                            if(user == "0"){
+                            if (user == "0") {
                               print('Logged in');
-                            }else if(user == "1"){
-                              widget.isPressed();
+                            } else if (user == "1") {
+                              widget.setDetails(true);
                               print('Registered');
-                            }else{
+                            } else {
                               print('Sign-in failed.');
                             }
                           },
@@ -153,15 +161,33 @@ class _SignInState extends State<Sign_In> {
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            dynamic result = await _auth.signInUsingEmailAndPassword(email, password);
-                            if (result == null) {
+                            final user = await _auth.checkIfEmailExists(email);
+                            if (user == "0") {
                               setState(() {
-                                error ="Could not sign in with those credential";
+                                error =
+                                    "Email is already associated with a Google Sign-In account.Please use google sign in.";
+                              });
+                            } else if (user == "1") {
+                              dynamic result = await _auth
+                                  .signInUsingEmailAndPassword(email, password);
+                              if (result == null) {
+                                if(mounted){
+                                  setState(() {
+                                    String err = (Error().getError());
+                                    int startindex = err.indexOf('[');
+                                    int lastindex = err.indexOf(']');
+                                  error =err.substring(0, startindex) + Error().getError().substring(lastindex + 1);
+                                });
+                                }
+                              }
+                            } else {
+                              setState(() {
+                                error = "Please enter a valid email!";
                               });
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:loginButtonColors,
+                            backgroundColor: loginButtonColors,
                             padding: const EdgeInsets.only(left: 15, right: 15),
                             minimumSize: const Size(300, 40),
                           ),

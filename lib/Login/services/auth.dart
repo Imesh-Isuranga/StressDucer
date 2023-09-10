@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:stress_ducer/Login/services/error.dart';
+
 
 class AuthServices {
   //firebase instance
@@ -16,6 +18,23 @@ class AuthServices {
   Stream<UserModel?> get user {
     return _auth.authStateChanges().map(_userWithFirebaseUserUid);
   }
+
+Future<void> deleteAccount() async {
+  try {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      await user.delete();
+      print('User account deleted');
+    } else {
+      print('No user signed in');
+    }
+  } catch (e) {
+    print('Error deleting account: $e');
+  }
+}
+
+
 
 //check only google sign in emails
   Future checkIfEmailExists(String email) async {
@@ -87,7 +106,7 @@ class AuthServices {
       User? user = result.user;
       return _userWithFirebaseUserUid(user);
     } catch (err) {
-      print(err.toString());
+      Error().setError(err.toString());
       return null;
     }
   }
@@ -100,6 +119,7 @@ class AuthServices {
       User? user = result.user;
       return _userWithFirebaseUserUid(user);
     } catch (err) {
+      Error().setError(err.toString());
       print(err.toString());
       return null;
     }

@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/constant/styles.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
+import 'package:stress_ducer/Login/services/error.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key, required this.toggle, required this.isPressed});
+  const Register({super.key, required this.toggle,required this.setDetails});
 
   final Function toggle;
-  final void Function() isPressed;
+  final void Function(bool) setDetails;
 
   @override
   State<Register> createState() => _RegisterState();
@@ -25,6 +26,10 @@ class _RegisterState extends State<Register> {
 
   final emailController = TextEditingController();
   final passController = TextEditingController();
+
+  String errorDisplay(){
+    return Error().getError();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +132,7 @@ class _RegisterState extends State<Register> {
                             if (user == "0") {
                               print('Logged in');
                             } else if (user == "1") {
-                              widget.isPressed();
+                              widget.setDetails(true);
                               print('Registered');
                             } else {
                               print('Sign-in failed.');
@@ -171,19 +176,33 @@ class _RegisterState extends State<Register> {
                                     "Email is already associated with a Google Sign-In account.Please use google sign in.";
                               });
                             } else if (user == "1") {
-                              widget.isPressed();
+                              try {
                               dynamic result =
                                   await _auth.registerWithEmailAndPassword(
                                       email, password);
                               if (result == null) {
-                                setState(() {
-                                  error = "Please enter a valid email!";
+                                if(mounted){
+                                  setState(() {
+                                    String err = (Error().getError());
+                                    int startindex = err.indexOf('[');
+                                    int lastindex = err.indexOf(']');
+                                  error =err.substring(0, startindex) + Error().getError().substring(lastindex + 1);
                                 });
+                                }
                               }
-                            } else {
-                              setState(() {
+                              } catch (e) {
+                                if(mounted){
+                                setState(() {
                                 error = "Please enter a valid email!";
                               });
+                              }
+                              }
+                            } else {
+                              if(mounted){
+                                setState(() {
+                                error = "Please enter a valid email!";
+                              });
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(

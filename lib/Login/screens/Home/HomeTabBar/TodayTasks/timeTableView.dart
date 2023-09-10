@@ -9,13 +9,11 @@ static List<String> getTableView(
   List<String> studentSubjectsList,
     List<String> studentSubjectsPriorityList,
     List<String> todaySubjectsList,
-    List<String> mondayList,
-    List<String> tuesdayList,
-    List<String> wednesdayList,
-    List<String> thursdayList,
-    List<String> fridayList,
-    List<String> saturdayList,
-    List<String> sundayList,
+
+
+
+    List<List<String>> dayList,
+
     int howManySubjects,
     TimeTable? _timeTableData,
     TimeTableDataBase timetable,
@@ -57,26 +55,26 @@ static List<String> getTableView(
    
     for (int i = 0; i < howManySubjects; i++) {
       Map<String, dynamic> tableEntry = {
-        'Monday': mondayList != null && i < mondayList.length
-            ? mondayList[i]
+        'Monday': dayList[0] != null && i < dayList[0].length
+            ? dayList[0][i]
             : "null",
-        'Tuesday': tuesdayList != null && i < tuesdayList.length
-            ? tuesdayList[i]
+        'Tuesday': dayList[1] != null && i < dayList[1].length
+            ? dayList[1][i]
             : "null",
-        'Wednesday': wednesdayList != null && i < wednesdayList.length
-            ? wednesdayList[i]
+        'Wednesday': dayList[2] != null && i < dayList[2].length
+            ? dayList[2][i]
             : "null",
-        'Thursday': thursdayList != null && i < thursdayList.length
-            ? thursdayList[i]
+        'Thursday': dayList[3] != null && i < dayList[3].length
+            ? dayList[3][i]
             : "null",
-        'Friday': fridayList != null && i < fridayList.length
-            ? fridayList[i]
+        'Friday': dayList[4] != null && i < dayList[4].length
+            ? dayList[4][i]
             : "null",
-        'Saturday': saturdayList != null && i < saturdayList.length
-            ? saturdayList[i]
+        'Saturday': dayList[5] != null && i < dayList[5].length
+            ? dayList[5][i]
             : "null",
-        'Sunday': sundayList != null && i < sundayList.length
-            ? sundayList[i]
+        'Sunday': dayList[6] != null && i < dayList[6].length
+            ? dayList[6][i]
             : "null",
       };
 
@@ -85,6 +83,15 @@ static List<String> getTableView(
 
  subjects = subjects.substring(
         1, subjects.length - 1); // Remove "[" and "]" characters
-   return updateTodaySubjectsList = subjects.split(',');
+   updateTodaySubjectsList = subjects.split(',');
+   for (int i = 0; i < updateTodaySubjectsList.length; i++) {
+     if(updateTodaySubjectsList[i]==" "){
+      updateTodaySubjectsList.removeAt(i);
+      i--;
+     }
+   }
+        return updateTodaySubjectsList;
+
+
 
 }}

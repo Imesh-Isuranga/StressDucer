@@ -17,7 +17,8 @@ class MainPlace extends StatefulWidget {
 }
 
 class _MainPlaceState extends State<MainPlace>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin  , WidgetsBindingObserver {
+      User? user = FirebaseAuth.instance.currentUser;
   String imageUrl = '';
   final Map<int, double> tabHeights = {
     0: 100, // Home
@@ -36,11 +37,13 @@ class _MainPlaceState extends State<MainPlace>
   void initState() {
     _initImageUrl();
     super.initState();
+    WidgetsBinding.instance!.addObserver(this);
     _tabController = TabController(length: 5, vsync: this);
 
     // Listen for tab changes
     _tabController.addListener(() {
       setState(() {
+        imageUrl = user!.photoURL==null ? "" : user!.photoURL.toString();
         // Update the height based on the selected tab
         height = tabHeights[_tabController.index] ?? 50;
       });
@@ -56,6 +59,8 @@ class _MainPlaceState extends State<MainPlace>
     _tabController.dispose();
     super.dispose();
   }
+
+
 
   Future<void> _initImageUrl() async {
     try {

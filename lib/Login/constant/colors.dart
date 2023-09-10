@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+
+const Color todayTaskgreen = Color.fromARGB(255, 24, 249, 3);
+
 const Color bgBlack = Color.fromARGB(255, 16, 16, 16);
-const Color textLight = Colors.white;
+
 const Color profColor = Colors.yellow;
 const Color mainBlue = Colors.blue;
 const Color mainAppBarColor = Color.fromARGB(255, 255, 255, 255);

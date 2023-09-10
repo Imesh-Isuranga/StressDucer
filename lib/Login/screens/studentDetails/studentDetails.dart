@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/model/studentFirstModel.dart';
+import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
 class StudentDetails extends StatefulWidget {
@@ -14,7 +15,7 @@ class StudentDetails extends StatefulWidget {
   State<StudentDetails> createState() => _StudentDetailsState();
 }
 
-class _StudentDetailsState extends State<StudentDetails> {
+class _StudentDetailsState extends State<StudentDetails>{
   final TextEditingController controllerStudentName = TextEditingController();
   final TextEditingController controllerStudentUniName =
       TextEditingController();
@@ -37,6 +38,7 @@ class _StudentDetailsState extends State<StudentDetails> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,12 +55,13 @@ class _StudentDetailsState extends State<StudentDetails> {
                 margin: EdgeInsets.only(left: 20, right: 30),
                 child: Column(
                   children: [
+                    const SizedBox(height: 40,),
                     const Text(
                       "Enter Your Name :",
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(
-                      width: 350,
+                      width: MediaQuery.of(context).size.width*0.6,
                       child: TextField(
                         keyboardType: TextInputType.name,
                         controller: controllerStudentName,
@@ -72,7 +75,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(
-                      width: 350,
+                      width: MediaQuery.of(context).size.width*0.7,
                       child: TextField(
                         keyboardType: TextInputType.name,
                         controller: controllerStudentUniName,
@@ -86,7 +89,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(
-                      width: 40,
+                      width: MediaQuery.of(context).size.width*0.2,
                       child: TextField(
                         keyboardType: TextInputType.number,
                         controller: controllerStudentCurrentSem,
@@ -100,14 +103,14 @@ class _StudentDetailsState extends State<StudentDetails> {
                       style: TextStyle(fontSize: 16),
                     ),
                     SizedBox(
-                      width: 40,
+                      width: MediaQuery.of(context).size.width*0.2,
                       child: TextField(
                         keyboardType: TextInputType.number,
                         controller: controllerStudentNumOfSubjects,
                       ),
                     ),
                     const SizedBox(
-                      height: 100,
+                      height: 50,
                     ),
                     FilledButton(
                       onPressed: () {

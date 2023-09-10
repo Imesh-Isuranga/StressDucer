@@ -17,18 +17,26 @@ class TodayTasks extends StatefulWidget {
 }
 
 class TodayTasksState extends State<TodayTasks> {
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   final timetable = TimeTableDataBase();
   final authStudent = dataAuthServices();
-  List<bool> _enable = [];
+  
+  static final List<bool> _enable = [];
+  static List<String> enabledList = [];
+  List<String> temp = [];
+  String enabledListString = "";
 
   String studentSubjects = "";
   String studentSubjectsPriority = "";
   late List<String> studentSubjectsList = [];
   late List<String> studentSubjectsPriorityList = [];
-
   static List<String> updateTodaySubjectsList = [];
   static List<String> todaySubjectsList = [];
+    static int howManySubjects = 19;
+
+
+
   static List<String> mondayList = [];
   static List<String> tuesdayList = [];
   static List<String> wednesdayList = [];
@@ -36,16 +44,14 @@ class TodayTasksState extends State<TodayTasks> {
   static List<String> fridayList = [];
   static List<String> saturdayList = [];
   static List<String> sundayList = [];
+
+  static List<List<String>> dayList = [mondayList,tuesdayList,wednesdayList,thursdayList,fridayList,saturdayList,sundayList];
+
+
   static List<Map<String, dynamic>> tableDataList = [];
-  static int howManySubjects = 19;
-  int k = 0;
-
-  static List<String> enabledList = [];
-  List<String> temp = [];
-  String enabledListString = "";
-
   TimeTable? _timeTableData;
 
+  int k = 0;
   final GetTodayData todayData = GetTodayData();
 
   @override
@@ -66,10 +72,7 @@ class TodayTasksState extends State<TodayTasks> {
             setState(() {
               try {
                 enabledListString = student.enableStatus.toString();
-                enabledListString = enabledListString.substring(
-                    1,
-                    enabledListString.length -
-                        1); // Remove "[" and "]" characters
+                enabledListString = enabledListString.substring(1,enabledListString.length -1); // Remove "[" and "]" characters
                 temp =
                     enabledListString.split(','); // Split the string by commas
 
@@ -100,7 +103,7 @@ class TodayTasksState extends State<TodayTasks> {
 
   void enableInstall() {
     _enable.clear();
-    for (int i = 0; i < howManySubjects; i++) {
+    for (int i = 0; i <= howManySubjects; i++) {
       _enable.add(false);
     }
   }
@@ -132,7 +135,7 @@ class TodayTasksState extends State<TodayTasks> {
 
   @override
   Widget build(BuildContext context) {
-    if (k < 2) {
+    if (k < 1) {
       getData();
       k++;
     }
@@ -146,188 +149,196 @@ class TodayTasksState extends State<TodayTasks> {
     fridayList.clear();
     saturdayList.clear();
     sundayList.clear();
-    updateTodaySubjectsList = GetTodayData.getTodaySubjects(updateTodaySubjectsList, studentSubjectsList, studentSubjectsPriorityList, todaySubjectsList, mondayList, tuesdayList, wednesdayList, thursdayList, fridayList, saturdayList, sundayList, howManySubjects, _timeTableData, timetable, auth, tableDataList);
+    
+    updateTodaySubjectsList = GetTodayData.getTodaySubjects(
+        updateTodaySubjectsList,
+        studentSubjectsList,
+        studentSubjectsPriorityList,
+        todaySubjectsList,
 
-    return Container(
-      padding: EdgeInsets.all(0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: background, // Replace with your gradient colors
-        ),
-      ),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Card(
-                  margin: EdgeInsets.all(0),
-                    child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "Today Tasks",
-                              style: GoogleFonts.roboto(
-                                  color: Colors.black,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w600),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            OutlinedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    for (int i = 0; i < _enable.length; i++) {
-                                      enabledList.add(i.toString());
-                                    }
-                                    authStudent.updateEnables(
-                                        auth.currentUser!.uid,
-                                        enabledList.toString());
-                                        _alertMsg();
-                                  });
-                                },
-                                child: Text("Done All"),
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          20.0), // Adjust the radius as needed
+        dayList,
+
+        howManySubjects,
+        _timeTableData,
+        timetable,
+        auth,
+        tableDataList);
+
+    return ListView(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Card(
+                        margin: const EdgeInsets.all(0),
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 20,
                                     ),
-                                  ),
-                                ))
-                          ],
-                        ),
-                        const SizedBox(height: 20,)
-                      ]),
-                )),
-              ),
-              SingleChildScrollView(
-                child: Card(
-                  margin: EdgeInsets.only(left: 0,right: 0,top: 3),
-                  child: Container(
-                    height: 300, // Set a bounded height
-                    child: ListView.builder(
-                      itemCount: updateTodaySubjectsList.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          enabled: _enable[index],
-                          // This sets text color and icon color to red when list tile is disabled and
-                          // green when list tile is selected, otherwise sets it to black.
-                          iconColor: MaterialStateColor.resolveWith(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
-                                return Colors.red;
-                              }
-                              return Colors.black;
-                            },
-                          ),
-                          // This sets text color and icon color to red when list tile is disabled and
-                          // green when list tile is selected, otherwise sets it to black.
-                          textColor: MaterialStateColor.resolveWith(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.disabled)) {
-                                return Colors.red;
-                              }
-                              return Colors.black;
-                            },
-                          ),
-                          leading: const Icon(Icons.person),
-                          title:
-                              Text(updateTodaySubjectsList[index].toString()),
-                          subtitle: Text('Done: ${_enable[index]}'),
-                          trailing: Switch(
-                            onChanged: (bool? value) {
-                              setState(() {
-                                if (value == true) {
-                                  enabledList.add(index.toString());
-                                } else {
-                                  enabledList.remove(index.toString());
-                                }
-                                authStudent.updateEnables(auth.currentUser!.uid,
-                                    enabledList.toString());
-                                _enable[index] = value!;
-
-                                int j = 0;
-                                for (int i = 0; i < howManySubjects; i++) {
-                                  if (_enable[i] == false) {
-                                    j++;
-                                  }
-                                }
-                                if (j == 0) {
-                                  _alertMsg();
-                                }
-                              });
-                            },
-                            value: _enable[index],
-                          ),
-                        );
-                      },
-                    ),
+                                    Text(
+                                      "Today Tasks",
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w600),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          enabledList.clear();
+                                          for (int i = 0;
+                                              i < howManySubjects;
+                                              i++) {
+                                            enabledList.add(i.toString());
+                                          }
+                                          authStudent.updateEnables(
+                                              auth.currentUser!.uid,
+                                              enabledList.toString());
+                                          _alertMsg();
+                                        });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              todayTaskgreen.withOpacity(0.5),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20))),
+                                      child: const Text("Done All"),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                )
+                              ]),
+                        )),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  margin: EdgeInsets.only(left: 0,right: 0,top: 3),
-                  child: Container(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: DataTable(
-                          columns: const [
-                            DataColumn(label: Text('Monday')),
-                            DataColumn(label: Text('Tuesday')),
-                            DataColumn(label: Text('Wednesday')),
-                            DataColumn(label: Text('Thursday')),
-                            DataColumn(label: Text('Friday')),
-                            DataColumn(label: Text('Saturday')),
-                            DataColumn(label: Text('Sunday')),
+                  SingleChildScrollView(
+                    child: Card(
+                      margin: const EdgeInsets.only(left: 0, right: 0, top: 3),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: SizedBox(
+                                height: 300, // Set a bounded height
+                                child: ListView.builder(
+                                  itemCount: updateTodaySubjectsList.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      enabled: _enable[index],
+                                      // This sets text color and icon color to red when list tile is disabled and
+                                      // green when list tile is selected, otherwise sets it to black.
+                                      iconColor: MaterialStateColor.resolveWith(
+                                        (Set<MaterialState> states) {
+                                          if (states
+                                              .contains(MaterialState.disabled)) {
+                                            return Colors.red;
+                                          }
+                                          return todayTaskgreen;
+                                        },
+                                      ),
+                                      // This sets text color and icon color to red when list tile is disabled and
+                                      // green when list tile is selected, otherwise sets it to black.
+                                      textColor: MaterialStateColor.resolveWith(
+                                        (Set<MaterialState> states) {
+                                          if (states
+                                              .contains(MaterialState.disabled)) {
+                                            return Colors.red;
+                                          }
+                                          return todayTaskgreen;
+                                        },
+                                      ),
+                                      leading: const Icon(Icons.person),
+                                      title: Text(
+                                          updateTodaySubjectsList[index].toString()),
+                                      subtitle: Text('Done: ${_enable[index]}'),
+                                      trailing: Switch(
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            if (value == true) {
+                                              enabledList.add(index.toString());
+                                            } else {
+                                              enabledList.remove(index.toString());
+                                            }
+                                            authStudent.updateEnables(
+                                                auth.currentUser!.uid,
+                                                enabledList.toString());
+                                            _enable[index] = value!;
+                      
+                                            int j = 0;
+                                            for (int i = 0;
+                                                i < howManySubjects;
+                                                i++) {
+                                              if (_enable[i] == false) {
+                                                j++;
+                                              }
+                                            }
+                                            if (j == 0) {
+                                              _alertMsg();
+                                            }
+                                          });
+                                        },
+                                        value: _enable[index],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                  columns: const [
+                                    DataColumn(label: Text('Monday')),
+                                    DataColumn(label: Text('Tuesday')),
+                                    DataColumn(label: Text('Wednesday')),
+                                    DataColumn(label: Text('Thursday')),
+                                    DataColumn(label: Text('Friday')),
+                                    DataColumn(label: Text('Saturday')),
+                                    DataColumn(label: Text('Sunday')),
+                                  ],
+                                  rows: tableDataList.map((data) {
+                                    return DataRow(
+                                      cells: [
+                                        DataCell(Text(data['Monday'])),
+                                        DataCell(Text(data['Tuesday'])),
+                                        DataCell(Text(data['Wednesday'])),
+                                        DataCell(Text(data['Thursday'])),
+                                        DataCell(Text(data['Friday'])),
+                                        DataCell(Text(data['Saturday'])),
+                                        DataCell(Text(data['Sunday'])),
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+                              
+                            ),
                           ],
-                          rows: tableDataList.map((data) {
-                            return DataRow(
-                              cells: [
-                                DataCell(Text(data['Monday'])),
-                                DataCell(Text(data['Tuesday'])),
-                                DataCell(Text(data['Wednesday'])),
-                                DataCell(Text(data['Thursday'])),
-                                DataCell(Text(data['Friday'])),
-                                DataCell(Text(data['Saturday'])),
-                                DataCell(Text(data['Sunday'])),
-                              ],
-                            );
-                          }).toList(),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                ],
+              );
       
-    );
+
   }
 }
