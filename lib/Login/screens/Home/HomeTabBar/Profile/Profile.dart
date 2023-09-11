@@ -13,6 +13,8 @@ import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
 class Profile extends StatefulWidget {
   Profile({super.key});
 
+
+
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -161,15 +163,31 @@ class _ProfileState extends State<Profile> {
     String id = Provider.of<UserModel?>(context)!.uid;
     return Center(
       child: Column(children: [
+        const SizedBox(height: 20,),
         Container(
           padding: const EdgeInsets.all(20),
-          decoration: const BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+         /* decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
             Color(0xFF0e6ba8),
             Color(0xFF0a2472)
-          ])),
+          ])),*/
           child: Row(
             children: [
+
+           /*   CircleAvatar(
+                radius: 46,
+                backgroundColor: Theme.of(context).iconTheme.color,
+                child: CircleAvatar(
+                  radius: 54,
+                  child: CircleAvatar(
+                    child: Image.asset("assets/man.png"),
+                    backgroundColor: Colors.pink,
+                    radius: 40,
+                  ),
+                ),
+              ),*/
+
               Expanded(
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 10),
@@ -200,7 +218,7 @@ class _ProfileState extends State<Profile> {
                     if (student != null) {
                       return Text(
                         student.studentName!,
-                        style: GoogleFonts.roboto(fontSize: 25,color: Color.fromARGB(255, 196, 203, 255)),textAlign: TextAlign.center,
+                        style: GoogleFonts.roboto(fontSize: 25,),textAlign: TextAlign.center,
                       ); // Return your actual widget
                     } else {
                       return const Text("Student not found");
@@ -218,28 +236,69 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               GestureDetector(
                 onTap: modelBottomPanelProfile,
-                child: const Card(
-                  child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text('Profile'),
+                child: Container(
+                  decoration: BoxDecoration(
+    border: Border(
+      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.person),
+                      iconColor: Theme.of(context).iconTheme.color,
+                      title: Text('Profile'),
+                    ),
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: modelBottomPanelSettings,
-                child: const Card(
-                  child: ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Settings'),
+                child: Container(
+                  decoration: BoxDecoration(
+    border: Border(
+      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.settings),
+                      iconColor: Theme.of(context).iconTheme.color,
+                      title: Text('Settings'),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){},
+                child: Container(
+                  decoration: BoxDecoration(
+    border: Border(
+      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.settings),
+                      iconColor: Theme.of(context).iconTheme.color,
+                      title: Text('Dark'),
+                    ),
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: modelBottomPanelProfile,
-                child: const Card(
-                  child: ListTile(
-                    leading: Icon(Icons.help_center),
-                    title: Text('Help & Support'),
+                child: Container(
+                  decoration: BoxDecoration(
+    border: Border(
+      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.help_center),
+                      iconColor: Theme.of(context).iconTheme.color,
+                      title: Text('Help & Support'),
+                    ),
                   ),
                 ),
               ),
@@ -247,10 +306,18 @@ class _ProfileState extends State<Profile> {
                 onTap: () {
                   _auth.signOut();
                 },
-                child: const Card(
-                  child: ListTile(
-                    leading: Icon(Icons.logout),
-                    title: Text('Log Out'),
+                child: Container(
+                  decoration: BoxDecoration(
+    border: Border(
+      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.logout),
+                      iconColor: Theme.of(context).iconTheme.color,
+                      title: Text('Log Out'),
+                    ),
                   ),
                 ),
               ),

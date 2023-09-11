@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
 
+//commom
+const Color btnBackGreen = Color.fromARGB(255, 24, 249, 3);
 
-const Color todayTaskgreen = Color.fromARGB(255, 24, 249, 3);
+
+
+//Today Tasks
+const Color todayTaskRed = Colors.red;
+
+
+//Game
+const Color gameTilesColor = Color.fromARGB(255, 3, 27, 163);
+const Color gameTilesColorWhite = Colors.white;
+
+
+//Calender
+const Color calenderSquare = Color.fromARGB(255, 175, 255, 148);
+const Color calenderMarks = Colors.red;
+
+
 
 const Color bgBlack = Color.fromARGB(255, 16, 16, 16);
 

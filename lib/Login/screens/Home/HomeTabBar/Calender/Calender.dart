@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:intl/intl.dart';
+import 'package:stress_ducer/Login/constant/colors.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender/calenderHelp.dart';
+
+
 
 
 class Calender extends StatefulWidget {
@@ -74,7 +77,7 @@ class _CalenderState extends State<Calender> {
       children: [SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Card(
-          margin: EdgeInsets.all(0),
+          margin: const EdgeInsets.all(0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -86,18 +89,43 @@ class _CalenderState extends State<Calender> {
                   Text(
                   "Magic Calender",
                   style: GoogleFonts.roboto(
-                      color: Colors.black,
                       fontSize: 25,
                       fontWeight: FontWeight.w600),
-                )
+                ),
                 ]),
+                const SizedBox(
+                        height: 10,
+                      ),
+                Row(
+                        children: [
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                CalenderHelp().getHelpTextPanel(context);
+                              });
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    btnBackGreen.withOpacity(0.5),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20))),
+                            child: const Text("Help"),
+                          )
+                        ],
+                      ),
                 const SizedBox(
                   height: 20,
                 )
               ]),
             ),
       ),
-        
+        Divider(
+  color: Theme.of(context).indicatorColor,
+  thickness: 0.3, // Adjust the thickness of the line
+),
         Expanded(
           child: Card(
             child: Padding(
@@ -113,7 +141,7 @@ class _CalenderState extends State<Calender> {
                         color: Colors.red),
                   ),
                   const SizedBox(height: 40),
-                  Text("${DateFormat.MMMM().format(DateTime.now())}",style: GoogleFonts.roboto(color: Colors.black,
+                  Text("${DateFormat.MMMM().format(DateTime.now())}",style: GoogleFonts.roboto(
                       fontSize: 22,
                       fontWeight: FontWeight.w600)),
                   const SizedBox(height: 20),
@@ -145,7 +173,7 @@ class _CalenderState extends State<Calender> {
                                       scheduled: true,
                                       date: DateTime(
                                           now.year, now.month, (index + 1)),
-                                      time: TimeOfDay(hour: 08, minute: 00));
+                                      time: const TimeOfDay(hour: 08, minute: 00));
                                 } else {
                                   NotificationService.cancelScheduledNotification(
                                       index);
@@ -155,22 +183,23 @@ class _CalenderState extends State<Calender> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
+                              color: calenderSquare,
                                 border: Border.all(color: Colors.black)),
                             child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(number.toString()),
+                                  Text(number.toString(),style: TextStyle(color: Colors.black),),
                                   if (!isValidNumber)
                                     const Icon(
                                       Icons.clear,
-                                      color: Colors.red,
+                                      color: calenderMarks,
                                     ),
                                   if ((flag[index] == true) && isValidNumber)
-                                    Expanded(
-                                      child: const Icon(
+                                    const Expanded(
+                                      child: Icon(
                                         Icons.flag,
-                                        color: Colors.red,
+                                        color: calenderMarks,
                                       ),
                                     )
                                 ],

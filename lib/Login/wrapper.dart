@@ -9,6 +9,9 @@ import 'package:stress_ducer/Login/screens/authentication/verify.dart';
 import 'package:stress_ducer/Login/studentWrapper.dart';
 
 class Wrapper extends StatefulWidget {
+  const Wrapper({super.key});
+
+
   @override
   _WrapperState createState() => _WrapperState();
 }
@@ -35,7 +38,7 @@ class _WrapperState extends State<Wrapper> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Show a circular progress indicator while loading
-          return TextTransitionNew();
+          return const TextTransitionNew();
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else {
@@ -49,7 +52,7 @@ class _WrapperState extends State<Wrapper> {
               if (isSetDetails) {
                 return StudentWrapper(Pressed: setStudentDetails, id: user.uid);
               } else {
-                return MainPlace();
+                return const MainPlace();
               }
             }
           }
@@ -62,6 +65,6 @@ class _WrapperState extends State<Wrapper> {
 
   Future fetchData(UserModel? user) async {
     // Simulate loading data with a delay for demonstration purposes
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
   }
 }

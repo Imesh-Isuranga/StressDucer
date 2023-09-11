@@ -151,7 +151,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                               (subjects.join(',')),
                               (prioritysControllers.join(',')),
                               widget.idNum,
-                              "5",
+                              "0",
                               "[]", []);
                         },
                         style: ButtonStyle(
@@ -175,28 +175,3 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
     );
   }
 }
-/*
-
-List.generate(18, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 12.0),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 200,
-                                child: TextField(
-                                  controller: subjectsControllers[index],
-                                  keyboardType: TextInputType.text,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 50,
-                              ),
-                              Text("data1111"),
-                            ],
-                          ),
-                        );
-                      })
-
-*/ 

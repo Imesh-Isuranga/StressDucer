@@ -141,7 +141,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                   ListTile(
                     leading: Icon(Icons.alarm),
                     title: Text("Today Task"),
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialApp(home:TodayTasks(),)));},
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialApp(home:Scaffold(body: const TodayTasks(),),)));},
                   ),
                   Divider(height: 1,),
                   ListTile(

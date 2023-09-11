@@ -34,15 +34,17 @@ class RotationTransitionExampleState extends State<TextTransitionNew> {
           duration: const Duration(milliseconds: 300),
           style: animate
               ? GoogleFonts.arimo(
-                  color: Colors.blue,
+                  color: const Color.fromARGB(255, 94, 213, 98),
                   fontSize: 26,
+                  fontWeight: FontWeight.w400
                 )
               : GoogleFonts.mulish(
                   color: Color.fromARGB(255, 233, 1, 1),
                   fontSize: 14,
+                  fontWeight: FontWeight.w400
                 ),
           curve: Curves.easeInCubic,
-          child: Text('Task It Easy'),
+          child: Text('Take It Easy') ,
         ),
       ),
     );

@@ -53,7 +53,7 @@ static List<String> getTableView(
     }
 
    
-    for (int i = 0; i < howManySubjects; i++) {
+    for (int i = 0; i < dayList[0].length; i++) {
       Map<String, dynamic> tableEntry = {
         'Monday': dayList[0] != null && i < dayList[0].length
             ? dayList[0][i]
@@ -91,7 +91,4 @@ static List<String> getTableView(
      }
    }
         return updateTodaySubjectsList;
-
-
-
 }}

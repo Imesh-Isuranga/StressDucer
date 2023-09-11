@@ -82,11 +82,15 @@ class _HomeState extends State<Home> {
           ),
           AddedTasksCards(),
           Container(
+            decoration: BoxDecoration(
+    border: Border(
+      top: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
             margin: const EdgeInsets.only(top: 3, bottom: 3, left: 0, right: 0),
             child: Card(
               margin: const EdgeInsets.all(0),
               child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
                 onTap: () {
                   widget.changeTabtoGame(1);
                   ;
@@ -97,9 +101,11 @@ class _HomeState extends State<Home> {
                     children: <Widget>[
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: ListTile(
                               title: Text("Today Tasks"),
+                              leading: Icon(Icons.task),
+                  iconColor: Theme.of(context).iconTheme.color,
                               subtitle: Text(
                                   "Plan your day with achievable goals. Break tasks into manageable steps to stay organized and reduce stress."),
                             ),
@@ -120,49 +126,57 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          Card(
-            margin: const EdgeInsets.only(top: 0, bottom: 3, left: 0, right: 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const ListTile(
-                  leading: Icon(Icons.polymer_sharp),
-                  title: Text(
-                    'Play Games',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          Container(
+            decoration: BoxDecoration(
+    border: Border(
+      top: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
+            child: Card(
+              margin: const EdgeInsets.only(top: 0, bottom: 3, left: 0, right: 0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.polymer_sharp),
+                    iconColor: Theme.of(context).iconTheme.color,
+                    title: Text(
+                      'Play Games',
+                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                    ),
+                    subtitle: Text("Relaxation Recess"),
                   ),
-                  subtitle: Text("Relaxation Recess"),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Image.asset(
-                      imageUrlPlayGames,
-                      width: 150,
-                      height: 150,
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          const Divider(),
-                          ListTile(
-                            titleAlignment: titleAlignment,
-                            title: const Text('Mindful Playgrounds'),
-                            subtitle: const Text(
-                                'Engage in games designed for relaxation. Immerse yourself in soothing gameplay to unwind and de-stress.'),
-                          ),
-                          const Divider(),
-                          TextButton(
-                              onPressed: () {
-                                widget.changeTabtoGame(2);
-                              },
-                              child: const Text("Play"))
-                        ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Image.asset(
+                        imageUrlPlayGames,
+                        width: 150,
+                        height: 150,
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      Expanded(
+                        child: Column(
+                          children: <Widget>[
+                            const Divider(),
+                            ListTile(
+                              titleAlignment: titleAlignment,
+                              title: const Text('Mindful Playgrounds'),
+                              subtitle: const Text(
+                                  'Engage in games designed for relaxation. Immerse yourself in soothing gameplay to unwind and de-stress.'),
+                            ),
+                            const Divider(),
+                            TextButton(
+                                onPressed: () {
+                                  widget.changeTabtoGame(2);
+                                },
+                                child: const Text("Play"))
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

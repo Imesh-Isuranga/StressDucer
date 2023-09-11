@@ -170,6 +170,11 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
     }
 
     return Container(
+      decoration: BoxDecoration(
+    border: Border(
+      top: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
+    ),
+  ),
       child: Card(
         margin: const EdgeInsets.only(top: 3,bottom: 0,left: 0,right: 0),
         child: Column(
@@ -187,8 +192,10 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
                 height: 200,
               ),
             ),
-           const Expanded(
+           Expanded(
               child: ListTile(
+                leading: Icon(Icons.alarm),
+                  iconColor: Theme.of(context).iconTheme.color,
                   title: Text('Add Task',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
