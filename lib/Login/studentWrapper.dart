@@ -4,10 +4,10 @@ import 'package:stress_ducer/Login/screens/studentDetails/StudentDetailsSecond.d
 import 'package:stress_ducer/Login/screens/studentDetails/studentDetails.dart';
 
 class StudentWrapper extends StatefulWidget {
-  const StudentWrapper({super.key,required this.Pressed,required this.id});
+  const StudentWrapper({super.key,required this.pressed,required this.id});
 
   final String id; 
-  final void Function(bool) Pressed;
+  final void Function(bool) pressed;
 
   @override
   State<StudentWrapper> createState() => _StudentWrapperState();
@@ -33,7 +33,7 @@ class _StudentWrapperState extends State<StudentWrapper> {
   void switchState(StudentFirstModel studentFirstModel){
     setState(() {
       newStudentFirstModel = studentFirstModel;
-      currentPage = StudentDetailsSecond(newStudentFirstModel, Pressed:widget.Pressed, idNum:widget.id, backPress:switchStatBack);
+      currentPage = StudentDetailsSecond(newStudentFirstModel, Pressed:widget.pressed, idNum:widget.id, backPress:switchStatBack);
     });
   }
 

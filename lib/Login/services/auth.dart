@@ -73,7 +73,6 @@ Future<void> deleteAccount() async {
         final UserCredential authResult =
             await _auth.signInWithCredential(credential);
       }
-
       if (signInMethods.contains("google.com")) {
         print("Email is already associated with a Google Sign-In account.");
         return "0";

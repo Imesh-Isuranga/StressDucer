@@ -19,6 +19,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   bool isSetDetails = false;
   bool isEmailVerified = false;
+  bool isGuestUser = false;
 
   void setStudentDetails(bool setVar) {
     setState(() {
@@ -26,6 +27,12 @@ class _WrapperState extends State<Wrapper> {
     });
   }
 
+void identityGuest(bool setbool) {
+    setState(() {
+      isGuestUser = setbool; // Toggle the value
+      isSetDetails = !setbool;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +51,15 @@ class _WrapperState extends State<Wrapper> {
         } else {
           // Depending on your data, conditionally return different widgets
           if (user == null) {
-            return Authenticate(setDetails:setStudentDetails);
+            return Authenticate(setDetails:setStudentDetails,identityGuest:identityGuest);
+          }else if(isGuestUser){
+            return const MainPlace();
           } else {
             if (!(us!.emailVerified)) {
               return Verify(refresh: setStudentDetails,);
             } else {
               if (isSetDetails) {
-                return StudentWrapper(Pressed: setStudentDetails, id: user.uid);
+                return StudentWrapper(pressed: setStudentDetails, id: user.uid);
               } else {
                 return const MainPlace();
               }

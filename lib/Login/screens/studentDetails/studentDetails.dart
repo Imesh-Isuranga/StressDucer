@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
-import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/model/studentFirstModel.dart';
-import 'package:stress_ducer/Login/services/auth.dart';
-import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
 class StudentDetails extends StatefulWidget {
   const StudentDetails({super.key, required this.stateChange});
@@ -49,10 +45,9 @@ class _StudentDetailsState extends State<StudentDetails>{
           title: const Text("Student Details",style: TextStyle(color: appBarTextColor),),
         ),
         body: Center(
-          child: Container(
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.only(left: 20, right: 30),
+                margin: const EdgeInsets.only(left: 20, right: 30),
                 child: Column(
                   children: [
                     const SizedBox(height: 40,),
@@ -63,6 +58,9 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.6,
                       child: TextField(
+                        decoration: InputDecoration(
+                errorText: controllerStudentName.text.isEmpty ? '*required' : null,
+              ),
                         keyboardType: TextInputType.name,
                         controller: controllerStudentName,
                       ),
@@ -77,6 +75,9 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.7,
                       child: TextField(
+                        decoration: InputDecoration(
+                errorText: controllerStudentUniName.text.isEmpty ? '*required' : null,
+              ),
                         keyboardType: TextInputType.name,
                         controller: controllerStudentUniName,
                       ),
@@ -91,6 +92,9 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.2,
                       child: TextField(
+                        decoration: InputDecoration(
+                errorText: controllerStudentCurrentSem.text.isEmpty ? '*required' : null,
+              ),
                         keyboardType: TextInputType.number,
                         controller: controllerStudentCurrentSem,
                       ),
@@ -105,6 +109,9 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.2,
                       child: TextField(
+                        decoration: InputDecoration(
+                errorText: controllerStudentNumOfSubjects.text.isEmpty ? '*required' : null,
+              ),
                         keyboardType: TextInputType.number,
                         controller: controllerStudentNumOfSubjects,
                       ),
@@ -113,14 +120,15 @@ class _StudentDetailsState extends State<StudentDetails>{
                       height: 50,
                     ),
                     FilledButton(
-                      onPressed: () {
+                      onPressed: ((controllerStudentName.text.isNotEmpty) && (controllerStudentUniName.text.isNotEmpty)  && (controllerStudentCurrentSem.text.isNotEmpty)  && (controllerStudentNumOfSubjects.text.isNotEmpty)) ? 
+                      () {
                         widget.stateChange(StudentFirstModel(
                             studentName: controllerStudentName.text,
                             studentUniName: controllerStudentUniName.text,
                             studentCurrentSem: controllerStudentCurrentSem.text,
                             studentNumOfSubjects:
                                 controllerStudentNumOfSubjects.text));
-                      },
+                      } : (){},
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.black)),
@@ -137,7 +145,6 @@ class _StudentDetailsState extends State<StudentDetails>{
                 ),
               ),
             ),
-          ),
         ),
       ),
     );

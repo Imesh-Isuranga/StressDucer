@@ -25,8 +25,8 @@ class _PersonalityState extends State<Personality> {
   late TextEditingController nameTxt;
   late TextEditingController uniTxt;
   User? user = FirebaseAuth.instance.currentUser;
-  String imageUrl = '';
-  String imageUrlCover = '';
+  String imageUrl = 'assets/man.png';
+  String imageUrlCover = 'assets/man.png';
 
   bool setEditName = false;
   bool setEditUni = false;
@@ -40,7 +40,7 @@ class _PersonalityState extends State<Personality> {
     nameTxt = TextEditingController();
     uniTxt = TextEditingController();
     super.initState();
-    _initImageUrl(); // Call a separate method to initialize imageUrl.
+  //  _initImageUrl(); // Call a separate method to initialize imageUrl.
   }
 
   // Method to initialize imageUrl asynchronously.
@@ -119,7 +119,7 @@ class _PersonalityState extends State<Personality> {
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             "Personality",
             style: TextStyle(color: Colors.black),
           ),
@@ -128,7 +128,7 @@ class _PersonalityState extends State<Personality> {
           stream: dataAuthServices.readSpecificDocument(id),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return TextTransitionSubNew();
+              return const TextTransitionSubNew();
             } else if (snapshot.hasError) {
               return Text("Error: ${snapshot.error}");
             } else if (snapshot.hasData) {

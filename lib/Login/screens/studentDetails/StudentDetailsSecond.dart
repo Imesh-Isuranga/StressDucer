@@ -51,6 +51,15 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
     }
   }
 
+  bool nextEnable(){
+    for (var element in subjectsControllers) {
+      if(element.text.isEmpty){
+        return false;
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final _authDataBase = dataAuthServices();
@@ -103,6 +112,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                                   width: MediaQuery.of(context).size.width*0.6,
                                   child: TextField(
                                     decoration: InputDecoration(
+                                      errorText: subjectsControllers[index].text.isEmpty ? '*required' : null,
                                       border: OutlineInputBorder(),
                                       labelText: 'Subject ${(index + 1)}',
                                     ),
@@ -144,7 +154,8 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                         height: 40,
                       ),
                       FilledButton(
-                        onPressed: () {
+                        onPressed: nextEnable() ?
+                        () {
                           widget.Pressed(false);
                           _authDataBase.create(
                               widget.studentFirstModel,
@@ -153,7 +164,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                               widget.idNum,
                               "0",
                               "[]", []);
-                        },
+                        } : (){},
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.black)),

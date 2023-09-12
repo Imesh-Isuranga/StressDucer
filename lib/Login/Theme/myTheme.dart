@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.system;
@@ -25,20 +24,20 @@ bool get isDarkMode => themeMode == ThemeMode.dark;
 class MyThemes {
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Colors.black,
-    primaryColor: Color.fromARGB(255, 19, 189, 53),
+    primaryColor: const Color.fromARGB(255, 19, 189, 53),
     primaryColorDark:Colors.white,
-    colorScheme: ColorScheme.dark(),
-    iconTheme: IconThemeData(color: Color.fromARGB(255, 19, 189, 53),),
+    colorScheme: const ColorScheme.dark(),
+    iconTheme: const IconThemeData(color: Color.fromARGB(255, 19, 189, 53),),
     indicatorColor : Colors.white,
     cardColor: Colors.black
   );
 
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    primaryColor: Color.fromARGB(255, 19, 189, 53),
-    primaryColorDark:Color.fromARGB(255, 0, 0, 0),
-    colorScheme: ColorScheme.light(),
-    iconTheme: IconThemeData(color: Color.fromARGB(255, 19, 189, 53),),
+    primaryColor:const  Color.fromARGB(255, 19, 189, 53),
+    primaryColorDark:const Color.fromARGB(255, 0, 0, 0),
+    colorScheme: const ColorScheme.light(),
+    iconTheme: const IconThemeData(color: Color.fromARGB(255, 19, 189, 53),),
     indicatorColor : Colors.black,
     cardColor: Colors.white
   );

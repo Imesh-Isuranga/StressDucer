@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stress_ducer/Login/model/addedTasks.dart';
-import 'package:stress_ducer/Login/model/timeTable.dart';
 
 class AddTasksDatabase {
   static Stream<List<AddedTasks>> read() {

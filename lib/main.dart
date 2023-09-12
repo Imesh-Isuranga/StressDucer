@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/Theme/myTheme.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
-import 'package:stress_ducer/Login/model/studentFirstModel.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/wrapper.dart';
@@ -42,7 +41,7 @@ final themeProvider = Provider.of<ThemeProvider>(context);
             theme: MyThemes.lightTheme,
             darkTheme: MyThemes.darkTheme,
         title: "StressDucer",
-        home: Wrapper(),
+        home: const Wrapper(),
       ),
     );
     

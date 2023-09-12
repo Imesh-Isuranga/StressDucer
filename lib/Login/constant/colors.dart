@@ -19,13 +19,17 @@ const Color calenderSquare = Color.fromARGB(255, 175, 255, 148);
 const Color calenderMarks = Colors.red;
 
 
+//Authentication
+const Color loginButtonColors = Color.fromARGB(255, 20, 163, 7);
+
+
 
 const Color bgBlack = Color.fromARGB(255, 16, 16, 16);
 
 const Color profColor = Colors.yellow;
 const Color mainBlue = Colors.blue;
 const Color mainAppBarColor = Color.fromARGB(255, 255, 255, 255);
-const Color loginButtonColors = Color.fromARGB(192, 255, 33, 17);
+
 const Color appBarTextColor = Color.fromARGB(192, 0, 0, 0);
 const Color unselectedLabelColor = Color.fromARGB(192, 1, 1, 1);
 const Color indicatorColor = Color.fromARGB(192, 17, 0, 255);

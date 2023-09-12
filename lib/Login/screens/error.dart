@@ -25,7 +25,7 @@ class Error{
       return AlertDialog(
       title: Text(
         text,
-        style: TextStyle(color: Colors.red),
+        style: const TextStyle(color: Colors.red),
       ),
       actions: [
         button(context),
