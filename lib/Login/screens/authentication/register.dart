@@ -2,7 +2,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
-import 'package:stress_ducer/Login/constant/styles.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/error.dart';
 
@@ -39,170 +38,127 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              opacity: 0.3,
-              image: AssetImage(
-                  'assets/newAuth.jpg'), // Path to your background image
-              fit: BoxFit.cover, // Adjust the BoxFit as needed
-            ),
+      body: Container(
+        height: screenHeight,
+        width: screenWidth,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.3,
+            image: AssetImage(
+                'assets/newAuth.jpg'), // Path to your background image
+            fit: BoxFit.cover, // Adjust the BoxFit as needed
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 10),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/logo.png",
-                      width: 50,
-                      height: 50,
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "REGISTER",
-                      style: GoogleFonts.roboto(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w800,
-                        color: Color.fromARGB(255, 3, 110, 6),
+        ),
+        alignment: Alignment.center,
+        child: Container(
+          height: screenHeight*0.85,
+        width: screenWidth*0.9,
+        color: const Color.fromARGB(186, 255, 255, 255),
+        alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Image.asset("assets/logo.png",width: screenWidth*0.1,height: screenHeight*0.1,),
+                    SizedBox(width: screenWidth*0.02,),
+                    Text("REGISTER",style: GoogleFonts.roboto(fontSize: screenWidth*0.08,fontWeight: FontWeight.w800,color: const Color.fromARGB(255, 3, 110, 6),),),
+                  ],),
+                  SizedBox(height: screenHeight*0.002,),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      SizedBox(
+                        width: screenWidth*0.7,
+                        child: TextField(
+                                  style: GoogleFonts.roboto(color: const Color.fromARGB(255, 0, 0, 0), fontSize: screenWidth*0.035),
+                                  controller: emailController,
+                                  decoration: InputDecoration(
+                                    labelStyle: GoogleFonts.roboto(color: const Color.fromARGB(255, 0, 0, 0), fontSize: screenWidth*0.035),
+                                    labelText: 'Email',
+                                    errorText: EmailValidator.validate(emailController.text)? null: '*Please enter valid Email',
+                                    errorStyle: GoogleFonts.roboto(color:const Color.fromARGB(255, 255, 0, 0), fontSize: screenWidth*0.03),
+                                    ),
+                                  onChanged: (value) => setState(() {
+                                    email = value;
+                                     error = "";
+                                  }),
+                                ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 250,
-                            child: TextField(
-                              style: const TextStyle(color: Colors.black),
-                              controller: emailController,
-                              decoration: InputDecoration(
-                                labelStyle:
-                                    const TextStyle(color: Colors.black),
-                                labelText: 'Email',
-                                errorText: EmailValidator.validate(
-                                        emailController.text)
-                                    ? null
-                                    : 'Please enter valid email',
-                              ),
-                              onChanged: (value) => setState(() {
-                                setState(() {
-                                  error = "";
-                                  email = value;
-                                });
-                              }),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 250,
-                            child: TextField(
-                              obscureText: true,
-                              style: const TextStyle(color: Colors.black),
-                              controller: passController,
-                              decoration: InputDecoration(
-                                labelStyle:
-                                    const TextStyle(color: Colors.black),
-                                labelText: 'Password',
-                                errorText: passController.text.length > 5
-                                    ? null
-                                    : 'Please enter valid Password',
-                              ),
-                              onChanged: (value) => setState(() {
-                                setState(() {
-                                  error = "";
+                      SizedBox(height: screenHeight*0.02,),
+                            SizedBox(
+                              width: screenWidth*0.7,
+                              child: TextField(
+                                obscureText: true,
+                                style: GoogleFonts.roboto(color: const Color.fromARGB(255, 0, 0, 0), fontSize: screenWidth*0.035),
+                                controller: passController,
+                                decoration: InputDecoration(
+                                  labelStyle:GoogleFonts.roboto(color: const Color.fromARGB(255, 0, 0, 0), fontSize: screenWidth*0.035),
+                                  labelText: 'Password',
+                                  errorText: passController.text.length > 5 ? null: '*Please enter valid Password',
+                                  errorStyle: GoogleFonts.roboto(color:const Color.fromARGB(255, 255, 0, 0), fontSize: screenWidth*0.03),
+                                ),
+                                onChanged: (value) => setState(() {
                                   password = value;
-                                });
-                              }),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            error,
-                            style: const TextStyle(
-                                color: Colors.red, fontSize: 12),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 60,
-                          ),
-                          const Text(
-                            "Login with social accounts",
-                            style: descriptionStyle,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              final user = await _auth.handleGoogleSignIn();
-                              if (user == "0") {
-                                print('Logged in');
-                              } else if (user == "1") {
-                                widget.setDetails(true);
-                                widget.identityGuest(false);
-                                print('Registered');
-                              } else {
-                                print('Sign-in failed.');
-                              }
-                            },
-                            child: Center(
-                              child: Image.asset(
-                                "assets/G.png",
-                                height: 60,
-                                width: 60,
+                                   error = "";
+                                }),
+                              ),
+                            )
+                    ],)
+                    ),
+                    SizedBox(height: screenHeight*0.02,),
+                    Text(error,style: GoogleFonts.roboto(color: Colors.red, fontSize: screenWidth*0.03),textAlign: TextAlign.center),
+                    SizedBox(height: screenHeight*0.02,),
+                    Text("Login with social accounts",style: GoogleFonts.roboto(color: const Color.fromARGB(255, 0, 0, 0), fontSize: screenWidth*0.035),),
+                //    SizedBox(height: screenHeight*0.02,),
+                    GestureDetector(
+                              onTap: () async {
+                                final user = await _auth.handleGoogleSignIn();
+                                if (user == "0") {
+                                  print('Logged in');
+                                } else if (user == "1") {
+                                  widget.setDetails(true);
+                                  print('Registered');
+                                  widget.identityGuest(false);
+                                } else {
+                                  print('Sign-in failed.');
+                                }
+                              },
+                              child: Center(
+                                child: Image.asset("assets/G.png",width: screenWidth*0.12,height: screenHeight*0.12,),
                               ),
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Do not have an account",
-                                style: descriptionStyle,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  widget.toggle();
-                                },
-                                child: const Text("LOGIN"),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ElevatedButton.icon(
-                            onPressed: () async {
+                        //    SizedBox(height: ScreenHeight*0.02,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text("Do not have an account",style: GoogleFonts.roboto(color: const Color.fromARGB(255, 0, 0, 0), fontSize: screenWidth*0.035),),
+                                SizedBox(width: screenWidth*0.02,),
+                                TextButton(
+                                  onPressed: () {
+                                    widget.toggle();
+                                  },
+                                  child: Text("LOGIN",style: GoogleFonts.roboto(color: const Color.fromARGB(255, 0, 0, 0), fontSize: screenWidth*0.036)),
+                                )
+                              ],
+                            ),
+                          //  SizedBox(height: ScreenHeight*0.02,),
+                            ElevatedButton.icon(
+                              onPressed: () async {
                               setState(() {
                                 isRegisterChecking = true;
                               });
@@ -251,38 +207,28 @@ class _RegisterState extends State<Register> {
                                 }
                               }
                             },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
+                                backgroundColor: loginButtonColors,
+                                padding:EdgeInsets.only(left: screenWidth*0.02, right: screenWidth*0.02),
+                                minimumSize: Size(screenWidth*0.8, screenHeight*0.05),
                               ),
-                              backgroundColor: loginButtonColors,
-                              padding:
-                                  const EdgeInsets.only(left: 15, right: 15),
-                              minimumSize: const Size(300, 40),
+                              icon: isRegisterChecking ? Container(
+                                      width: screenHeight*0.03,
+                                      height: screenHeight*0.03,
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: const CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 3,
+                                      ),
+                                    )
+                                  : Icon(Icons.co_present_outlined,size: screenWidth*0.045),
+                              label: Text('REGISTER',style: GoogleFonts.roboto(color: const Color.fromARGB(255, 255, 255, 255), fontSize: screenWidth*0.035,fontWeight: FontWeight.w500)),
                             ),
-                            icon: isRegisterChecking
-                                ? Container(
-                                    width: 24,
-                                    height: 24,
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: const CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 3,
-                                    ),
-                                  )
-                                : const Icon(Icons.co_present_outlined),
-                            label: const Text('REGISTER'),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      )),
-                )
-              ],
+                ],
+              ),
             ),
           ),
-        ),
       ),
     );
   }

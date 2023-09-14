@@ -18,7 +18,8 @@ static List<String> getTableView(
     TimeTable? _timeTableData,
     TimeTableDataBase timetable,
     FirebaseAuth auth,
-    List<Map<String, dynamic>> tableDataList
+    List<Map<String, dynamic>> tableDataList,
+    int changeSubjectsCount
     ) {
 
         final timeTable = TimeTable(
@@ -31,7 +32,9 @@ static List<String> getTableView(
         sunday: todaySubjectsList[6],
         freedays: todaySubjectsList[7],
         exam: todaySubjectsList[8],
-        howManySubjectsPerDay: howManySubjects.toString());
+        howManySubjectsPerDay: howManySubjects.toString(),
+        changeSubjectsCount : changeSubjectsCount.toString()
+        );
 
     timetable.create(timeTable, auth.currentUser!.uid);
 

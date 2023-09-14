@@ -14,7 +14,6 @@ class _ProfileMenuState extends State<ProfileMenu> {
   String text = "Edit";
 
 void guestFunction(){
-  print("2222222222222222222222");
   setState(() {
     text = "Back to Login";
   });
@@ -22,30 +21,30 @@ void guestFunction(){
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Profile",
           style: TextStyle(color: Colors.black),
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-            child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            StudentProfile(text: "Current Semester : "),
-            Divider(height: 1),
-            StudentProfile(text: "Number Of Subjects : "),
-            Divider(height: 1),
-            StudentProfile(text: "Subjects : "),
-            Divider(height: 1),
-            StudentProfile(text: "Priorities : "),
-            SizedBox(
+        child: Column(
+          children:[
+            const SizedBox(height: 20,),
+            const StudentProfile(text: "Current Semester : "),
+            const Divider(height: 1),
+            const StudentProfile(text: "Number Of Subjects : "),
+            const Divider(height: 1),
+            const StudentProfile(text: "Subjects : "),
+            const Divider(height: 1),
+            const StudentProfile(text: "Priorities : "),
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
@@ -60,7 +59,7 @@ void guestFunction(){
                 },
                 child: Text(text))
           ],
-        )),
+        ),
       ),
     );
   }

@@ -25,8 +25,8 @@ class _PersonalityState extends State<Personality> {
   late TextEditingController nameTxt;
   late TextEditingController uniTxt;
   User? user = FirebaseAuth.instance.currentUser;
-  String imageUrl = 'assets/man.png';
-  String imageUrlCover = 'assets/man.png';
+  String imageUrl = '';
+  String imageUrlCover = '';
 
   bool setEditName = false;
   bool setEditUni = false;
@@ -40,7 +40,7 @@ class _PersonalityState extends State<Personality> {
     nameTxt = TextEditingController();
     uniTxt = TextEditingController();
     super.initState();
-  //  _initImageUrl(); // Call a separate method to initialize imageUrl.
+    _initImageUrl(); // Call a separate method to initialize imageUrl.
   }
 
   // Method to initialize imageUrl asynchronously.

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Game/gameHelp.dart';
@@ -14,8 +15,8 @@ class Games extends StatefulWidget {
 }
 
 class _GamesState extends State<Games> {
-  static Color color = gameTilesColor;
-  static Color colorWhite = gameTilesColorWhite;
+  static Color color =  Color.fromARGB(255, 1, 90, 27);
+  static Color colorWhite = Color.fromARGB(255, 255, 255, 255).withOpacity(0);
   static String imgURL = 'assets/cardGame.jpg';
   int state = 1;
 
@@ -150,100 +151,47 @@ class _GamesState extends State<Games> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return ListView(
-      children: [
-        SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Card(
-                margin: const EdgeInsets.all(0),
+      children: [   
+            Card(
+              margin: const EdgeInsets.all(0),
+              child: Padding(
+                padding: EdgeInsets.only(left: screenWidth*0.05),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Games",
-                          style: GoogleFonts.roboto(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                GameHelp().getHelpTextPanel(context);
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    btnBackGreen.withOpacity(0.5),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20))),
-                                    child: const Text("Help"),
-                                    ),
-
-                                    const SizedBox(width: 20,),
-
-                                    if(state == 2)ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                state = 1;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    btnBackGreen.withOpacity(0.5),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20))),
-                            child: const Text("Back"),
-                          )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ))),
-                const SizedBox(height: 3,),
-                Divider(
-  color: Theme.of(context).indicatorColor,
-  thickness: 0.1, // Adjust the thickness of the line
-),
-
-if(state ==1 )
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Card(
-                    margin: const EdgeInsets.all(0),
-                    child: Container(child: Padding(
-                      padding: const EdgeInsets.all(13.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      SizedBox(height: screenHeight*0.02,),
+                      Text("Games",style: GoogleFonts.roboto(fontSize: screenWidth*0.053, fontWeight: FontWeight.w600),),
+                      SizedBox(height: screenHeight*0.02,),
+                      Row(
                         children: [
-                          Image.asset(imgURL,width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
-                          Image.asset(imgURL,width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
-                          Text("This is simple Game Develop for Mind Relax",style: GoogleFonts.roboto(fontSize: 17,fontWeight: FontWeight.w400),textAlign: TextAlign.center,),
-                        const SizedBox(height: 20,),
-                        ElevatedButton(
+                          SizedBox(
+                            width: screenWidth*0.14,
+                            height: screenWidth*0.054,
+                            child: ElevatedButton(
+                                    onPressed: () {
+                                      GameHelp().getHelpTextPanel(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            btnBackGreen.withOpacity(0.5),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20))),
+                                    child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                                  ),
+                          ),
+                                SizedBox(width: screenWidth*0.04,),
+                                if(state == 2)SizedBox(
+                                  width: screenWidth*0.14,
+                                  height: screenWidth*0.054,
+                                  child: ElevatedButton(
                                     onPressed: () {
                                       setState(() {
-                                        state = 2;
+                                        state = 1;
                                       });
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -251,20 +199,56 @@ if(state ==1 )
                                             btnBackGreen.withOpacity(0.5),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(20))),
-                                    child: const Text("Play Now"),
-                                  )
+                                    child: Text("Back",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                                  ),
+                                ),
+                        ],
+                      ),
+                      SizedBox(height: screenHeight*0.02,)
                       ]),
-                    ),),
+              ),
+              ),
+              SizedBox(height: screenHeight * 0.005,), 
+              if(state==1)SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Card(
+                    margin: const EdgeInsets.all(0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(imgURL,width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
+                          Image.asset(imgURL,width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
+                          Text("This is simple Game Develop for Mind Relax",style: GoogleFonts.roboto(fontSize: screenWidth*0.029,fontWeight: FontWeight.w400),textAlign: TextAlign.center,),
+                        SizedBox(height: screenHeight*0.02,),
+                        SizedBox(
+                          width: screenWidth*0.64,
+                          height: screenWidth*0.06,
+                          child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          state = 2;
+                                        });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                      backgroundColor:btnBackGreen.withOpacity(0.5),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                                      child: Text("Play Now",style: GoogleFonts.roboto(fontSize: screenWidth * 0.029,fontWeight: FontWeight.w600),),
+                                    ),
+                        )
+                      ]),
+                    ),
                   ),
                 ),
-              
-   if(state == 2) Card(child: Column(
-                children: [ GridView.builder(
-                  shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                      ),
+                if(state==2)Card(
+                  child: Column(
+                  children: [ 
+                    GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,),
                       itemCount: 9,
                       itemBuilder: (context, index) {
                         return GestureDetector(
@@ -275,33 +259,23 @@ if(state ==1 )
                             alignment: Alignment.center,
                             child: Text(
                               itemText[index].toString(),
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 50),
+                              style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor, fontSize: screenWidth*0.09),
                             ),
                           ),
                         );
                       },
                     ),
                 
-                  const SizedBox(height: 20,),
+                  SizedBox(height: screenHeight*0.02,),
                   TextButton(
                       onPressed: () {
                         shuffleAll();
                       },
-                      child: const Text(
-                        "Shuffle",
-                        style: TextStyle(
-                            fontSize: 20, color: Color.fromARGB(255, 2, 2, 108)),
+                      child: Text("Shuffle",style: TextStyle(fontSize: screenWidth*0.05),
                       )),
                 ],
               ),
           ),
-      
-
-
-     
-
-              
       ],
     );
   }

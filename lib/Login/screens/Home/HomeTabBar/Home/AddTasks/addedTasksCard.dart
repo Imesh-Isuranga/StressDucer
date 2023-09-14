@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/addedTasks.dart';
@@ -27,7 +28,6 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
   TimeOfDay pickedTime = TimeOfDay.now();
 
   List<String?> listAll = [];
-
   List<List> listAllFull = [];
   static int count = 0;
   static String imageUrlAddTask = 'assets/todayTasks.jpg';
@@ -47,8 +47,7 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
   void getData() {
     String? tasksDocumentId = auth.currentUser!.uid;
     if (tasksDocumentId != null) {
-      Stream<AddedTasks?> tasksStream =
-          AddTasksDatabase.readSpecificDocument(tasksDocumentId);
+      Stream<AddedTasks?> tasksStream = AddTasksDatabase.readSpecificDocument(tasksDocumentId);
 
       tasksStream.listen((task) {
         if (task != null) {
@@ -105,6 +104,8 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     String id = Provider.of<UserModel?>(context)!.uid;
     final AuthServices _auth = AuthServices();
     final dataAuthServices _authData = dataAuthServices();
@@ -171,219 +172,188 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
 
     return Container(
       decoration: BoxDecoration(
-    border: Border(
-      top: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
-    ),
-  ),
+            border: Border(top: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
+            margin: const EdgeInsets.only(top: 3, bottom: 3, left: 0, right: 0),
       child: Card(
-        margin: const EdgeInsets.only(top: 3,bottom: 0,left: 0,right: 0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const SizedBox(
-              height: 20,
-            ),
-            Row(children: [
-              Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                imageUrlAddTask,
-                width: 200,
-                height: 200,
+          margin: const EdgeInsets.only(top: 3,bottom: 0,left: 0,right: 0),
+          child: Column(
+            children: <Widget>[
+              Row(children: [
+                Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(imageUrlAddTask,width: screenWidth*0.4,height: screenWidth*0.4,
+                ),
               ),
-            ),
-           Expanded(
-              child: ListTile(
-                leading: Icon(Icons.alarm),
-                  iconColor: Theme.of(context).iconTheme.color,
-                  title: Text('Add Task',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
-                  subtitle: Text("Add Task")),
-            ),
-            ],),
-            
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(
-                  child: const Text('Add Task Sheduler'),
-                  onPressed: () {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          height: MediaQuery.of(context)
-                              .size
-                              .height, // Take up full screen height
-                          child: SingleChildScrollView(
-                            child: Container(
-                              padding: const EdgeInsets.all(30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  const Text("Task Name : ",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.7, // Set the desired width
-                                    child: TextField(
-                                      controller: taskNameController,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          taskNameController.text = value;
-                                          text = value;
-                                        });
-                                      },
-                                      keyboardType: TextInputType.number,
+             Expanded(
+                child: ListTile(
+                  leading: Icon(Icons.alarm,size: screenWidth*0.07,),
+                    iconColor: Theme.of(context).iconTheme.color,
+                    title: Text('Add Task',style:GoogleFonts.roboto(fontSize: screenWidth*0.038, fontWeight: FontWeight.w400)),
+                    subtitle: Text("Shedule Your Task",style:GoogleFonts.roboto(fontSize: screenWidth*0.028))),
+              ),
+              ],),
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  TextButton(
+                    child: Text('Add Task Sheduler',style:GoogleFonts.roboto(fontSize: screenWidth*0.030,)),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height, // Take up full screen height
+                            child: SingleChildScrollView(
+                              child: Container(
+                                padding: const EdgeInsets.all(30),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: screenHeight*0.1,),
+                                    Text("Task Name : ",style: GoogleFonts.roboto(fontSize: screenWidth*0.048,fontWeight: FontWeight.w400,),),
+                                    SizedBox(height: screenHeight*0.04,),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width*0.7, // Set the desired width
+                                      child: TextField(
+                                        controller: taskNameController,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            taskNameController.text = value;
+                                            text = value;
+                                          });
+                                        },
+                                        keyboardType: TextInputType.text,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _selectDate(context);
-                                          });
-                                        },
-                                        child: const Text('Select Date'),
-                                      ),
-                                      const SizedBox(
-                                        width: 50,
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _selectTime(context);
-                                          });
-                                        },
-                                        child: const Text('Select Time'),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  NotificationButton(
-                                    text: "Add Scheduled",
-                                    onPressed: () async {
-                                      if (text != "") {
-                                        FocusScope.of(context).unfocus();
-                                        await NotificationService.showNotification(
-                                            id: count,
-                                            title:
-                                                "You Have to Start your Task.",
-                                            body: textGetter(),
-                                            scheduled: true,
-                                            date: pickedDateGetter(),
-                                            time: pickedTimeeGetter());
-                                        List<String?> temp = [
-                                          textGetter(),
-                                          pickedDateGetter().toString(),
-                                          ('${pickedTimeeGetter().hour}:${pickedTimeeGetter().minute}'),
-                                          count.toString()
-                                        ];
-                                        setState(() {
-                                          taskNameController.clear();
-                                          listAll.add(temp.toString());
-                                          listAllFull.add(temp);
-                                          addTasks.create(
-                                              AddedTasks(list: listAll),
-                                              auth.currentUser!.uid);
-                                          setCount();
-                                          text = "";
-                                          pickedDate = DateTime.now();
-                                          pickedTime = TimeOfDay.now();
-                                        });
-                                      } else {
-                                        showAlert();
-                                      }
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.6,
-                                    child: ListView.builder(
-                                      itemCount: count,
-                                      itemBuilder: (context, index) {
-                                        return Dismissible(
-                                          key: Key(index.toString()),
-                                          onDismissed: (direction) async {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                content:
-                                                    Text('Deleted your Task'),
-                                              ),
-                                            );
-                                            await NotificationService
-                                                .cancelScheduledNotification(
-                                                    index);
+                                    SizedBox(height: screenHeight*0.04,),
+                                    Row(
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
                                             setState(() {
-                                              listAll.removeAt(index);
-                                              authAddNewTask.create(
-                                                  AddedTasks(list: listAll),
-                                                  auth.currentUser!.uid);
-                                              count--;
+                                              _selectDate(context);
                                             });
                                           },
-                                          child: Center(
-                                            child: Card(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: ListTile(
-                                                      leading: const Icon(
-                                                          Icons.alarm),
-                                                      title: Text(
-                                                          listAllFull[index]
-                                                              [0]),
-                                                      subtitle: Text(
-                                                          'Date : ${DateTime.parse(listAllFull[index][1]).year}:${DateTime.parse(listAllFull[index][1]).month}:${DateTime.parse(listAllFull[index][1]).day}\nTime : ${(listAllFull[index][2])}'),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        );
+                                          child: const Text('Select Date'),
+                                        ),
+                                        SizedBox(width: screenWidth*0.06,),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _selectTime(context);
+                                            });
+                                          },
+                                          child: const Text('Select Time'),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: screenHeight*0.04,),
+                                    NotificationButton(
+                                      text: "Add Scheduled",
+                                      onPressed: () async {
+                                        if (text != "") {
+                                          FocusScope.of(context).unfocus();
+                                          await NotificationService.showNotification(
+                                              id: count,
+                                              title:
+                                                  "You Have to Start your Task.",
+                                              body: textGetter(),
+                                              scheduled: true,
+                                              date: pickedDateGetter(),
+                                              time: pickedTimeeGetter());
+                                          List<String?> temp = [
+                                            textGetter(),
+                                            pickedDateGetter().toString(),
+                                            ('${pickedTimeeGetter().hour}:${pickedTimeeGetter().minute}'),
+                                            count.toString()
+                                          ];
+                                          setState(() {
+                                            taskNameController.clear();
+                                            listAll.add(temp.toString());
+                                            listAllFull.add(temp);
+                                            addTasks.create(
+                                                AddedTasks(list: listAll),
+                                                auth.currentUser!.uid);
+                                            setCount();
+                                            text = "";
+                                            pickedDate = DateTime.now();
+                                            pickedTime = TimeOfDay.now();
+                                          });
+                                        } else {
+                                          showAlert();
+                                        }
                                       },
                                     ),
-                                  )
-                                ],
+                                    SizedBox(height: screenHeight*0.03,),
+                                    SizedBox(
+                                      height: MediaQuery.of(context).size.height *0.6,
+                                      child: ListView.builder(
+                                        itemCount: count,
+                                        itemBuilder: (context, index) {
+                                          return Dismissible(
+                                            key: Key(index.toString()),
+                                            onDismissed: (direction) async {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content:
+                                                      Text('Deleted your Task'),
+                                                ),
+                                              );
+                                              await NotificationService
+                                                  .cancelScheduledNotification(
+                                                      index);
+                                              setState(() {
+                                                listAll.removeAt(index);
+                                                authAddNewTask.create(
+                                                    AddedTasks(list: listAll),
+                                                    auth.currentUser!.uid);
+                                                count--;
+                                              });
+                                            },
+                                            child: Center(
+                                              child: Card(
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              20.0),
+                                                      child: ListTile(
+                                                        leading: const Icon(
+                                                            Icons.alarm),
+                                                        title: Text(
+                                                            listAllFull[index]
+                                                                [0]),
+                                                        subtitle: Text(
+                                                            'Date : ${DateTime.parse(listAllFull[index][1]).year}:${DateTime.parse(listAllFull[index][1]).month}:${DateTime.parse(listAllFull[index][1]).day}\nTime : ${(listAllFull[index][2])}'),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
     );
   }
 }

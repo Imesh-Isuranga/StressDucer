@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:stress_ducer/Login/constant/styles.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
@@ -18,22 +18,21 @@ class _StudentProfileState extends State<StudentProfile> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
+      child: Column(
           children: [
             ListTile(
-              title: SizedBox(width: MediaQuery.of(context).size.width, child: Card(
+              title: SizedBox(width: MediaQuery.of(context).size.width, 
+              child: Card(
                 elevation: 0,
                 child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(widget.text, style: studentDetailsProfile),
+                padding: const EdgeInsets.all(15.0),
+                child: Text(widget.text, style: GoogleFonts.roboto(fontSize: MediaQuery.of(context).size.width*0.048,fontWeight: FontWeight.w300)),
               ))),
               subtitle: StreamBuilder<Student?>(
                 stream: dataAuthServices.readSpecificDocument(Provider.of<UserModel?>(context)!.uid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const Text("Loading...");
                   } else if (snapshot.hasError) {
                     return Text("Error: ${snapshot.error}");
                   } else if (snapshot.hasData) {
@@ -53,26 +52,24 @@ class _StudentProfileState extends State<StudentProfile> {
                       } else {
                         content = student.studentSubjectsPriority!;
                       }
-    
                       return Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left:17,bottom: 10),
                         child: Text(
                           content,
-                          style: studentDetailsProfileSub,
+                          style: GoogleFonts.roboto(fontSize: MediaQuery.of(context).size.width*0.04,),
                         ),
                       );
                     } else {
-                      return Text("Student not found");
+                      return const Text("Student not found");
                     }
                   } else {
-                    return Text("No data available");
+                    return const Text("No data available");
                   }
                 },
               ),
             ),
           ],
         ),
-      ),
     );
   }
 }

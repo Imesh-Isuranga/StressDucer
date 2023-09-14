@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stress_ducer/Login/Transition/sub_transition.dart';
 import 'package:stress_ducer/Login/model/student.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/TodayTasks.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Profile_In_Menu/profile_menu.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/personality.dart';
@@ -14,6 +13,8 @@ import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
 class PopUpScreen extends StatefulWidget {
   const PopUpScreen({super.key});
+
+
 
   @override
   State<PopUpScreen> createState() => _PopUpScreenState();
@@ -57,8 +58,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    return Column(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -68,10 +68,10 @@ class _PopUpScreenState extends State<PopUpScreen> {
           ])),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   height: 80,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -79,13 +79,13 @@ class _PopUpScreenState extends State<PopUpScreen> {
                         ? DecorationImage(
                             image: NetworkImage(imageUrl),
                           )
-                        : DecorationImage(
+                        : const DecorationImage(
                             image: AssetImage("assets/man.png"),
                           ), // Handle the case where imageUrl is empty or invalid
                   ),
                 ),
             
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 
@@ -97,7 +97,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return TextTransitionSubNew();
+                          return const TextTransitionSubNew();
                         } else if (snapshot.hasError) {
                           return Text("Error: ${snapshot.error}");
                         } else if (snapshot.hasData) {
@@ -113,12 +113,11 @@ class _PopUpScreenState extends State<PopUpScreen> {
                     onPressed: () {
                       AuthServices().signOut();
                     },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(color: Colors.white),
-                    ),
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.white)),
+                      side: const BorderSide(color: Colors.white),),
+                        child: const Text("Login",
+                      style: TextStyle(color: Colors.white),
+                    )
                   );
                         }
                       },
@@ -128,39 +127,38 @@ class _PopUpScreenState extends State<PopUpScreen> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             height: 300,
               child: ListView(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text("Profile"),
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileMenu()));},
+                    leading: const Icon(Icons.person),
+                    title: const Text("Profile"),
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileMenu()));},
+                  ),
+                  const Divider(height: 1,),
+                  ListTile(
+                    leading: const Icon(Icons.alarm),
+                    title: const Text("Today Task"),
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialApp(home:Scaffold(body: TodayTasks(currentContext: context,),),)));},
+                  ),
+                  const Divider(height: 1,),
+                  ListTile(
+                    leading: const Icon(Icons.image_aspect_ratio),
+                    title: const Text("Personality"),
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Personality()));},
                   ),
                   Divider(height: 1,),
                   ListTile(
-                    leading: Icon(Icons.alarm),
-                    title: Text("Today Task"),
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialApp(home:Scaffold(body: const TodayTasks(),),)));},
-                  ),
-                  Divider(height: 1,),
-                  ListTile(
-                    leading: Icon(Icons.image_aspect_ratio),
-                    title: Text("Personality"),
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Personality()));},
-                  ),
-                  Divider(height: 1,),
-                  ListTile(
-                    leading: Icon(Icons.book_online),
-                    title: Text("Take A Test"),
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => TestMain()));},
+                    leading:const Icon(Icons.book_online),
+                    title: const Text("Take A Test"),
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const TestMain()));},
                   ),
                 ],
               ),
             
           )
         ],
-      ),
-    );
+      );
   }
 }

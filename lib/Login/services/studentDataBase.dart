@@ -78,9 +78,24 @@ Future updateHowManySubjects(String documentId,String num) async {
     }
   }
 
+Future updateChangeSubjectsCount(String documentId,String num) async {
+    final userColection = FirebaseFirestore.instance.collection("students");
+
+    final docRef = userColection.doc(documentId);
+
+    
+    try {
+      await docRef.update({
+            "changeSubjectsCount": num
+      });
+    } catch (error) {
+      print("Some error occure $error");
+    }
+  }
+
 
   Future update(String documentId,StudentFirstModel studentFirstModel, String subjects,
-      String priority,String num,String enable,List<bool> flag) async {
+      String priority,String num,String enable,List<bool> flag,String changeSubjectsCount) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(documentId);
@@ -96,7 +111,8 @@ Future updateHowManySubjects(String documentId,String num) async {
             "studentSubjectsPriority": priority,
             "howManySubjects": num,
             "enableStatus": enable,
-            "flag":flag
+            "flag":flag,
+            "changeSubjectsCount":changeSubjectsCount
       });
     } catch (error) {
       print("Some error occure $error");
@@ -145,7 +161,7 @@ Future updateHowManySubjects(String documentId,String num) async {
 
 
   Future create(StudentFirstModel studentFirstModel, String subjects,
-      String priority,String id,String num,String enable,List<bool> flag) async {
+      String priority,String id,String num,String enable,List<bool> flag,String changeSubjectsCount) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(id);
@@ -159,7 +175,8 @@ Future updateHowManySubjects(String documentId,String num) async {
             studentSubjectsPriority: priority,
             howManySubjects: num,
             enableStatus: enable,
-            flag: flag,)
+            flag: flag,
+            changeSubjectsCount:changeSubjectsCount)
         .toJson();
 
     try {

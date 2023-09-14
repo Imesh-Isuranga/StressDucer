@@ -41,7 +41,8 @@ class TimeTableDataBase {
         "sunday": timeTable.sunday,
         "freedays": timeTable.freedays,
         "exam": timeTable.exam,
-        "howManySubjectsPerDay":timeTable.howManySubjectsPerDay
+        "howManySubjectsPerDay":timeTable.howManySubjectsPerDay,
+        "changeSubjectsCount":timeTable.changeSubjectsCount,
       });
     } catch (error) {
       print("Some error occure $error");
@@ -63,7 +64,8 @@ class TimeTableDataBase {
             sunday: timeTable.sunday,
             freedays: timeTable.freedays,
             exam: timeTable.exam,
-            howManySubjectsPerDay:timeTable.howManySubjectsPerDay)
+            howManySubjectsPerDay:timeTable.howManySubjectsPerDay,
+            changeSubjectsCount:timeTable.changeSubjectsCount)
         .toJson();
 
     try {

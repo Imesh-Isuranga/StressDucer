@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -21,41 +23,37 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
-  String imageUrl = "";
+  static String imageUrl = "";
 
   final _authData = dataAuthServices();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final _authTimeTable = TimeTableDataBase();
-  final TextEditingController howManySubjectsPerDayController =
-      TextEditingController();
+  double _currentSliderValue = 20;
 
   void modelBottomPanelProfile() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return Container(
-          height:
-              MediaQuery.of(context).size.height, // Take up full screen height
+        return SizedBox(
+          height:MediaQuery.of(context).size.height, // Take up full screen height
           child: SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.all(8),
-              child: const Column(
+              child: Column(
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  StudentProfile(text: "Name : "),
-                  Divider(height: 1),
-                  StudentProfile(text: "University : "),
-                  Divider(height: 1),
-                  StudentProfile(text: "Current Semester : "),
-                  Divider(height: 1),
-                  StudentProfile(text: "Number Of Subjects : "),
-                  Divider(height: 1),
-                  StudentProfile(text: "Subjects : "),
-                  Divider(height: 1),
-                  StudentProfile(text: "Priorities : "),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                  const StudentProfile(text: "Name : "),
+                  const Divider(height: 1),
+                  const StudentProfile(text: "University : "),
+                  const Divider(height: 1),
+                  const StudentProfile(text: "Current Semester : "),
+                  const Divider(height: 1),
+                  const StudentProfile(text: "Number Of Subjects : "),
+                  const Divider(height: 1),
+                  const StudentProfile(text: "Subjects : "),
+                  const Divider(height: 1),
+                  const StudentProfile(text: "Priorities : "),
                 ],
               ),
             ),
@@ -70,49 +68,55 @@ class _ProfileState extends State<Profile> {
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return Container(
-          height:
-              MediaQuery.of(context).size.height, // Take up full screen height
+        return SizedBox(
+          height:MediaQuery.of(context).size.height, // Take up full screen height
           child: SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text("How many subjects per day : ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      )),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width *
-                            0.2, // Set the desired width
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          controller: howManySubjectsPerDayController,
-                        ),
-                      ),
-                      TextButton(
+                  SizedBox(height:MediaQuery.of(context).size.height*0.05,),
+                  Text("TimeTable Settings",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.05,fontWeight: FontWeight.w700,)),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                  Divider(color: Theme.of(context).indicatorColor, thickness: 1,),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                  Text("Get New TimeTable",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.042)),
+                  TextButton(
                           onPressed: () {
+                            int number = Random().nextInt(7);
                             _authData.updateEnables(
                                 auth.currentUser!.uid, [].toString());
                             _authData.updateHowManySubjects(
                                 auth.currentUser!.uid,
-                                howManySubjectsPerDayController.text != ""
-                                    ? howManySubjectsPerDayController.text
+                                number.toString() != ""
+                                    ? number.toString()
                                     : "1");
                           },
-                          child: const Text("Save"))
-                    ],
-                  )
+                          child: const Text("Refresh"),
+                    ),
+                    Text("Complex Time Table",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.042)),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                    StatefulBuilder(builder: (context, setState) {
+                      return Slider(
+                      value: _currentSliderValue,
+                      max: 100,
+                      divisions: 10,
+                      label: (_currentSliderValue/10).round().toString(),
+                      onChanged: (double value) {
+                      setState(() {
+                           _currentSliderValue = value;
+                            _authData.updateEnables(
+                                auth.currentUser!.uid, [].toString());
+                            _authData.updateChangeSubjectsCount(
+                                auth.currentUser!.uid,
+                                ((value/10).round()).toString() != ""
+                                    ? ((value/10).round()).toString()
+                                    : "0");
+                      });
+                      },
+                   );
+                    },)
                 ],
               ),
             ),
@@ -124,7 +128,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   void dispose() {
-    howManySubjectsPerDayController.dispose();
     super.dispose();
   }
 
@@ -159,177 +162,134 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     final AuthServices _auth = AuthServices();
     String id = Provider.of<UserModel?>(context)!.uid;
-    return Center(
-      child: Column(children: [
-        const SizedBox(height: 20,),
-        Container(
-          padding: const EdgeInsets.all(20),
-          color: Theme.of(context).scaffoldBackgroundColor,
-         /* decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-            Color(0xFF0e6ba8),
-            Color(0xFF0a2472)
-          ])),*/
-          child: Row(
-            children: [
 
-           /*   CircleAvatar(
-                radius: 46,
-                backgroundColor: Theme.of(context).iconTheme.color,
-                child: CircleAvatar(
-                  radius: 54,
-                  child: CircleAvatar(
-                    child: Image.asset("assets/man.png"),
-                    backgroundColor: Colors.pink,
-                    radius: 40,
-                  ),
-                ),
-              ),*/
-
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: imageUrl.isNotEmpty
-                        ? DecorationImage(
-                            image: NetworkImage(imageUrl),
-                          )
-                        : const DecorationImage(
-                                    image: AssetImage("assets/man.png"),
-                                  ), // Handle the case where imageUrl is empty or invalid
-                  ),
-                ),
-              ),
-              const SizedBox(width: 50,),
-              
-              Expanded(child: StreamBuilder<Student?>(
-                stream: dataAuthServices.readSpecificDocument(id),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  } else if (snapshot.hasData) {
-                    final student = snapshot.data;
-                    if (student != null) {
-                      return Text(
-                        student.studentName!,
-                        style: GoogleFonts.roboto(fontSize: 25,),textAlign: TextAlign.center,
-                      ); // Return your actual widget
-                    } else {
-                      return const Text("Student not found");
-                    }
-                  } else {
-                    return const Text("No data available");
-                  }
-                },
-              ))
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView(
-            children: <Widget>[
+    return ListView(children: [
+      Card(
+              margin: const EdgeInsets.all(0),
+              child: Padding(
+                padding: EdgeInsets.only(left: screenWidth*0.09,top: screenWidth*0.09,right: screenWidth*0.02,bottom: screenWidth*0.09),
+                child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SizedBox(
+                                width: screenHeight*0.1,
+                                height: screenHeight*0.1,
+                                child: Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  height: screenHeight*0.1,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: imageUrl.isNotEmpty
+                                        ? DecorationImage(
+                                            image: NetworkImage(imageUrl),
+                                          )
+                                        : const DecorationImage(
+                                                    image: AssetImage("assets/man.png"),
+                                                  ), // Handle the case where imageUrl is empty or invalid
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: screenWidth*0.05,),
+                              Expanded(child: StreamBuilder<Student?>(
+                                stream: dataAuthServices.readSpecificDocument(id),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text("Error: ${snapshot.error}");
+                                  } else if (snapshot.hasData) {
+                                    final student = snapshot.data;
+                                    if (student != null) {
+                                      return Text(
+                                        student.studentName!,
+                                        style: GoogleFonts.roboto(fontSize: screenWidth*0.05,),textAlign: TextAlign.center,
+                                      ); // Return your actual widget
+                                    } else {
+                                      return const Text("Student not found");
+                                    }
+                                  } else {
+                                    return const Text("No data available");
+                                  }
+                                },
+                              ))
+                            ],
+                          ),
+                          ),
+                          ),
+              SizedBox(height: screenHeight * 0.005,),
               GestureDetector(
                 onTap: modelBottomPanelProfile,
                 child: Container(
-                  decoration: BoxDecoration(
-    border: Border(
-      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
-    ),
-  ),
+                decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
                   child: Card(
                     child: ListTile(
-                      leading: Icon(Icons.person),
+                      leading: Icon(Icons.person,size: screenWidth*0.05,),
                       iconColor: Theme.of(context).iconTheme.color,
-                      title: Text('Profile'),
+                      title: Text('Profile',style: GoogleFonts.roboto(fontSize: screenWidth*0.038,fontWeight: FontWeight.w400),),
                     ),
                   ),
                 ),
               ),
+
               GestureDetector(
                 onTap: modelBottomPanelSettings,
                 child: Container(
-                  decoration: BoxDecoration(
-    border: Border(
-      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
-    ),
-  ),
+                decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
                   child: Card(
                     child: ListTile(
-                      leading: Icon(Icons.settings),
+                      leading: Icon(Icons.settings,size: screenWidth*0.05,),
                       iconColor: Theme.of(context).iconTheme.color,
-                      title: Text('Settings'),
+                      title: Text('Settings',style: GoogleFonts.roboto(fontSize: screenWidth*0.038,fontWeight: FontWeight.w400),),
                     ),
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: (){},
-                child: Container(
-                  decoration: BoxDecoration(
-    border: Border(
-      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
-    ),
-  ),
-                  child: Card(
-                    child: ListTile(
-                      leading: Icon(Icons.settings),
-                      iconColor: Theme.of(context).iconTheme.color,
-                      title: Text('Dark'),
-                    ),
-                  ),
-                ),
-              ),
+
               GestureDetector(
                 onTap: modelBottomPanelProfile,
                 child: Container(
-                  decoration: BoxDecoration(
-    border: Border(
-      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
-    ),
-  ),
+                decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
                   child: Card(
                     child: ListTile(
-                      leading: Icon(Icons.help_center),
+                      leading: Icon(Icons.help_center,size: screenWidth*0.05,),
                       iconColor: Theme.of(context).iconTheme.color,
-                      title: Text('Help & Support'),
+                      title: Text('Help & Support',style: GoogleFonts.roboto(fontSize: screenWidth*0.038,fontWeight: FontWeight.w400),),
                     ),
                   ),
                 ),
               ),
+
               GestureDetector(
                 onTap: () {
                   _auth.signOut();
                 },
                 child: Container(
-                  decoration: BoxDecoration(
-    border: Border(
-      bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor), // Top border width and color
-    ),
-  ),
+                decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
                   child: Card(
                     child: ListTile(
-                      leading: Icon(Icons.logout),
+                      leading: Icon(Icons.logout,size: screenWidth*0.05,),
                       iconColor: Theme.of(context).iconTheme.color,
-                      title: Text('Log Out'),
+                      title: Text('LogOut',style: GoogleFonts.roboto(fontSize: screenWidth*0.038,fontWeight: FontWeight.w400),),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 100,),
+
+              SizedBox(height: screenHeight*0.08,),
               Column(children: [
-              Image.asset("assets/logo.png",width: 50,height: 50,),
-              const SizedBox(height: 10,),
-              Text("StressDucer",style: GoogleFonts.roboto(fontSize: 15,color: Color.fromARGB(255, 143, 143, 143)),)],)
-            ],
-          ),
-        ),
-      ]),
+              Image.asset("assets/logo.png",width: screenHeight*0.08,height: screenHeight*0.08,),
+              SizedBox(height: screenHeight*0.02,),
+              Text("StressDucer",style: GoogleFonts.roboto(fontSize: screenWidth*0.04,color: const Color.fromARGB(255, 143, 143, 143)),),],)
+    ],
     );
   }
 }

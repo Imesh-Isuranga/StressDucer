@@ -11,7 +11,8 @@ class TimeTable {
       required this.sunday,
       required this.freedays,
       required this.exam,
-      required this.howManySubjectsPerDay
+      required this.howManySubjectsPerDay,
+      required this.changeSubjectsCount,
       });
 
   final String? monday;
@@ -24,6 +25,7 @@ class TimeTable {
   final String freedays;
   final String exam;
   final String howManySubjectsPerDay;
+  final String changeSubjectsCount;
 
   factory TimeTable.fromSnapshot(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -38,7 +40,8 @@ class TimeTable {
         sunday: snapshot['sunday'],
         freedays: snapshot['freedays'],
         exam: snapshot['exam'],
-        howManySubjectsPerDay: snapshot['howManySubjectsPerDay']);
+        changeSubjectsCount: snapshot['howManySubjectsPerDay'],
+        howManySubjectsPerDay: snapshot['changeSubjectsCount']);
   }
 
   Map<String,dynamic> toJson()=>{
@@ -51,7 +54,8 @@ class TimeTable {
     "sunday":sunday,
     "freedays":freedays,
     "exam":exam,
-    "howManySubjectsPerDay":howManySubjectsPerDay
+    "howManySubjectsPerDay":howManySubjectsPerDay,
+    "changeSubjectsCount":changeSubjectsCount,
   };
 
 }

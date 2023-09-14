@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stress_ducer/Login/model/student.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender/calenderHelp.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:intl/intl.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender/calenderHelp.dart';
 
 
 
@@ -69,88 +69,54 @@ class _CalenderState extends State<Calender> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     DateTime currentDate = DateTime.now();
     int daysInCurrentMonth =
         DateTime(currentDate.year, currentDate.month + 1, 0).day;
 
-    return Column(
-      children: [SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Card(
-          margin: const EdgeInsets.all(0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                const SizedBox(
-                  height: 20,
+    return ListView(children: [
+        Card(
+              margin: const EdgeInsets.all(0),
+              child: Padding(
+                padding: EdgeInsets.only(left: screenWidth*0.05),
+                child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      SizedBox(height: screenHeight*0.02,),
+                      Text("Magic Calender",style: GoogleFonts.roboto(fontSize: screenWidth*0.053, fontWeight: FontWeight.w600),),
+                      SizedBox(height: screenHeight*0.02,),
+                      SizedBox(
+                        width: screenWidth*0.14,
+                        height: screenWidth*0.054,
+                        child: ElevatedButton(
+                                onPressed: () {
+                                  CalenderHelp().getHelpTextPanel(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        btnBackGreen.withOpacity(0.5),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20))),
+                                child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                              ),
+                      ),
+                      SizedBox(height: screenHeight*0.02,)
+                      ]),
                 ),
-                Row(children: [
-                  const SizedBox(width: 20,),
-                  Text(
-                  "Magic Calender",
-                  style: GoogleFonts.roboto(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600),
-                ),
-                ]),
-                const SizedBox(
-                        height: 10,
-                      ),
-                Row(
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                CalenderHelp().getHelpTextPanel(context);
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    btnBackGreen.withOpacity(0.5),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20))),
-                            child: const Text("Help"),
-                          )
-                        ],
-                      ),
-                const SizedBox(
-                  height: 20,
-                )
-              ]),
-            ),
-      ),
-        Divider(
-  color: Theme.of(context).indicatorColor,
-  thickness: 0.3, // Adjust the thickness of the line
-),
-        Expanded(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 40),
-                  Text(
-                    "You have only ${daysInCurrentMonth - currentDate.day} days for this month",
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.red),
-                  ),
-                  const SizedBox(height: 40),
-                  Text("${DateFormat.MMMM().format(DateTime.now())}",style: GoogleFonts.roboto(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 7,
-                      ),
+              ),
+              SizedBox(height: screenHeight * 0.005,),
+              Card(child: Column(children: [
+                SizedBox(height: screenHeight * 0.02,),
+                Text("You have only ${daysInCurrentMonth - currentDate.day} days for this month",style: GoogleFonts.roboto(fontSize: screenWidth*0.037,fontWeight: FontWeight.w600,color: Colors.red),),
+                SizedBox(height: screenHeight * 0.04,),
+                Text("${DateFormat.MMMM().format(DateTime.now())}",style: GoogleFonts.roboto(fontSize: screenWidth*0.033,fontWeight: FontWeight.w600)),
+                SizedBox(height: screenHeight*0.04),
+                GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7,),
                       itemCount: daysInCurrentMonth,
                       itemBuilder: (context, index) {
                         final number = index + 1;
@@ -175,47 +141,34 @@ class _CalenderState extends State<Calender> {
                                           now.year, now.month, (index + 1)),
                                       time: const TimeOfDay(hour: 08, minute: 00));
                                 } else {
-                                  NotificationService.cancelScheduledNotification(
-                                      index);
+                                  NotificationService.cancelScheduledNotification(index);
                                 }
                               }
                             });
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: calenderSquare,
-                                border: Border.all(color: Colors.black)),
+                              color: const Color.fromARGB(255, 1, 89, 4),
+                                border: Border.all(color: Colors.white)),
                             child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(number.toString(),style: TextStyle(color: Colors.black),),
+                                  Text(number.toString(),style: GoogleFonts.roboto(fontSize: screenWidth*0.05,color: Colors.white),),
                                   if (!isValidNumber)
-                                    const Icon(
-                                      Icons.clear,
-                                      color: calenderMarks,
-                                    ),
+                                    Icon(Icons.clear,color: Colors.red,size: screenWidth*0.045,),
                                   if ((flag[index] == true) && isValidNumber)
-                                    const Expanded(
+                                    Expanded(
                                       child: Icon(
-                                        Icons.flag,
-                                        color: calenderMarks,
-                                      ),
-                                    )
+                                        Icons.flag,color: Colors.red,size: screenWidth*0.045,),)
                                 ],
                               ),
                             ),
                           ),
                         );
                       },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+                        ),
+              ]),)
+    ],);
   }
 }

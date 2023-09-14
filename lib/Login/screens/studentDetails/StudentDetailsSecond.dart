@@ -163,7 +163,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                               (prioritysControllers.join(',')),
                               widget.idNum,
                               "0",
-                              "[]", []);
+                              "[]", [],"0");
                         } : (){},
                         style: ButtonStyle(
                             backgroundColor:

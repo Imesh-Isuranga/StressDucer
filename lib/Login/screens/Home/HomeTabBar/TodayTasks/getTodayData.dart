@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stress_ducer/Login/model/timeTable.dart';
@@ -18,7 +19,8 @@ static List<String> getTodaySubjects(
     TimeTable? _timeTableData,
     TimeTableDataBase timetable,
     FirebaseAuth auth,
-    List<Map<String, dynamic>> tableDataList
+    List<Map<String, dynamic>> tableDataList,
+    int changeSubjectsCount
     ) {
 
 
@@ -55,7 +57,23 @@ static List<String> getTodaySubjects(
       }
     }
 
+for (int k = 0; k < 7; k++) {
+  dayList[k].clear();
+}
 
+
+
+for (int k = 0; k < changeSubjectsCount; k++) {
+  if(k>0){
+    List<int> numbersNewTemp = dayPriorities;
+    int minNumberNewTemp = numbersNewTemp.reduce(min);
+    for (int j=0; j<7; j++) {
+      if(minNumberNewTemp==dayPriorities[j]){
+        howManySubjects = j;
+        break;
+      }
+    }
+  }
 
 int j1 = 0;
 int lengthpriority4AND5 = priority4AND5.length;
@@ -123,19 +141,21 @@ while((j3 < priority1.length) && (priority1.length != 0)){
     minNumberNew = numbersNew.reduce(min);
   }
 }
-
-
-
+}
 
 
 
 //remove duplicates
+int i=0;
 for (var element in dayList) {
-  Set<String> uniqueNumbers1 = element.toSet();
-  element = uniqueNumbers1.toList();
+  element = LinkedHashSet<String>.from(element).toList();
+  dayList[i] = element;
+  i++;
+ // Set<String> uniqueNumbers1 = element.toSet();
+ // element = uniqueNumbers1.toList();
 }
   
-
+print(dayList[0]);
 
 
 List<int> maxLengthFindList = [dayList[0].length,dayList[1].length,dayList[2].length,dayList[3].length,dayList[4].length,dayList[5].length,dayList[6].length];
@@ -152,7 +172,6 @@ for (var element in dayList) {
 }
 
 
-
     todaySubjectsList.add(dayList[0].toString());
     todaySubjectsList.add(dayList[1].toString());
     todaySubjectsList.add(dayList[2].toString());
@@ -166,7 +185,7 @@ for (var element in dayList) {
 
     
 
-   return TimeTableView.getTableView(updateTodaySubjectsList, studentSubjectsList, studentSubjectsPriorityList, todaySubjectsList, dayList ,howManySubjects, _timeTableData, timetable, auth, tableDataList);
+   return TimeTableView.getTableView(updateTodaySubjectsList, studentSubjectsList, studentSubjectsPriorityList, todaySubjectsList, dayList ,howManySubjects, _timeTableData, timetable, auth, tableDataList,changeSubjectsCount);
 
   }
 

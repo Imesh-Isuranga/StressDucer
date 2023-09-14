@@ -10,7 +10,9 @@ import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
 
 class TodayTasks extends StatefulWidget {
-  const TodayTasks({super.key});
+  const TodayTasks({super.key, required this.currentContext});
+
+  final BuildContext currentContext;
 
   @override
   State<TodayTasks> createState() => TodayTasksState();
@@ -33,6 +35,7 @@ class TodayTasksState extends State<TodayTasks> {
   static List<String> updateTodaySubjectsList = [];
   static List<String> todaySubjectsList = [];
   static int howManySubjects = 19;
+  static int changeSubjectsCount = 0;
 
   static List<String> mondayList = [];
   static List<String> tuesdayList = [];
@@ -91,34 +94,38 @@ class TodayTasksState extends State<TodayTasks> {
                 studentSubjectsPriorityList =
                     studentSubjectsPriority.split(',');
 
-  tableDataList.clear();
-    updateTodaySubjectsList.clear();
-    todaySubjectsList.clear();
-    mondayList.clear();
-    tuesdayList.clear();
-    wednesdayList.clear();
-    thursdayList.clear();
-    fridayList.clear();
-    saturdayList.clear();
-    sundayList.clear();
+                    changeSubjectsCount = int.parse(student.changeSubjectsCount ?? '0');
+                    print("111111111111111111111111---------------");
+print(howManySubjects);
 
-    updateTodaySubjectsList = GetTodayData.getTodaySubjects(
-        updateTodaySubjectsList,
-        studentSubjectsList,
-        studentSubjectsPriorityList,
-        todaySubjectsList,
-        dayList,
-        howManySubjects,
-        _timeTableData,
-        timetable,
-        auth,
-        tableDataList);
+                tableDataList.clear();
+                updateTodaySubjectsList.clear();
+                todaySubjectsList.clear();
+                mondayList.clear();
+                tuesdayList.clear();
+                wednesdayList.clear();
+                thursdayList.clear();
+                fridayList.clear();
+                saturdayList.clear();
+                sundayList.clear();
 
-         _enable.clear();
-    for (int i = 0; i < updateTodaySubjectsList.length; i++) {
-      _enable.add(false);
-    }
+                updateTodaySubjectsList = GetTodayData.getTodaySubjects(
+                    updateTodaySubjectsList,
+                    studentSubjectsList,
+                    studentSubjectsPriorityList,
+                    todaySubjectsList,
+                    dayList,
+                    howManySubjects,
+                    _timeTableData,
+                    timetable,
+                    auth,
+                    tableDataList,
+                    changeSubjectsCount);
 
+                _enable.clear();
+                for (int i = 0; i < updateTodaySubjectsList.length; i++) {
+                  _enable.add(false);
+                }
               } catch (e) {
                 // Handle the parsing error
                 print("Error parsing howManySubjects: $e");
@@ -148,8 +155,10 @@ class TodayTasksState extends State<TodayTasks> {
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-        Navigator.of(context).pop();
-        ;
+        //  widget.changeTab(0);
+        if (mounted) {
+          Navigator.of(widget.currentContext).pop();
+        }
       },
     );
 
@@ -171,93 +180,72 @@ class TodayTasksState extends State<TodayTasks> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     if (k < 1) {
       getData();
       k++;
     }
-  
 
     return ListView(
       children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Card(
-              margin: const EdgeInsets.all(0),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "Today Tasks",
-                            style: GoogleFonts.roboto(
-                                fontSize: 25, fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                enabledList.clear();
-                                for (int i = 0;
-                                    i < updateTodaySubjectsList.length;
-                                    i++) {
-                                  enabledList.add(i.toString());
-                                }
-                                authStudent.updateEnables(auth.currentUser!.uid,
-                                    enabledList.toString());
-                                _alertMsg();
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    btnBackGreen.withOpacity(0.5),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20))),
-                            child: const Text("Done All"),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ]),
-              )),
-        ),
-
-        Divider(
-  color: Theme.of(context).indicatorColor,
-  thickness: 0.3, // Adjust the thickness of the line
-),
-        SingleChildScrollView(
-          child: Card(
-            margin: const EdgeInsets.only(left: 0, right: 0, top: 3),
-            child: Center(
-              child: Column(
+        Card(
+          margin: const EdgeInsets.all(0),
+          child: Padding(
+            padding: EdgeInsets.only(left: screenWidth * 0.05),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Center(
-                    child: SizedBox(
-                      height: 300, // Set a bounded height
-                      child: ListView.builder(
-                        itemCount: updateTodaySubjectsList.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
+                  SizedBox(
+                    height: screenHeight * 0.02,
+                  ),
+                  Text(
+                    "Today Tasks",
+                    style: GoogleFonts.roboto(fontSize: screenWidth * 0.053,fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.02,
+                  ),
+                  SizedBox(
+                    width: screenWidth*0.24,
+                    height: screenWidth*0.054,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          enabledList.clear();
+                          for (int i = 0;
+                              i < updateTodaySubjectsList.length;
+                              i++) {
+                            enabledList.add(i.toString());
+                          }
+                          authStudent.updateEnables(
+                              auth.currentUser!.uid, enabledList.toString());
+                          _alertMsg();
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: btnBackGreen.withOpacity(0.5),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                      child: Text("Done All",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                    ),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.02,
+                  )
+                ]),
+          ),
+        ),
+        SizedBox(height: screenHeight * 0.005,),
+        Card(
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: updateTodaySubjectsList.length,
+            itemBuilder:(context, index) {
+              return ListTile(
                             enabled: _enable[index],
                             // This sets text color and icon color to red when list tile is disabled and
                             // green when list tile is selected, otherwise sets it to black.
@@ -279,10 +267,9 @@ class TodayTasksState extends State<TodayTasks> {
                                 return btnBackGreen;
                               },
                             ),
-                            leading: const Icon(Icons.person),
-                            title:
-                                Text(updateTodaySubjectsList[index].toString()),
-                            subtitle: Text('Done: ${_enable[index]}'),
+                            leading: Icon(Icons.person,size: screenWidth*0.05),
+                            title:Text(updateTodaySubjectsList[index].toString()),
+                            subtitle: Text('Done: ${_enable[index]}',style: GoogleFonts.roboto(fontSize: screenWidth * 0.029,fontWeight: FontWeight.w600)),
                             trailing: Switch(
                               onChanged: (bool? value) {
                                 setState(() {
@@ -312,46 +299,36 @@ class TodayTasksState extends State<TodayTasks> {
                               value: _enable[index],
                             ),
                           );
-                        },
-                      ),
-                    ),
-                  ),
-                  Divider(
-  color: Theme.of(context).indicatorColor,
-  thickness: 0.3, // Adjust the thickness of the line
-),
-                  SingleChildScrollView(
+          },),
+        ),
+        SizedBox(height: screenWidth*0.01,),
+        Card(child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
-                      columns: const [
-                        DataColumn(label: Text('Monday')),
-                        DataColumn(label: Text('Tuesday')),
-                        DataColumn(label: Text('Wednesday')),
-                        DataColumn(label: Text('Thursday')),
-                        DataColumn(label: Text('Friday')),
-                        DataColumn(label: Text('Saturday')),
-                        DataColumn(label: Text('Sunday')),
-                      ],
-                      rows: tableDataList.map((data) {
-                        return DataRow(
-                          cells: [
-                            DataCell(Text(data['Monday'])),
-                            DataCell(Text(data['Tuesday'])),
-                            DataCell(Text(data['Wednesday'])),
-                            DataCell(Text(data['Thursday'])),
-                            DataCell(Text(data['Friday'])),
-                            DataCell(Text(data['Saturday'])),
-                            DataCell(Text(data['Sunday'])),
-                          ],
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+                        columns: const [
+                          DataColumn(label: Text('Monday')),
+                          DataColumn(label: Text('Tuesday')),
+                          DataColumn(label: Text('Wednesday')),
+                          DataColumn(label: Text('Thursday')),
+                          DataColumn(label: Text('Friday')),
+                          DataColumn(label: Text('Saturday')),
+                          DataColumn(label: Text('Sunday')),
+                        ],
+                        rows: tableDataList.map((data) {
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(data['Monday'])),
+                              DataCell(Text(data['Tuesday'])),
+                              DataCell(Text(data['Wednesday'])),
+                              DataCell(Text(data['Thursday'])),
+                              DataCell(Text(data['Friday'])),
+                              DataCell(Text(data['Saturday'])),
+                              DataCell(Text(data['Sunday'])),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                  ),)
       ],
     );
   }
