@@ -158,6 +158,24 @@ Future updateChangeSubjectsCount(String documentId,String num) async {
   }
 
 
+    Future updateSubjectsWithPri(String documentId, String numOfSub,String subjects,String priority) async {
+    final userColection = FirebaseFirestore.instance.collection("students");
+
+    final docRef = userColection.doc(documentId);
+
+    
+    try {
+      await docRef.update({
+        "studentNumOfSubjects": numOfSub,
+            "studentSubjects": subjects,
+            "studentSubjectsPriority": priority
+      });
+    } catch (error) {
+      print("Some error occure $error");
+    }
+  }
+
+
 
 
   Future create(StudentFirstModel studentFirstModel, String subjects,

@@ -1,15 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:googleapis/privateca/v1.dart';
 import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Home.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/Profile.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/StudentProfile.dart';
-import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:stress_ducer/Login/screens/error.dart';
+import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Profile_In_Menu/subjectsEdit.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key,required this.guestFunction});
@@ -46,18 +43,15 @@ class _EditProfileState extends State<EditProfile> {
     String id = Provider.of<UserModel?>(context)!.uid;
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Profile",
-          style: TextStyle(color: Colors.black),
         ),
       ),
       body: StreamBuilder<Student?>(
         stream: dataAuthServices.readSpecificDocument(id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text("Error: ${snapshot.error}");
           } else if (snapshot.hasData) {
@@ -69,8 +63,7 @@ class _EditProfileState extends State<EditProfile> {
               _priTxt.text = student.studentSubjectsPriority ?? '';
 
               return SingleChildScrollView(
-                child: Container(
-                    child: Padding(
+                child: Padding(
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     children: [
@@ -121,8 +114,9 @@ class _EditProfileState extends State<EditProfile> {
                           TextButton(
                               onPressed: () {
                                 setState(() {
-                                  setEditNumSub = true;
-                                  setEditSave = true;
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => const Subjects()));
+                                 /* setEditNumSub = true;
+                                  setEditSave = true;*/
                                 });
                               },
                               child: const Text("Edit"))
@@ -130,64 +124,8 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       const SizedBox(
                         height: 30,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              child: TextField(
-                                enabled: setEditSub,
-                                controller: _subTxt,
-                                decoration: const InputDecoration(
-                                  labelText: 'Subjects',
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 40,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  setEditSub = true;
-                                  setEditSave = true;
-                                });
-                              },
-                              child: const Text("Edit"))
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              child: TextField(
-                                enabled: setEditPri,
-                                controller: _priTxt,
-                                decoration: const InputDecoration(
-                                  labelText: 'Priority',
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 40,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  setEditPri = true;
-                                  setEditSave = true;
-                                });
-                              },
-                              child: const Text("Edit"))
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
                       ),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black),
                           onPressed: setEditSave
                               ? () {
                                   try {
@@ -215,13 +153,13 @@ class _EditProfileState extends State<EditProfile> {
                                   }
                                 }
                               : null,
-                          child: Text("Save"))
+                          child: const Text("Save"))
                     ],
                   ),
-                )),
+                ),
               );
             } else {
-              return Text("data");
+              return const Text("data");
             }
           } else {
             return Center(
@@ -229,7 +167,7 @@ class _EditProfileState extends State<EditProfile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "You are loged as a guest",
+                    "You are logged as a guest",
                     style: GoogleFonts.roboto(
                         fontSize: 15, fontWeight: FontWeight.w400),
                   ),
@@ -243,12 +181,12 @@ class _EditProfileState extends State<EditProfile> {
                       widget.guestFunction();
                       Navigator.pop(context);
                     },
-                    child: Text(
-                      "Back",
-                      style: TextStyle(color: Colors.black),
-                    ),
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.black)),
+                        side: BorderSide(color: Theme.of(context).indicatorColor)),
+                    child: const Text(
+                      "Back",
+                    ),
+                    
                   )
                 ],
               ),

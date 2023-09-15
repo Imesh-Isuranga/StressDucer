@@ -25,8 +25,8 @@ class _PersonalityState extends State<Personality> {
   late TextEditingController nameTxt;
   late TextEditingController uniTxt;
   User? user = FirebaseAuth.instance.currentUser;
-  String imageUrl = '';
-  String imageUrlCover = '';
+  static String imageUrl = '';
+  static String imageUrlCover = '';
 
   bool setEditName = false;
   bool setEditUni = false;
@@ -114,14 +114,10 @@ class _PersonalityState extends State<Personality> {
   @override
   Widget build(BuildContext context1) {
     String id = Provider.of<UserModel?>(context)!.uid;
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-          backgroundColor: Colors.white,
           title: const Text(
             "Personality",
-            style: TextStyle(color: Colors.black),
           ),
         ),
         body: StreamBuilder<Student?>(
@@ -138,11 +134,10 @@ class _PersonalityState extends State<Personality> {
                 uniTxt.text = student.studentUniName ?? '';
 
                 return SingleChildScrollView(
-                  child: Container(
-                      child: Column(
+                  child: Column(
                     children: [
                       Card(
-                          margin: EdgeInsets.all(0),
+                          margin: const EdgeInsets.all(0),
                           child: Padding(
                             padding: const EdgeInsets.all(30.0),
                             child: Column(
@@ -152,7 +147,7 @@ class _PersonalityState extends State<Personality> {
                                   height: 20,
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(bottom: 10),
+                                  margin: const EdgeInsets.only(bottom: 10),
                                   height: 100,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
@@ -160,7 +155,7 @@ class _PersonalityState extends State<Personality> {
                                         ? DecorationImage(
                                             image: NetworkImage(imageUrl),
                                           )
-                                        : DecorationImage(
+                                        : const DecorationImage(
                                             image: AssetImage("assets/man.png"),
                                           ), // Handle the case where imageUrl is empty or invalid
                                   ),
@@ -175,7 +170,7 @@ class _PersonalityState extends State<Personality> {
                                     saveProfileImage(id);
                                     _initImageUrl();
                                   },
-                                  child: const Text("Edit"),
+                                  child: const Text("Upload"),
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -233,11 +228,10 @@ class _PersonalityState extends State<Personality> {
                                     )
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                                   onPressed: setEditSave
                                       ? () {
                                           try {
@@ -265,14 +259,14 @@ class _PersonalityState extends State<Personality> {
                                           }
                                         }
                                       : null,
-                                  child: Text("Save"),
+                                  child: const Text("Save"),
                                 )
                               ],
                             ),
                           )),
                       const SizedBox(height: 3),
                       Card(
-                        margin: EdgeInsets.all(0),
+                        margin: const EdgeInsets.all(0),
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
@@ -283,12 +277,13 @@ class _PersonalityState extends State<Personality> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                imageUrl.isEmpty
-                                    ? Image.asset("assets/cover_img.jpg")
-                                    : Image.network(imageUrlCover),
+                                Container(
+                                  width: double.infinity, height: MediaQuery.of(context).size.height*0.3,
+                                  decoration: BoxDecoration(image: imageUrlCover.isEmpty
+                                    ? const DecorationImage(image: AssetImage("assets/cover_img.jpg"))
+                                    : DecorationImage(image: NetworkImage(imageUrlCover))),),
                                 const SizedBox(height: 20),
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                                   onPressed: () {
                                     try {
                                       saveCoverProfileImage(id);
@@ -302,7 +297,7 @@ class _PersonalityState extends State<Personality> {
                                       );
                                     }
                                   },
-                                  child: Text("Save"),
+                                  child: const Text("Upload"),
                                 ),
                               ],
                             ),
@@ -311,7 +306,7 @@ class _PersonalityState extends State<Personality> {
                       ),
                       const SizedBox(height: 30),
                     ],
-                  )),
+                  )
                 );
               } else {
                 return const Text("Student not found");
@@ -335,12 +330,11 @@ class _PersonalityState extends State<Personality> {
                     onPressed: () {
                       Navigator.pop(context1);
                     },
-                    child: Text(
-                      "Back to Login",
-                      style: TextStyle(color: Colors.black),
-                    ),
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.black)),
+                        side: BorderSide(color: Theme.of(context).indicatorColor)),
+                        child: const Text(
+                      "Back to Login",
+                    )
                   )
                 ],
               ),
@@ -348,7 +342,6 @@ class _PersonalityState extends State<Personality> {
             }
           },
         ),
-      ),
-    );
+      );
   }
 }

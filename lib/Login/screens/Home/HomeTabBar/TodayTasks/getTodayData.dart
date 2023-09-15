@@ -57,13 +57,12 @@ static List<String> getTodaySubjects(
       }
     }
 
-for (int k = 0; k < 7; k++) {
+for (int k = 0; k < 7; k++) {//When repeating below algrothem(refreshing btn) dayList should clear
   dayList[k].clear();
 }
 
 
-
-for (int k = 0; k < changeSubjectsCount; k++) {
+for (int k = 0; k < changeSubjectsCount; k++) {//for repeat
   if(k>0){
     List<int> numbersNewTemp = dayPriorities;
     int minNumberNewTemp = numbersNewTemp.reduce(min);

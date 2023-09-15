@@ -60,6 +60,29 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
     return true;
   }
 
+  void warningtMsg() {
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: const Text("Warning",style: TextStyle(color: Colors.red),),
+      content: const Text("Please Fill All"),
+      actions: [
+        okButton,
+      ],
+    );
+  showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+}
+
   @override
   Widget build(BuildContext context) {
     final _authDataBase = dataAuthServices();
@@ -71,7 +94,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
               onPressed: () {
                 widget.backPress();
               },
-              icon: Icon(Icons.arrow_back_ios_new_sharp),
+              icon: const Icon(Icons.arrow_back_ios_new_sharp),
               color: Colors.black,
             ),
             backgroundColor: mainAppBarColor,
@@ -80,8 +103,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
               style: TextStyle(color: appBarTextColor),
             ),
           ),
-          body: Container(
-            child: SingleChildScrollView(
+          body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Center(
@@ -113,7 +135,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                                   child: TextField(
                                     decoration: InputDecoration(
                                       errorText: subjectsControllers[index].text.isEmpty ? '*required' : null,
-                                      border: OutlineInputBorder(),
+                                      border: const OutlineInputBorder(),
                                       labelText: 'Subject ${(index + 1)}',
                                     ),
                                     controller: subjectsControllers[index],
@@ -156,6 +178,17 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                       FilledButton(
                         onPressed: nextEnable() ?
                         () {
+                          int num = int.parse(widget.studentFirstModel.studentNumOfSubjects);
+                          int repeatSubject = 0;
+                          if(num<14){
+                            if(num<=7){
+                              repeatSubject = (14/num).round();
+                            }else{
+                              repeatSubject=2;
+                            }
+                          }else{
+                            repeatSubject=1;
+                          }
                           widget.Pressed(false);
                           _authDataBase.create(
                               widget.studentFirstModel,
@@ -163,8 +196,8 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                               (prioritysControllers.join(',')),
                               widget.idNum,
                               "0",
-                              "[]", [],"0");
-                        } : (){},
+                              "[]", [],repeatSubject.toString());
+                        } : (){warningtMsg();},
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.black)),
@@ -182,7 +215,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                 ),
               ),
             ),
-          )),
+          ),
     );
   }
 }

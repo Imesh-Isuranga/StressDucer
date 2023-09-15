@@ -88,8 +88,8 @@ class _CalenderState extends State<Calender> {
                       Text("Magic Calender",style: GoogleFonts.roboto(fontSize: screenWidth*0.053, fontWeight: FontWeight.w600),),
                       SizedBox(height: screenHeight*0.02,),
                       SizedBox(
-                        width: screenWidth*0.14,
-                        height: screenWidth*0.054,
+                        width: screenWidth*0.15,
+                        height: screenWidth*0.0625,
                         child: ElevatedButton(
                                 onPressed: () {
                                   CalenderHelp().getHelpTextPanel(context);
@@ -99,7 +99,7 @@ class _CalenderState extends State<Calender> {
                                         btnBackGreen.withOpacity(0.5),
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20))),
-                                child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                                child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600),),
                               ),
                       ),
                       SizedBox(height: screenHeight*0.02,)

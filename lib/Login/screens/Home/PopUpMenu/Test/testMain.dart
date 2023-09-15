@@ -24,11 +24,8 @@ class _TestMainState extends State<TestMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Test",
-          style: TextStyle(color: Colors.black),
         ),
       ),
       body: changeWindow == 0

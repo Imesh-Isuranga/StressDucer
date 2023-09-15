@@ -35,6 +35,30 @@ class _StudentDetailsState extends State<StudentDetails>{
   }
 
 
+  void warningtMsg() {
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: const Text("Warning",style: TextStyle(color: Colors.red),),
+      content: const Text("Please Fill All"),
+      actions: [
+        okButton,
+      ],
+    );
+  showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+}
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -128,7 +152,7 @@ class _StudentDetailsState extends State<StudentDetails>{
                             studentCurrentSem: controllerStudentCurrentSem.text,
                             studentNumOfSubjects:
                                 controllerStudentNumOfSubjects.text));
-                      } : (){},
+                      } : (){warningtMsg();},
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.black)),

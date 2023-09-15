@@ -26,11 +26,8 @@ void guestFunction(){
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
         title: const Text(
           "Profile",
-          style: TextStyle(color: Colors.black),
         ),
       ),
       body: SingleChildScrollView(
@@ -48,11 +45,9 @@ void guestFunction(){
               height: 20,
             ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                 onPressed: () {
                   if(text == "Edit"){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EditProfile(guestFunction: guestFunction,)));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => EditProfile(guestFunction: guestFunction,)));
                   }else{
                     Navigator.pop(context);
                   }

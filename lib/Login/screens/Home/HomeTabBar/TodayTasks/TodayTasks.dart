@@ -94,8 +94,7 @@ class TodayTasksState extends State<TodayTasks> {
                 studentSubjectsPriorityList =
                     studentSubjectsPriority.split(',');
 
-                    changeSubjectsCount = int.parse(student.changeSubjectsCount ?? '0');
-                    print("111111111111111111111111---------------");
+                    changeSubjectsCount = int.parse(student.changeSubjectsCount ?? '1');
 print(howManySubjects);
 
                 tableDataList.clear();
@@ -210,7 +209,7 @@ print(howManySubjects);
                   ),
                   SizedBox(
                     width: screenWidth*0.24,
-                    height: screenWidth*0.054,
+                    height: screenWidth*0.0625,
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -229,7 +228,7 @@ print(howManySubjects);
                           backgroundColor: btnBackGreen.withOpacity(0.5),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20))),
-                      child: Text("Done All",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                      child: Text("Done All",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600),),
                     ),
                   ),
                   SizedBox(

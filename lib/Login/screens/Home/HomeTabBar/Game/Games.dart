@@ -170,8 +170,8 @@ class _GamesState extends State<Games> {
                       Row(
                         children: [
                           SizedBox(
-                            width: screenWidth*0.14,
-                            height: screenWidth*0.054,
+                            width: screenWidth*0.15,
+                            height: screenWidth*0.0625,
                             child: ElevatedButton(
                                     onPressed: () {
                                       GameHelp().getHelpTextPanel(context);
@@ -181,13 +181,13 @@ class _GamesState extends State<Games> {
                                             btnBackGreen.withOpacity(0.5),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(20))),
-                                    child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                                    child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600),),
                                   ),
                           ),
                                 SizedBox(width: screenWidth*0.04,),
                                 if(state == 2)SizedBox(
-                                  width: screenWidth*0.14,
-                                  height: screenWidth*0.054,
+                                  width: screenWidth*0.175,
+                                  height: screenWidth*0.0625,
                                   child: ElevatedButton(
                                     onPressed: () {
                                       setState(() {
@@ -199,7 +199,7 @@ class _GamesState extends State<Games> {
                                             btnBackGreen.withOpacity(0.5),
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(20))),
-                                    child: Text("Back",style: GoogleFonts.roboto(fontSize: screenWidth * 0.025,fontWeight: FontWeight.w600),),
+                                    child: Text("Back",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600),),
                                   ),
                                 ),
                         ],

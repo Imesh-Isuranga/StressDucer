@@ -58,6 +58,9 @@ class _PopUpScreenState extends State<PopUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Column(
         children: [
           Container(
@@ -140,7 +143,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                   ListTile(
                     leading: const Icon(Icons.alarm),
                     title: const Text("Today Task"),
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MaterialApp(home:Scaffold(body: TodayTasks(currentContext: context,),),)));},
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(body: TodayTasks(currentContext: context,),)));},
                   ),
                   const Divider(height: 1,),
                   ListTile(
@@ -148,7 +151,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                     title: const Text("Personality"),
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Personality()));},
                   ),
-                  Divider(height: 1,),
+                  const Divider(height: 1,),
                   ListTile(
                     leading:const Icon(Icons.book_online),
                     title: const Text("Take A Test"),
@@ -157,7 +160,13 @@ class _PopUpScreenState extends State<PopUpScreen> {
                 ],
               ),
             
-          )
+          ),
+          
+          SizedBox(height: screenHeight*0.05,),
+          Column(children: [
+          Image.asset("assets/logo.png",width: screenHeight*0.075,height: screenHeight*0.075,),
+          SizedBox(height: screenHeight*0.02,),
+          Text("StressDucer",style: GoogleFonts.roboto(fontSize: screenWidth*0.04),),],)
         ],
       );
   }

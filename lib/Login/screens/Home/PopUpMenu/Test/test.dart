@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googleapis/customsearch/v1.dart';
-import 'package:googleapis/forms/v1.dart';
 import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Test/questions.dart';
-import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Test/result.dart';
 
 class Test extends StatefulWidget {
   const Test({super.key, required this.changeScreen});
@@ -26,8 +23,7 @@ class _TestState extends State<Test> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
+    return Center(
         child: Padding(
           padding: const EdgeInsets.all(50.0),
           child: Column(
@@ -52,7 +48,7 @@ class _TestState extends State<Test> {
                                 20.0), // Adjust the radius here
                           ),
                         ),
-                      backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 3, 42, 171))),
+                      backgroundColor: const MaterialStatePropertyAll(Color.fromARGB(255, 3, 42, 171))),
                       onPressed: () {
                         setState(() {
                           if ((questions.length - 1) > i) {
@@ -75,7 +71,7 @@ class _TestState extends State<Test> {
                             borderRadius: BorderRadius.circular(
                                 20.0), // Adjust the radius here
                           ),
-                        ),backgroundColor: MaterialStatePropertyAll(Color.fromARGB(255, 3, 42, 171))
+                        ),backgroundColor: const MaterialStatePropertyAll(Color.fromARGB(255, 3, 42, 171))
                       ),
                       onPressed: () {
                         setState(() {
@@ -98,7 +94,6 @@ class _TestState extends State<Test> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

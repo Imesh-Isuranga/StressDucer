@@ -30,6 +30,9 @@ class _ProfileState extends State<Profile> {
   final _authTimeTable = TimeTableDataBase();
   double _currentSliderValue = 20;
 
+
+      
+
   void modelBottomPanelProfile() {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -97,6 +100,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text("Complex Time Table",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.042)),
                     SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                    Text('Complexity : ${_currentSliderValue}',style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.032)),
                     StatefulBuilder(builder: (context, setState) {
                       return Slider(
                       value: _currentSliderValue,
@@ -105,14 +109,20 @@ class _ProfileState extends State<Profile> {
                       label: (_currentSliderValue/10).round().toString(),
                       onChanged: (double value) {
                       setState(() {
-                           _currentSliderValue = value;
+                        if(value==0.0){
+                          value = 10;
+                          _currentSliderValue = value;
+                        }else{
+                          _currentSliderValue = value;
+                        }
+                           
                             _authData.updateEnables(
                                 auth.currentUser!.uid, [].toString());
                             _authData.updateChangeSubjectsCount(
                                 auth.currentUser!.uid,
-                                ((value/10).round()).toString() != ""
-                                    ? ((value/10).round()).toString()
-                                    : "0");
+                                ((value/10).round()).toString() == ""
+                                    ? "1"
+                                    : ((value/10).round()).toString());
                       });
                       },
                    );
@@ -133,11 +143,23 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    setState(() {
-      imageUrl = user!.photoURL==null ? "" : user!.photoURL.toString();
-    });
     super.initState();
     _initImageUrl();
+
+    if (auth.currentUser!.uid != null) {
+      Stream<Student?> studentStream =
+          dataAuthServices.readSpecificDocument(auth.currentUser!.uid);
+
+      studentStream.listen((student) {
+        if (student != null) {
+          if (mounted == true) {
+            setState(() {
+              imageUrl = user!.photoURL==null ? "" : user!.photoURL.toString();
+              _currentSliderValue = double.parse(student.changeSubjectsCount ?? "1");
+            });
+          }}},
+          );}
+
   }
 
   Future<void> _initImageUrl() async {

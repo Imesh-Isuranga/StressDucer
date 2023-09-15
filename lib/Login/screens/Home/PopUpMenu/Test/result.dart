@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googleapis/datastore/v1.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Home.dart';
-import 'package:stress_ducer/Login/screens/Home/PopUpMenu/pop_upMenu.dart';
-import 'package:stress_ducer/Login/screens/Home/mainPlace.dart';
 
 class StressResult extends StatefulWidget {
   const StressResult({super.key, required this.count});
@@ -38,8 +34,7 @@ class _StressResultState extends State<StressResult> {
   @override
   Widget build(BuildContext context) {
     checkStatus();
-    return Container(
-      child: Center(
+    return Center(
         child: Padding(
           padding: const EdgeInsets.all(50.0),
           child: Column(
@@ -67,16 +62,14 @@ class _StressResultState extends State<StressResult> {
                 height: 40,
               ),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Home"),
+                child: const Text("Home"),
               )
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
