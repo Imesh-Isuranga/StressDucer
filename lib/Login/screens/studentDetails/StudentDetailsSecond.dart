@@ -195,7 +195,6 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                               (subjects.join(',')),
                               (prioritysControllers.join(',')),
                               widget.idNum,
-                              "0",
                               "[]", [],repeatSubject.toString());
                         } : (){warningtMsg();},
                         style: ButtonStyle(

@@ -1,34 +1,23 @@
 import 'dart:collection';
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:stress_ducer/Login/model/timeTable.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/timeTableView.dart';
-import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
 
 class GetTodayData{
 
 static List<String> getTodaySubjects(
-  List<String> updateTodaySubjectsList,
   List<String> studentSubjectsList,
     List<String> studentSubjectsPriorityList,
-    List<String> todaySubjectsList,
-
-    List<List<String>> dayList,
-
-    int howManySubjects,
-    TimeTable? _timeTableData,
-    TimeTableDataBase timetable,
-    FirebaseAuth auth,
     List<Map<String, dynamic>> tableDataList,
     int changeSubjectsCount
     ) {
-
-
+final FirebaseAuth auth = FirebaseAuth.instance;
     List<int> intPriorities = []; //To store priorities 
-    
     List<String> priority4AND5 =[];
     List<String> priority2AND3 =[];
     List<String> priority1 =[];
+
+
     int mondayTotalPriority =0;
     int tuesdayTotalPriority =0;
     int wednesdayTotalPriority =0;
@@ -36,16 +25,33 @@ static List<String> getTodaySubjects(
     int fridayTotalPriority =0;
     int saturdayTotalPriority=0;
     int sundayTotalPriority=0;
-
+    int startingIndex = 0;
     List<int> dayPriorities = [mondayTotalPriority,tuesdayTotalPriority,wednesdayTotalPriority,thursdayTotalPriority,fridayTotalPriority,saturdayTotalPriority,sundayTotalPriority];
 
-    
+
+
+    List<String> mondayList = [];
+    List<String> tuesdayList = [];
+    List<String> wednesdayList = [];
+    List<String> thursdayList = [];
+    List<String> fridayList = [];
+    List<String> saturdayList = [];
+    List<String> sundayList = [];
+    List<List<String>> dayList = [mondayList,tuesdayList, wednesdayList,thursdayList,fridayList,saturdayList,sundayList];
+
+    List<String> todaySubjectsList = [];
+    List<String> updateTodaySubjectsList = [];
 
     //String priority list make int List
     for(int i=0; i<studentSubjectsPriorityList.length; i++){
       intPriorities.add(int.parse(studentSubjectsPriorityList[i]));
     }
 
+
+
+    priority4AND5.clear();
+    priority2AND3.clear();
+    priority1.clear();
     //seperate subjects according to priority
     for(int i=0; i<intPriorities.length; i++){
       if(intPriorities[i]==5 || intPriorities[i]==4){
@@ -57,18 +63,30 @@ static List<String> getTodaySubjects(
       }
     }
 
+
+int tempLength = priority4AND5.length;
+    if(tempLength<=5){
+      for (int i = 0; i < 1; i++) {
+        for (int j = 0; j < tempLength; j++) {
+          priority4AND5.add(priority4AND5[j]);
+        }
+      }
+    }
+
+
 for (int k = 0; k < 7; k++) {//When repeating below algrothem(refreshing btn) dayList should clear
   dayList[k].clear();
 }
 
 
 for (int k = 0; k < changeSubjectsCount; k++) {//for repeat
+
   if(k>0){
     List<int> numbersNewTemp = dayPriorities;
     int minNumberNewTemp = numbersNewTemp.reduce(min);
     for (int j=0; j<7; j++) {
       if(minNumberNewTemp==dayPriorities[j]){
-        howManySubjects = j;
+        startingIndex = j;
         break;
       }
     }
@@ -77,7 +95,7 @@ for (int k = 0; k < changeSubjectsCount; k++) {//for repeat
 int j1 = 0;
 int lengthpriority4AND5 = priority4AND5.length;
 //adding priority 4&5
-  for (int i = howManySubjects; ((i < 7) && (lengthpriority4AND5 != 0) && (j1<lengthpriority4AND5)) ; i+=2) {
+  for (int i = startingIndex; ((i < 7) && (lengthpriority4AND5 != 0) && (j1<lengthpriority4AND5)) ; i+=2) {
 
     for(int j=0; j<dayList.length; j++){
       if(i==j){
@@ -93,6 +111,17 @@ int lengthpriority4AND5 = priority4AND5.length;
     }else if(i==6){
       i=-1;
     }
+
+    if(k>0){
+    List<int> numbersNewTemp = dayPriorities;
+    int minNumberNewTemp = numbersNewTemp.reduce(min);
+    for (int j=0; j<7; j++) {
+      if(minNumberNewTemp==dayPriorities[j]){
+        i = (j-2);
+        break;
+      }
+    }
+  }
   }
     
     
@@ -129,6 +158,7 @@ int j3 = 0;
 List<int> numbersNew = dayPriorities;
 int minNumberNew = numbersNew.reduce(min);
 
+
 while((j3 < priority1.length) && (priority1.length != 0)){
   for (int j = 0; j < dayList.length; j++) {
     if(minNumberNew == dayPriorities[j] && j3 < priority1.length){
@@ -154,7 +184,7 @@ for (var element in dayList) {
  // element = uniqueNumbers1.toList();
 }
   
-print(dayList[0]);
+
 
 
 List<int> maxLengthFindList = [dayList[0].length,dayList[1].length,dayList[2].length,dayList[3].length,dayList[4].length,dayList[5].length,dayList[6].length];
@@ -180,11 +210,10 @@ for (var element in dayList) {
     todaySubjectsList.add(dayList[6].toString());
     todaySubjectsList.add(dayList[6].toString());
     todaySubjectsList.add(dayList[6].toString());
-    todaySubjectsList.add(howManySubjects.toString());
 
-    
 
-   return TimeTableView.getTableView(updateTodaySubjectsList, studentSubjectsList, studentSubjectsPriorityList, todaySubjectsList, dayList ,howManySubjects, _timeTableData, timetable, auth, tableDataList,changeSubjectsCount);
+
+   return TimeTableView.getTableView(updateTodaySubjectsList, studentSubjectsList, studentSubjectsPriorityList, todaySubjectsList, dayList , auth, tableDataList,changeSubjectsCount);
 
   }
 

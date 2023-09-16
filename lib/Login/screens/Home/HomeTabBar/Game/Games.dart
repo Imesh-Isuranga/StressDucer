@@ -15,9 +15,8 @@ class Games extends StatefulWidget {
 }
 
 class _GamesState extends State<Games> {
-  static Color color =  Color.fromARGB(255, 1, 90, 27);
-  static Color colorWhite = Color.fromARGB(255, 255, 255, 255).withOpacity(0);
-  static String imgURL = 'assets/cardGame.jpg';
+  static Color color = const Color.fromARGB(255, 1, 90, 27);
+  static Color colorWhite = const Color.fromARGB(255, 255, 255, 255).withOpacity(0);
   int state = 1;
 
   List<Color> itemColors = List.generate(9, (index) => color);
@@ -170,7 +169,7 @@ class _GamesState extends State<Games> {
                       Row(
                         children: [
                           SizedBox(
-                            width: screenWidth*0.15,
+                            width: screenWidth*0.2,
                             height: screenWidth*0.0625,
                             child: ElevatedButton(
                                     onPressed: () {
@@ -186,7 +185,7 @@ class _GamesState extends State<Games> {
                           ),
                                 SizedBox(width: screenWidth*0.04,),
                                 if(state == 2)SizedBox(
-                                  width: screenWidth*0.175,
+                                  width: screenWidth*0.2,
                                   height: screenWidth*0.0625,
                                   child: ElevatedButton(
                                     onPressed: () {
@@ -208,7 +207,9 @@ class _GamesState extends State<Games> {
                       ]),
               ),
               ),
-              SizedBox(height: screenHeight * 0.005,), 
+              SizedBox(height: screenHeight * 0.0025,),
+              Divider(height: 0.3, color: Theme.of(context).indicatorColor,),
+              SizedBox(height: screenHeight * 0.0025,),
               if(state==1)SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Card(
@@ -219,8 +220,10 @@ class _GamesState extends State<Games> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset(imgURL,width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
-                          Image.asset(imgURL,width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
+                          if(Theme.of(context).brightness==Brightness.dark)
+                          Image.asset("assets/cardGame.jpg",width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
+                          if(Theme.of(context).brightness==Brightness.light)
+                          Image.asset("assets/cover_img.jpg",width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
                           Text("This is simple Game Develop for Mind Relax",style: GoogleFonts.roboto(fontSize: screenWidth*0.029,fontWeight: FontWeight.w400),textAlign: TextAlign.center,),
                         SizedBox(height: screenHeight*0.02,),
                         SizedBox(

@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:stress_ducer/Login/model/timeTable.dart';
-import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
 
 class TimeTableView{
 
@@ -9,34 +7,11 @@ static List<String> getTableView(
   List<String> studentSubjectsList,
     List<String> studentSubjectsPriorityList,
     List<String> todaySubjectsList,
-
-
-
     List<List<String>> dayList,
-
-    int howManySubjects,
-    TimeTable? _timeTableData,
-    TimeTableDataBase timetable,
     FirebaseAuth auth,
     List<Map<String, dynamic>> tableDataList,
     int changeSubjectsCount
     ) {
-
-        final timeTable = TimeTable(
-        monday: todaySubjectsList[0],
-        tuesday: todaySubjectsList[1],
-        wednesday: todaySubjectsList[2],
-        thursday: todaySubjectsList[3],
-        friday: todaySubjectsList[4],
-        saturday: todaySubjectsList[5],
-        sunday: todaySubjectsList[6],
-        freedays: todaySubjectsList[7],
-        exam: todaySubjectsList[8],
-        howManySubjectsPerDay: howManySubjects.toString(),
-        changeSubjectsCount : changeSubjectsCount.toString()
-        );
-
-    timetable.create(timeTable, auth.currentUser!.uid);
 
     String subjects;
     if (DateTime.now().weekday == DateTime.monday) {

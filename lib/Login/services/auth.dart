@@ -21,7 +21,7 @@ class AuthServices {
 
 Future<void> deleteAccount() async {
   try {
-    User? user = FirebaseAuth.instance.currentUser;
+    User? user = _auth.currentUser;
 
     if (user != null) {
       await user.delete();
@@ -40,7 +40,7 @@ Future<void> deleteAccount() async {
   Future checkIfEmailExists(String email) async {
     try {
       List<String> signInMethods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+          await _auth.fetchSignInMethodsForEmail(email);
 
       if (signInMethods.contains("google.com")) {
         print("Email is already associated with a Google Sign-In account.");
@@ -60,7 +60,7 @@ Future<void> deleteAccount() async {
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
 
-      List<String> signInMethods = await FirebaseAuth.instance
+      List<String> signInMethods = await _auth
           .fetchSignInMethodsForEmail(googleSignInAccount!.email);
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =

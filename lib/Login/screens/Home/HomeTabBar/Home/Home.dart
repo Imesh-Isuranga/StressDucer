@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Game/gameCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/testCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/TodayTaskCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/HomeDisplayQuotes.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/Motivational_Quotes/motivational_api.dart';
@@ -69,6 +70,8 @@ class _HomeState extends State<Home> {
           ]),
           SizedBox(height: screenWidth*0.01,),
           AddedTasksCards(),
+          SizedBox(height: screenWidth*0.01,),
+          const TestCard(),
           SizedBox(height: screenWidth*0.01,),
           TodayTaskCard(changeTab: widget.changeTab,),
           SizedBox(height: screenWidth*0.01,),

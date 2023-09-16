@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stress_ducer/Login/screens/Home/PopUpMenu/Test/testMain.dart';
 
-class TodayTaskCard extends StatefulWidget {
-  const TodayTaskCard({super.key,required this.changeTab});
+class TestCard extends StatefulWidget {
+  const TestCard({super.key});
 
-  final Function(int) changeTab;
 
   @override
-  State<TodayTaskCard> createState() => _TodayTaskCardState();
+  State<TestCard> createState() => _TestCardState();
 }
 
-class _TodayTaskCardState extends State<TodayTaskCard> {
- // static String imageUrlTodayTasks = 'assets/todo.jpg';
+class _TestCardState extends State<TestCard> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -25,7 +24,7 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
               margin: const EdgeInsets.all(0),
               child: InkWell(
                 onTap: () {
-                  widget.changeTab(1);
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const TestMain()));;
                 },
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -35,8 +34,8 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                         children: [
                           Expanded(
                             child: ListTile(
-                              title: Text("Today Tasks",style:GoogleFonts.roboto(fontSize: screenWidth*0.038, fontWeight: FontWeight.w400),),
-                              leading: Icon(Icons.task,size: screenWidth*0.07),
+                              title: Text("Stress Test",style:GoogleFonts.roboto(fontSize: screenWidth*0.038, fontWeight: FontWeight.w400),),
+                              leading: Icon(Icons.text_snippet_rounded,size: screenWidth*0.07),
                               iconColor: Theme.of(context).iconTheme.color,
                               subtitle: Text("Plan your day with achievable goals",style:GoogleFonts.roboto(fontSize: screenWidth*0.028)),),
                           ),

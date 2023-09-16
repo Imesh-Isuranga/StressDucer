@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/StudentProfile.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/aboutUs.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
-import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
 
 class Profile extends StatefulWidget {
   Profile({super.key});
@@ -27,8 +27,9 @@ class _ProfileState extends State<Profile> {
 
   final _authData = dataAuthServices();
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final _authTimeTable = TimeTableDataBase();
+//  final _authTimeTable = TimeTableDataBase();
   double _currentSliderValue = 20;
+  static int number=1;
 
 
       
@@ -69,7 +70,7 @@ class _ProfileState extends State<Profile> {
   void modelBottomPanelSettings() {
     showModalBottomSheet(
       isScrollControlled: true,
-      context: context,
+      context : context,
       builder: (context) {
         return SizedBox(
           height:MediaQuery.of(context).size.height, // Take up full screen height
@@ -87,14 +88,17 @@ class _ProfileState extends State<Profile> {
                   Text("Get New TimeTable",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.042)),
                   TextButton(
                           onPressed: () {
-                            int number = Random().nextInt(7);
+                            if(number>7){
+                              number = 1;
+                            }
                             _authData.updateEnables(
                                 auth.currentUser!.uid, [].toString());
-                            _authData.updateHowManySubjects(
+                            _authData.updateChangeSubjectsCount(
                                 auth.currentUser!.uid,
                                 number.toString() != ""
                                     ? number.toString()
                                     : "1");
+                                    number++;
                           },
                           child: const Text("Refresh"),
                     ),
@@ -114,8 +118,7 @@ class _ProfileState extends State<Profile> {
                           _currentSliderValue = value;
                         }else{
                           _currentSliderValue = value;
-                        }
-                           
+                        } 
                             _authData.updateEnables(
                                 auth.currentUser!.uid, [].toString());
                             _authData.updateChangeSubjectsCount(
@@ -135,6 +138,7 @@ class _ProfileState extends State<Profile> {
       },
     );
   }
+
 
   @override
   void dispose() {
@@ -288,6 +292,22 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
+
+              GestureDetector(
+                onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => AboutUs()));},
+                child: Container(
+                decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.groups_2_rounded,size: screenWidth*0.05,),
+                      iconColor: Theme.of(context).iconTheme.color,
+                      title: Text('About Us',style: GoogleFonts.roboto(fontSize: screenWidth*0.038,fontWeight: FontWeight.w400),),
+                    ),
+                  ),
+                ),
+              ),
+
 
               GestureDetector(
                 onTap: () {

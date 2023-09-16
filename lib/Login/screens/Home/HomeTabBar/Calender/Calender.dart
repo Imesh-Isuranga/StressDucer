@@ -88,7 +88,7 @@ class _CalenderState extends State<Calender> {
                       Text("Magic Calender",style: GoogleFonts.roboto(fontSize: screenWidth*0.053, fontWeight: FontWeight.w600),),
                       SizedBox(height: screenHeight*0.02,),
                       SizedBox(
-                        width: screenWidth*0.15,
+                        width: screenWidth*0.2,
                         height: screenWidth*0.0625,
                         child: ElevatedButton(
                                 onPressed: () {
@@ -106,7 +106,9 @@ class _CalenderState extends State<Calender> {
                       ]),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.005,),
+              SizedBox(height: screenHeight * 0.0025,),
+              Divider(height: 0.3, color: Theme.of(context).indicatorColor,),
+              SizedBox(height: screenHeight * 0.0025,),
               Card(child: Column(children: [
                 SizedBox(height: screenHeight * 0.02,),
                 Text("You have only ${daysInCurrentMonth - currentDate.day} days for this month",style: GoogleFonts.roboto(fontSize: screenWidth*0.037,fontWeight: FontWeight.w600,color: Colors.red),),

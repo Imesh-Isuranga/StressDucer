@@ -20,6 +20,7 @@ class _WrapperState extends State<Wrapper> {
   bool isSetDetails = false;
   bool isEmailVerified = false;
   bool isGuestUser = false;
+  bool whenReloggAsGuest = false;
 
   void setStudentDetails(bool setVar) {
     setState(() {
@@ -40,6 +41,7 @@ void identityGuest(bool setbool) {
     final auth = FirebaseAuth.instance;
     User? us = FirebaseAuth.instance.currentUser;
 
+
     return FutureBuilder(
       future: fetchData(user), // Replace fetchData with your data loading logic
       builder: (context, snapshot) {
@@ -51,11 +53,12 @@ void identityGuest(bool setbool) {
         } else {
           // Depending on your data, conditionally return different widgets
           if (user == null) {
+            whenReloggAsGuest = true;
             return Authenticate(setDetails:setStudentDetails,identityGuest:identityGuest);
           }else if(isGuestUser){
             return const MainPlace();
           } else {
-            if (!(us!.emailVerified)) {
+            if (!(us!.emailVerified) && whenReloggAsGuest) {
               return Verify(refresh: setStudentDetails,);
             } else {
               if (isSetDetails) {

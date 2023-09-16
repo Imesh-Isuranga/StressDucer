@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
+import 'package:stress_ducer/Login/model/addedTasks.dart';
 import 'package:stress_ducer/Login/model/student.dart';
-import 'package:stress_ducer/Login/model/timeTable.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/TodayTasks/getTodayData.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
-import 'package:stress_ducer/Login/services/timeTableDataBase.dart';
 
 class TodayTasks extends StatefulWidget {
   const TodayTasks({super.key, required this.currentContext});
@@ -20,7 +20,6 @@ class TodayTasks extends StatefulWidget {
 
 class TodayTasksState extends State<TodayTasks> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final timetable = TimeTableDataBase();
   final authStudent = dataAuthServices();
 
   static final List<bool> _enable = [];
@@ -33,30 +32,10 @@ class TodayTasksState extends State<TodayTasks> {
   late List<String> studentSubjectsList = [];
   late List<String> studentSubjectsPriorityList = [];
   static List<String> updateTodaySubjectsList = [];
-  static List<String> todaySubjectsList = [];
-  static int howManySubjects = 19;
   static int changeSubjectsCount = 0;
 
-  static List<String> mondayList = [];
-  static List<String> tuesdayList = [];
-  static List<String> wednesdayList = [];
-  static List<String> thursdayList = [];
-  static List<String> fridayList = [];
-  static List<String> saturdayList = [];
-  static List<String> sundayList = [];
-
-  static List<List<String>> dayList = [
-    mondayList,
-    tuesdayList,
-    wednesdayList,
-    thursdayList,
-    fridayList,
-    saturdayList,
-    sundayList
-  ];
 
   static List<Map<String, dynamic>> tableDataList = [];
-  TimeTable? _timeTableData;
 
   int k = 0;
   final GetTodayData todayData = GetTodayData();
@@ -86,7 +65,7 @@ class TodayTasksState extends State<TodayTasks> {
                 temp =
                     enabledListString.split(','); // Split the string by commas
 
-                howManySubjects = int.parse(student.howManySubjects ?? '1');
+
                 studentSubjects = student.studentSubjects.toString();
                 studentSubjectsPriority =
                     student.studentSubjectsPriority.toString();
@@ -95,29 +74,14 @@ class TodayTasksState extends State<TodayTasks> {
                     studentSubjectsPriority.split(',');
 
                     changeSubjectsCount = int.parse(student.changeSubjectsCount ?? '1');
-print(howManySubjects);
 
                 tableDataList.clear();
                 updateTodaySubjectsList.clear();
-                todaySubjectsList.clear();
-                mondayList.clear();
-                tuesdayList.clear();
-                wednesdayList.clear();
-                thursdayList.clear();
-                fridayList.clear();
-                saturdayList.clear();
-                sundayList.clear();
+
 
                 updateTodaySubjectsList = GetTodayData.getTodaySubjects(
-                    updateTodaySubjectsList,
                     studentSubjectsList,
                     studentSubjectsPriorityList,
-                    todaySubjectsList,
-                    dayList,
-                    howManySubjects,
-                    _timeTableData,
-                    timetable,
-                    auth,
                     tableDataList,
                     changeSubjectsCount);
 
@@ -237,7 +201,9 @@ print(howManySubjects);
                 ]),
           ),
         ),
-        SizedBox(height: screenHeight * 0.005,),
+        SizedBox(height: screenHeight * 0.0025,),
+        Divider(height: 0.3, color: Theme.of(context).indicatorColor,),
+        SizedBox(height: screenHeight * 0.0025,),
         Card(
           child: ListView.builder(
             shrinkWrap: true,
@@ -327,8 +293,9 @@ print(howManySubjects);
                           );
                         }).toList(),
                       ),
-                  ),)
-      ],
+                  ),),
+                  AddedTasksCards()      
+                  ],
     );
   }
 }

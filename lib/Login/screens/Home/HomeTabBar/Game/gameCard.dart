@@ -11,7 +11,7 @@ class GameCard extends StatefulWidget {
 }
 
 class _GameCardState extends State<GameCard> {
-  static String imageUrlPlayGames = 'assets/games.jpg';
+ // static String imageUrlPlayGames = 'assets/games.jpg';
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -35,15 +35,15 @@ class _GameCardState extends State<GameCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Image.asset(
+                 /* Image.asset(
                         imageUrlPlayGames,width: screenWidth*0.4,height: screenWidth*0.4
-                      ),
+                   ),*/
                       Expanded(
                         child: Column(
                           children: <Widget>[
                             const Divider(),
                             ListTile(
-                              title: Text('Mindful Playgrounds',style:GoogleFonts.roboto(fontSize: screenWidth*0.037, fontWeight: FontWeight.w500),),
+                              title: Text('Mindful Playgrounds',style:GoogleFonts.roboto(fontSize: screenWidth*0.037, fontWeight: FontWeight.w400),),
                               subtitle: Text('Engage in games designed for relaxation. Immerse yourself in soothing gameplay to unwind and de-stress.',style:GoogleFonts.roboto(fontSize: screenWidth*0.026,)),),
                             const Divider(),
                             TextButton(

@@ -8,7 +8,6 @@ class Student {
       required this.studentNumOfSubjects,
       required this.studentSubjects,
       required this.studentSubjectsPriority,
-      required this.howManySubjects,
       required this.enableStatus,
       required this.flag,
       required this.changeSubjectsCount});
@@ -19,7 +18,6 @@ class Student {
   final String? studentNumOfSubjects;
   final String? studentSubjects;
   final String? studentSubjectsPriority;
-  final String? howManySubjects;
   final String? enableStatus;
   final List<bool> flag;
   final String? changeSubjectsCount;
@@ -34,10 +32,10 @@ class Student {
         studentNumOfSubjects: snapshot['studentNumOfSubjects'],
         studentSubjects: snapshot['studentSubjects'],
         studentSubjectsPriority: snapshot['studentSubjectsPriority'],
-        howManySubjects: snapshot['howManySubjects'],
         enableStatus: snapshot['enableStatus'],
         flag: (snapshot['flag'] as List<dynamic>).cast<bool>(),
-        changeSubjectsCount:snapshot['changeSubjectsCount']);
+        changeSubjectsCount:snapshot['changeSubjectsCount'],
+        );
   }
 
   Map<String,dynamic> toJson()=>{
@@ -47,7 +45,6 @@ class Student {
     "studentNumOfSubjects":studentNumOfSubjects,
     "studentSubjects":studentSubjects,
     "studentSubjectsPriority":studentSubjectsPriority,
-    "howManySubjects":howManySubjects,
     "enableStatus":enableStatus,
     "flag":flag,
     "changeSubjectsCount":changeSubjectsCount

@@ -3,11 +3,12 @@ import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/model/studentFirstModel.dart';
 
 class dataAuthServices {
-  static Stream<List<Student>> read() {
+
+  /*static Stream<List<Student>> read() {
     final userCollection = FirebaseFirestore.instance.collection("students");
     return userCollection.snapshots().map((quesrySnapshot) =>
         quesrySnapshot.docs.map((e) => Student.fromSnapshot(e)).toList());
-  }
+  }*/
 
   static Stream<Student?> readSpecificDocument(String documentId) {
   final userCollection = FirebaseFirestore.instance.collection("students");
@@ -23,23 +24,15 @@ class dataAuthServices {
 
 Future delete(String documentId) async {
     final userColection = FirebaseFirestore.instance.collection("students");
-
-    final docRef = userColection.doc(documentId).delete();
-
-    
-    
+    final docRef = userColection.doc(documentId).delete();    
   }
+
 
 Future updateFlag(String documentId,List<bool> flag) async {
     final userColection = FirebaseFirestore.instance.collection("students");
-
     final docRef = userColection.doc(documentId);
-
-    
     try {
-      await docRef.update({
-            "flag": flag
-      });
+      await docRef.update({"flag": flag});
     } catch (error) {
       print("Some error occure $error");
     }
@@ -49,53 +42,28 @@ Future updateFlag(String documentId,List<bool> flag) async {
 
 Future updateEnables(String documentId,String list) async {
     final userColection = FirebaseFirestore.instance.collection("students");
-
     final docRef = userColection.doc(documentId);
-
-    
     try {
-      await docRef.update({
-            "enableStatus": list
-      });
+      await docRef.update({"enableStatus": list});
     } catch (error) {
       print("Some error occure $error");
     }
   }
 
-
-Future updateHowManySubjects(String documentId,String num) async {
-    final userColection = FirebaseFirestore.instance.collection("students");
-
-    final docRef = userColection.doc(documentId);
-
-    
-    try {
-      await docRef.update({
-            "howManySubjects": num
-      });
-    } catch (error) {
-      print("Some error occure $error");
-    }
-  }
 
 Future updateChangeSubjectsCount(String documentId,String num) async {
     final userColection = FirebaseFirestore.instance.collection("students");
-
     final docRef = userColection.doc(documentId);
-
-    
     try {
-      await docRef.update({
-            "changeSubjectsCount": num
-      });
+      await docRef.update({"changeSubjectsCount": num});
     } catch (error) {
       print("Some error occure $error");
     }
   }
 
 
-  Future update(String documentId,StudentFirstModel studentFirstModel, String subjects,
-      String priority,String num,String enable,List<bool> flag,String changeSubjectsCount) async {
+  /*Future updateAll(String documentId,StudentFirstModel studentFirstModel, String subjects,
+    String priority,String num,String enable,List<bool> flag,String changeSubjectsCount) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(documentId);
@@ -117,19 +85,17 @@ Future updateChangeSubjectsCount(String documentId,String num) async {
     } catch (error) {
       print("Some error occure $error");
     }
-  }
+  }*/
 
 
   Future updateWithName(String documentId,String name, String uni) async {
     final userColection = FirebaseFirestore.instance.collection("students");
-
     final docRef = userColection.doc(documentId);
 
     
     try {
       await docRef.update({
-          "studentName": name,
-            "studentUniName": uni,
+          "studentName": name,"studentUniName": uni,
       });
     } catch (error) {
       print("Some error occure $error");
@@ -179,7 +145,7 @@ Future updateChangeSubjectsCount(String documentId,String num) async {
 
 
   Future create(StudentFirstModel studentFirstModel, String subjects,
-      String priority,String id,String num,String enable,List<bool> flag,String changeSubjectsCount) async {
+      String priority,String id,String enable,List<bool> flag,String changeSubjectsCount) async {
     final userColection = FirebaseFirestore.instance.collection("students");
 
     final docRef = userColection.doc(id);
@@ -191,7 +157,6 @@ Future updateChangeSubjectsCount(String documentId,String num) async {
             studentNumOfSubjects: studentFirstModel.studentNumOfSubjects,
             studentSubjects: subjects,
             studentSubjectsPriority: priority,
-            howManySubjects: num,
             enableStatus: enable,
             flag: flag,
             changeSubjectsCount:changeSubjectsCount)

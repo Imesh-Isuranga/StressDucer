@@ -30,7 +30,7 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
   List<String?> listAll = [];
   List<List> listAllFull = [];
   static int count = 0;
-  static String imageUrlAddTask = 'assets/todayTasks.jpg';
+ // static String imageUrlAddTask = 'assets/todayTasks.jpg';
 
   @override
   void initState() {
@@ -179,11 +179,11 @@ class _AddedTasksCardsState extends State<AddedTasksCards> {
           child: Column(
             children: <Widget>[
               Row(children: [
-                Padding(
+        /*        Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(imageUrlAddTask,width: screenWidth*0.4,height: screenWidth*0.4,
-                ),
-              ),
+               child: Image.asset(imageUrlAddTask,width: screenWidth*0.4,height: screenWidth*0.4,
+               ),
+              ),*/
              Expanded(
                 child: ListTile(
                   leading: Icon(Icons.alarm,size: screenWidth*0.07,),

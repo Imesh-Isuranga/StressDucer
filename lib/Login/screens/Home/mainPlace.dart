@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class MainPlace extends StatefulWidget {
 class _MainPlaceState extends State<MainPlace> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   User? user = FirebaseAuth.instance.currentUser;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  int currentPageIndex = 0;//BottomNavigationBar Index
+  int currentPageIndex = 0; //BottomNavigationBar Index
   NavigationDestinationLabelBehavior labelBehavior = NavigationDestinationLabelBehavior.alwaysShow;
   static String imageUrl = '';
 
@@ -54,47 +55,85 @@ class _MainPlaceState extends State<MainPlace> with SingleTickerProviderStateMix
     }
   }
 
+  Future<bool> _onBackPressed() async {
+  if (currentPageIndex != 0) {
+    setState(() {
+      currentPageIndex = 0;
+    });
+    return false;
+  } else {
+    Completer<bool> completer = Completer<bool>();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Exit App?'),
+        content: const Text('Are you sure you want to exit the app?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              completer.complete(false);
+              Navigator.of(context).pop();
+            },
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              completer.complete(true);
+              Navigator.of(context).pop();
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    return completer.future;
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(screenHeight*0.06),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(20.0), // Adjust the bottom-left radius
-            bottomRight:Radius.circular(20.0), // Adjust the bottom-right radius
-          ),
-          child: AppBar(
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(screenHeight * 0.06),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20.0),
+              bottomRight: Radius.circular(20.0),
+            ),
+            child: AppBar(
               shape: Border(
                 bottom: BorderSide(
-                  color: Theme.of(context).indicatorColor, // Set your border color here
-                  width: 0.3, // Set your border thickness here
+                  color: Theme.of(context).indicatorColor,
+                  width: 0.3,
                 ),
               ),
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               leading: IconButton(
-                  onPressed: () {
-                   _scaffoldKey.currentState?.openEndDrawer();
-                  },
-                  icon: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1.5, color: Theme.of(context).indicatorColor),
-                      shape: BoxShape.circle,
-                      image: imageUrl.isNotEmpty
-                          ? DecorationImage(
-                              image: NetworkImage(imageUrl),
-                            )
-                          : const DecorationImage(
-                              image: AssetImage("assets/man.png"),
-                            ), // Handle the case where imageUrl is empty or invalid
-                    ),
-                  )),
+                onPressed: () {
+                  _scaffoldKey.currentState?.openEndDrawer();
+                },
+                icon: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        width: 1.5, color: Theme.of(context).indicatorColor),
+                    shape: BoxShape.circle,
+                    image: imageUrl.isNotEmpty
+                        ? DecorationImage(
+                            image: NetworkImage(imageUrl),
+                          )
+                        : const DecorationImage(
+                            image: AssetImage("assets/man.png"),
+                          ),
+                  ),
+                ),
+              ),
               actions: [
                 ChangeThemeButtonWidget(),
               ],
@@ -103,83 +142,95 @@ class _MainPlaceState extends State<MainPlace> with SingleTickerProviderStateMix
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text("StressDucer",style: TextStyle(color: Colors.red),),
-                  Image.asset( "assets/logo.png",width: screenWidth*0.1, height: screenWidth*0.1,)
+                  const Text(
+                    "StressDucer",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  Image.asset(
+                    "assets/logo.png",
+                    width: screenWidth * 0.1,
+                    height: screenWidth * 0.1,
+                  )
                 ],
               ),
             ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Theme.of(context).indicatorColor, // Set your border color here
-            width: 0.5, // Set your border thickness here
-            ),
           ),
         ),
-        child: BottomNavigationBar(
-          iconSize: screenWidth*0.055,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          type:BottomNavigationBarType.fixed, // Ensures all icons are displayed
-          showSelectedLabels: false, // Hide labels
-          showUnselectedLabels: false, // Hide labels
-          selectedItemColor: Theme.of(context).iconTheme.color,
-          unselectedItemColor:Theme.of(context).indicatorColor, // Adjust the color as needed
-          currentIndex: currentPageIndex,
-          onTap: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: '', 
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Theme.of(context).indicatorColor,
+                width: 0.3,
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.today_rounded),
-              label: '', 
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.border_all_rounded),
-              label: '', 
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_rounded),
-              label: '', 
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_2_outlined),
-              label: '', 
-            ),
-          ],
+          ),
+          child: BottomNavigationBar(
+            iconSize: screenWidth * 0.055,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            type: BottomNavigationBarType.fixed,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            selectedItemColor: Theme.of(context).iconTheme.color,
+            unselectedItemColor: Theme.of(context).indicatorColor,
+            currentIndex: currentPageIndex,
+            onTap: (int index) {
+              setState(() {
+                currentPageIndex = index;
+              });
+            },
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.today_rounded),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.border_all_rounded),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month_rounded),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_2_outlined),
+                label: '',
+              ),
+            ],
+          ),
         ),
-      ),
-      body: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: SingleChildScrollView(child: Home(_changeTabIndex)),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: Center(child: TodayTasks(currentContext : context)),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Center(child: Games()),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Center(child: Calender()),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: Center(child: Profile()),
-        ),
-      ][currentPageIndex],
-      endDrawer: const Drawer(
-        child: Column(children: [PopUpScreen()],
+        body: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(child: Home(_changeTabIndex)),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Center(child: TodayTasks(currentContext: context)),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: const Center(child: Games()),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: const Center(child: Calender()),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Center(child: Profile()),
+          ),
+        ][currentPageIndex],
+        endDrawer: const Drawer(
+          child: Column(
+            children: [
+              PopUpScreen(),
+            ],
+          ),
         ),
       ),
     );
