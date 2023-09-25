@@ -85,7 +85,7 @@ class _CalenderState extends State<Calender> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                       SizedBox(height: screenHeight*0.02,),
-                      Text("Magic Calender",style: GoogleFonts.roboto(fontSize: screenWidth*0.053, fontWeight: FontWeight.w600),),
+                      Text("Magic Calendar",style: GoogleFonts.roboto(fontSize: screenWidth*0.053, fontWeight: FontWeight.w600),),
                       SizedBox(height: screenHeight*0.02,),
                       SizedBox(
                         width: screenWidth*0.2,
@@ -111,9 +111,9 @@ class _CalenderState extends State<Calender> {
               SizedBox(height: screenHeight * 0.0025,),
               Card(child: Column(children: [
                 SizedBox(height: screenHeight * 0.02,),
-                Text("You have only ${daysInCurrentMonth - currentDate.day} days for this month",style: GoogleFonts.roboto(fontSize: screenWidth*0.037,fontWeight: FontWeight.w600,color: Colors.red),),
+                Text("You have only ${daysInCurrentMonth - currentDate.day} days for this month",style: GoogleFonts.roboto(fontSize: screenWidth*0.040,fontWeight: FontWeight.w600,color: Colors.red),),
                 SizedBox(height: screenHeight * 0.04,),
-                Text("${DateFormat.MMMM().format(DateTime.now())}",style: GoogleFonts.roboto(fontSize: screenWidth*0.033,fontWeight: FontWeight.w600)),
+                Text("${DateFormat.MMMM().format(DateTime.now())}",style: GoogleFonts.roboto(fontSize: screenWidth*0.040,fontWeight: FontWeight.w600)),
                 SizedBox(height: screenHeight*0.04),
                 GridView.builder(
                       shrinkWrap: true,

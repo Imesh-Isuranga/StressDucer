@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -126,7 +127,20 @@ class _RegisterState extends State<Register> {
                 //    SizedBox(height: screenHeight*0.02,),
                     GestureDetector(
                               onTap: () async {
-                                final user = await _auth.handleGoogleSignIn();
+                                var connectivityResult = await (Connectivity().checkConnectivity());
+                                if (connectivityResult == ConnectivityResult.none) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Color.fromARGB(255, 33, 4, 2),
+                                    content: const Text('Something went wrong! May be No internet connection',style: TextStyle(color: Colors.white),),
+                                    action: SnackBarAction(
+                                      label: 'Close',
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                );
+                                }else{
+                                  final user = await _auth.handleGoogleSignIn();
                                 if (user == "0") {
                                   print('Logged in');
                                 } else if (user == "1") {
@@ -135,6 +149,7 @@ class _RegisterState extends State<Register> {
                                   widget.identityGuest(false);
                                 } else {
                                   print('Sign-in failed.');
+                                }
                                 }
                               },
                               child: Center(
@@ -159,7 +174,20 @@ class _RegisterState extends State<Register> {
                           //  SizedBox(height: ScreenHeight*0.02,),
                             ElevatedButton.icon(
                               onPressed: () async {
-                              setState(() {
+                                var connectivityResult = await (Connectivity().checkConnectivity());
+                                if (connectivityResult == ConnectivityResult.none) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Color.fromARGB(255, 33, 4, 2),
+                                    content: const Text('Something went wrong! May be No internet connection',style: TextStyle(color: Colors.white),),
+                                    action: SnackBarAction(
+                                      label: 'Close',
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                );
+                                }else{
+                                  setState(() {
                                 isRegisterChecking = true;
                               });
                               final user =
@@ -206,6 +234,7 @@ class _RegisterState extends State<Register> {
                                   });
                                 }
                               }
+                                }
                             },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),

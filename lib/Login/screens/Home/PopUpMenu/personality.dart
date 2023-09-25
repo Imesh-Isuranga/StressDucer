@@ -116,9 +116,8 @@ class _PersonalityState extends State<Personality> {
     String id = Provider.of<UserModel?>(context)!.uid;
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Personality",
-          ),
+          backgroundColor: const Color.fromARGB(255, 1, 69, 3),
+        title: const Text("Personality",style: TextStyle(color: Colors.white),),
         ),
         body: StreamBuilder<Student?>(
           stream: dataAuthServices.readSpecificDocument(id),

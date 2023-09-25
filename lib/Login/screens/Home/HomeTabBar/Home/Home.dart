@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -47,12 +48,29 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
+  Future<void> _checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      // Show snackbar for no internet connection
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Color.fromARGB(255, 33, 4, 2),
+          content: const Text('Something went wrong! May be No internet connection',style: TextStyle(color: Colors.white),),
+          action: SnackBarAction(
+            label: 'Close',
+            onPressed: () {},
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final api = MotivationalApi();
-
+    _checkInternetConnection();
     return Center(
       child: Column(
         children: [

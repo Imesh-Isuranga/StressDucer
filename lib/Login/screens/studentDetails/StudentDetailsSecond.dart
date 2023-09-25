@@ -120,6 +120,27 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Priority 1 to 5 subjects vary from easy to difficult",
+                        style: GoogleFonts.roboto(
+                            fontSize: 15, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
+                        textAlign: TextAlign.center,
+                      ),
+                       Text(
+                        "Ex :- Prioriy 1 mean it is very easy subject for you.",
+                        style: GoogleFonts.roboto(
+                            fontSize: 15, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Ex :- Prioriy 5 mean it is very hard subject for you.",
+                        style: GoogleFonts.roboto(
+                            fontSize: 15, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
                         height: 40,
                       ),
                       Column(
@@ -199,7 +220,7 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                         } : (){warningtMsg();},
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.black)),
+                                MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 67, 3))),
                         child: const SizedBox(
                           width: 100,
                           child: Text(

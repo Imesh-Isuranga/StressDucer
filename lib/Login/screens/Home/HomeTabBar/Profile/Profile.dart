@@ -9,6 +9,7 @@ import 'package:stress_ducer/Login/model/UserModel.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/StudentProfile.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/aboutUs.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/helpAndSupport.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
@@ -100,8 +101,9 @@ class _ProfileState extends State<Profile> {
                                     : "1");
                                     number++;
                           },
-                          child: const Text("Refresh"),
+                          child: Text("Refresh",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.025),),
                     ),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.05,),
                     Text("Complex Time Table",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.042)),
                     SizedBox(height: MediaQuery.of(context).size.height*0.01,),
                     Text('Complexity : ${_currentSliderValue}',style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.032)),
@@ -279,7 +281,7 @@ class _ProfileState extends State<Profile> {
               ),
 
               GestureDetector(
-                onTap: modelBottomPanelProfile,
+                onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => const HelpAndSupport()));},
                 child: Container(
                 decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
@@ -294,7 +296,7 @@ class _ProfileState extends State<Profile> {
               ),
 
               GestureDetector(
-                onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => AboutUs()));},
+                onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => const AboutUs()));},
                 child: Container(
                 decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),

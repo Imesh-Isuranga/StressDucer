@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/model/studentFirstModel.dart';
 
@@ -68,12 +69,15 @@ class _StudentDetailsState extends State<StudentDetails>{
           backgroundColor: mainAppBarColor,
           title: const Text("Student Details",style: TextStyle(color: appBarTextColor),),
         ),
-        body: Center(
-          child: SingleChildScrollView(
+        body: SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 30),
                 child: Column(
                   children: [
+                    const SizedBox(height: 20,),
+                    Text("User Registration",style: GoogleFonts.roboto(fontSize: 30,fontWeight: FontWeight.w800,color: Color.fromARGB(255, 1, 101, 3)),),
+                    const SizedBox(height: 10,),
+                    const Divider(height: 2,),
                     const SizedBox(height: 40,),
                     const Text(
                       "Enter Your Name :",
@@ -82,6 +86,11 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.6,
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            
+                          });
+                        },
                         decoration: InputDecoration(
                 errorText: controllerStudentName.text.isEmpty ? '*required' : null,
               ),
@@ -99,6 +108,11 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.7,
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            
+                          });
+                        },
                         decoration: InputDecoration(
                 errorText: controllerStudentUniName.text.isEmpty ? '*required' : null,
               ),
@@ -116,6 +130,11 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.2,
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            
+                          });
+                        },
                         decoration: InputDecoration(
                 errorText: controllerStudentCurrentSem.text.isEmpty ? '*required' : null,
               ),
@@ -133,6 +152,11 @@ class _StudentDetailsState extends State<StudentDetails>{
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.2,
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            
+                          });
+                        },
                         decoration: InputDecoration(
                 errorText: controllerStudentNumOfSubjects.text.isEmpty ? '*required' : null,
               ),
@@ -155,7 +179,7 @@ class _StudentDetailsState extends State<StudentDetails>{
                       } : (){warningtMsg();},
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.black)),
+                              MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 67, 3))),
                       child: const SizedBox(
                         width: 100,
                         child: Text(
@@ -169,7 +193,6 @@ class _StudentDetailsState extends State<StudentDetails>{
                 ),
               ),
             ),
-        ),
       ),
     );
   }

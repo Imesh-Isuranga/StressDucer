@@ -221,9 +221,9 @@ class _GamesState extends State<Games> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if(Theme.of(context).brightness==Brightness.dark)
-                          Image.asset("assets/cardGame.jpg",width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
+                          Image.asset("assets/cardGame-dark.jpg",width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
                           if(Theme.of(context).brightness==Brightness.light)
-                          Image.asset("assets/cover_img.jpg",width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
+                          Image.asset("assets/cardGame.jpg",width: MediaQuery.of(context).size.width*0.5,height: MediaQuery.of(context).size.width*0.5),
                           Text("This is simple Game Develop for Mind Relax",style: GoogleFonts.roboto(fontSize: screenWidth*0.029,fontWeight: FontWeight.w400),textAlign: TextAlign.center,),
                         SizedBox(height: screenHeight*0.02,),
                         SizedBox(

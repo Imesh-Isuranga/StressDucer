@@ -142,14 +142,10 @@ class _MainPlaceState extends State<MainPlace> with SingleTickerProviderStateMix
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    "StressDucer",
-                    style: TextStyle(color: Colors.red),
-                  ),
                   Image.asset(
                     "assets/logo.png",
-                    width: screenWidth * 0.1,
-                    height: screenWidth * 0.1,
+                    width: screenWidth * 0.08,
+                    height: screenWidth * 0.08,
                   )
                 ],
               ),
@@ -225,8 +221,9 @@ class _MainPlaceState extends State<MainPlace> with SingleTickerProviderStateMix
             child: Center(child: Profile()),
           ),
         ][currentPageIndex],
-        endDrawer: const Drawer(
-          child: Column(
+        endDrawer: Drawer(
+          width: screenWidth*0.6,
+          child: const Column(
             children: [
               PopUpScreen(),
             ],

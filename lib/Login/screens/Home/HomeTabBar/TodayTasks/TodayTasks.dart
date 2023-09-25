@@ -270,30 +270,31 @@ class TodayTasksState extends State<TodayTasks> {
         Card(child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
-                        columns: const [
-                          DataColumn(label: Text('Monday')),
-                          DataColumn(label: Text('Tuesday')),
-                          DataColumn(label: Text('Wednesday')),
-                          DataColumn(label: Text('Thursday')),
-                          DataColumn(label: Text('Friday')),
-                          DataColumn(label: Text('Saturday')),
-                          DataColumn(label: Text('Sunday')),
+                        columns: [
+                          DataColumn(label: Text('Monday',style: TextStyle(fontSize: screenHeight*0.016,),)),
+                          DataColumn(label: Text('Tuesday',style: TextStyle(fontSize: screenHeight*0.016,))),
+                          DataColumn(label: Text('Wednesday',style: TextStyle(fontSize: screenHeight*0.016,))),
+                          DataColumn(label: Text('Thursday',style: TextStyle(fontSize: screenHeight*0.016,))),
+                          DataColumn(label: Text('Friday',style: TextStyle(fontSize: screenHeight*0.016,))),
+                          DataColumn(label: Text('Saturday',style: TextStyle(fontSize: screenHeight*0.016,))),
+                          DataColumn(label: Text('Sunday',style: TextStyle(fontSize: screenHeight*0.016,))),
                         ],
                         rows: tableDataList.map((data) {
                           return DataRow(
                             cells: [
-                              DataCell(Text(data['Monday'])),
-                              DataCell(Text(data['Tuesday'])),
-                              DataCell(Text(data['Wednesday'])),
-                              DataCell(Text(data['Thursday'])),
-                              DataCell(Text(data['Friday'])),
-                              DataCell(Text(data['Saturday'])),
-                              DataCell(Text(data['Sunday'])),
+                              DataCell(Text(data['Monday'],style: TextStyle(fontSize: screenHeight*0.016,))),
+                              DataCell(Text(data['Tuesday'],style: TextStyle(fontSize: screenHeight*0.016,))),
+                              DataCell(Text(data['Wednesday'],style: TextStyle(fontSize: screenHeight*0.016,))),
+                              DataCell(Text(data['Thursday'],style: TextStyle(fontSize: screenHeight*0.016,))),
+                              DataCell(Text(data['Friday'],style: TextStyle(fontSize: screenHeight*0.016,))),
+                              DataCell(Text(data['Saturday'],style: TextStyle(fontSize: screenHeight*0.016,))),
+                              DataCell(Text(data['Sunday'],style: TextStyle(fontSize: screenHeight*0.016,))),
                             ],
                           );
                         }).toList(),
                       ),
                   ),),
+                  SizedBox(height: screenHeight*0.09,),
                   AddedTasksCards()      
                   ],
     );

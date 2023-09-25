@@ -75,7 +75,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                   height: 60,
                 ),Container(
                   margin: const EdgeInsets.only(bottom: 10),
-                  height: 80,
+                  height: screenWidth*0.15,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: imageUrl.isNotEmpty
@@ -88,12 +88,14 @@ class _PopUpScreenState extends State<PopUpScreen> {
                   ),
                 ),
             
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: screenWidth*0.02,
                 ),
                 
-                Text("Hi",style: GoogleFonts.roboto(fontSize: 10,color: Colors.white),),
-
+                Text("Hi",style: GoogleFonts.roboto(fontSize: screenWidth*0.035,color: Colors.white),),
+                SizedBox(
+                  height: screenWidth*0.02,
+                ),
                 StreamBuilder<Student?>(
                       stream: dataAuthServices
                           .readSpecificDocument(_auth.currentUser!.uid),
@@ -107,7 +109,7 @@ class _PopUpScreenState extends State<PopUpScreen> {
                           final student = snapshot.data;
                           if (student != null) {
                             return Text(student
-                                .studentName!,style: GoogleFonts.roboto(fontSize: 20,color: Colors.white),); // Return your actual widget
+                                .studentName!,style: GoogleFonts.roboto(fontSize: screenWidth*0.035,color: Colors.white),); // Return your actual widget
                           } else {
                             return const Text("Student not found");
                           }
@@ -135,26 +137,26 @@ class _PopUpScreenState extends State<PopUpScreen> {
               child: ListView(
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.person),
-                    title: const Text("Profile"),
+                    leading: Icon(Icons.person,size: screenWidth*0.052 ,),
+                    title: Text("Profile",style: TextStyle(fontSize: screenWidth*0.035),),
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileMenu()));},
                   ),
                   const Divider(height: 1,),
                   ListTile(
-                    leading: const Icon(Icons.alarm),
-                    title: const Text("Today Task"),
+                    leading: Icon(Icons.alarm,size: screenWidth*0.052 ),
+                    title: Text("Today Task",style: TextStyle(fontSize: screenWidth*0.035),),
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Scaffold(body: TodayTasks(currentContext: context,),)));},
                   ),
                   const Divider(height: 1,),
                   ListTile(
-                    leading: const Icon(Icons.image_aspect_ratio),
-                    title: const Text("Personality"),
+                    leading: Icon(Icons.image_aspect_ratio,size: screenWidth*0.052 ),
+                    title: Text("Personality",style: TextStyle(fontSize: screenWidth*0.035),),
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const Personality()));},
                   ),
                   const Divider(height: 1,),
                   ListTile(
-                    leading:const Icon(Icons.book_online),
-                    title: const Text("Take A Test"),
+                    leading:Icon(Icons.book_online,size: screenWidth*0.052 ),
+                    title: Text("Take A Test",style: TextStyle(fontSize: screenWidth*0.035),),
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const TestMain()));},
                   ),
                 ],
@@ -164,9 +166,9 @@ class _PopUpScreenState extends State<PopUpScreen> {
           
           SizedBox(height: screenHeight*0.05,),
           Column(children: [
-          Image.asset("assets/logo.png",width: screenHeight*0.075,height: screenHeight*0.075,),
+          Image.asset("assets/logo.png",width: screenHeight*0.050,height: screenHeight*0.075,),
           SizedBox(height: screenHeight*0.02,),
-          Text("StressDucer",style: GoogleFonts.roboto(fontSize: screenWidth*0.04),),],)
+          Text("StressDucer",style: GoogleFonts.roboto(fontSize: screenWidth*0.02),),],)
         ],
       );
   }

@@ -54,6 +54,10 @@ dependencies:
   firebase_storage: ^11.2.6
   image_picker: ^1.0.4
   intl: ^0.17.0
+  connectivity_plus: ^4.0.2
+  url_launcher: ^6.1.14
+  flutter_spinkit: ^5.2.0
+
 
 
 dev_dependencies:
@@ -92,6 +96,9 @@ flutter:
   - assets/guest.jpg 
   - assets/cardGame.jpg
   - assets/newAuth.jpg
+  - assets/flag.png
+  - assets/cardGame-dark.jpg
+  - assets/CompanyLogo.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

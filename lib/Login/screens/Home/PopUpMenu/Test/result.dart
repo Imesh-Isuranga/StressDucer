@@ -19,11 +19,11 @@ class _StressResultState extends State<StressResult> {
     if (widget.count <= 5) {
       text1 = "Mild stress";
       text2 = "Try to take it easy";
-      txtColor = Colors.black;
+      txtColor = Color.fromARGB(255, 1, 195, 46);
     } else if (widget.count <= 10) {
       text1 = "Moderate stress";
       text2 = "You need to make some changes and learn stress management";
-      txtColor = Colors.green;
+      txtColor = const Color.fromARGB(255, 63, 202, 68);
     } else {
       text1 = "You may be in the danger zone";
       text2 = "Talk to a medical provider ASAP";

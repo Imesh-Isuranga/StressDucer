@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -228,8 +229,21 @@ void alerttMsg(BuildContext contx) {
                         height: 40,
                       ),
                       FilledButton.icon(
-                        onPressed: nextEnable() ? () {
-                        setState(() {
+                        onPressed: nextEnable() ? () async{
+                          var connectivityResult = await (Connectivity().checkConnectivity());
+                                if (connectivityResult == ConnectivityResult.none) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: const Color.fromARGB(255, 33, 4, 2),
+                                    content: const Text('Something went wrong! May be No internet connection',style: TextStyle(color: Colors.white),),
+                                    action: SnackBarAction(
+                                      label: 'Close',
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                );
+                                }else{
+                                  setState(() {
                           isUpdating = true; // Set isUpdating to true when update starts
                         });
 
@@ -240,6 +254,7 @@ void alerttMsg(BuildContext contx) {
                             });
                             alerttMsg(context);
                           });
+                                }
                       } : () {
                         warningtMsg();
                       },

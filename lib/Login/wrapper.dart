@@ -47,7 +47,7 @@ void identityGuest(bool setbool) {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Show a circular progress indicator while loading
-          return const TextTransitionNew();
+          return TextTransitionNew();
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else {

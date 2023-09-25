@@ -40,18 +40,18 @@ class _QuoteDisplayState extends State<QuoteDisplay> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Text(
                         'Be the change that you wish to see in the world.― Mahatma Gandhi',
-                        style: GoogleFonts.montserrat(fontSize: screenWidth*0.038));
+                        style: GoogleFonts.montserrat(fontSize: screenWidth*0.038,fontWeight: FontWeight.w600));
                     // return CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text(
                         'Be the change that you wish to see in the world.― Mahatma Gandhi',
-                        style: GoogleFonts.montserrat(fontSize: screenWidth*0.038));
+                        style: GoogleFonts.montserrat(fontSize: screenWidth*0.038,fontWeight: FontWeight.w600));
                     //   return Text('Error: ${snapshot.error}');
                   } else {
                     final quote = snapshot.data ?? 'Be the change that you wish to see in the world.― Mahatma Gandhi';
                     return Column(
                       children: [
-                        Text(quote,style: GoogleFonts.montserrat(fontSize: screenWidth*0.038),),
+                        Text(quote,style: GoogleFonts.montserrat(fontSize: screenWidth*0.038,fontWeight: FontWeight.w600),),
                       ],
                     );
                   }
