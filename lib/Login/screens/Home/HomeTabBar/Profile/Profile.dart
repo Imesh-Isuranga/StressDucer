@@ -10,6 +10,7 @@ import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/StudentProfile.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/aboutUs.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/helpAndSupport.dart';
+import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Profile/reduceStress.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 
@@ -279,6 +280,23 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
+
+
+              GestureDetector(
+                onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => ReduceStress()));},
+                child: Container(
+                decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(width: 0.3, color: Theme.of(context).indicatorColor),),),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.help_center,size: screenWidth*0.05,),
+                      iconColor: Theme.of(context).iconTheme.color,
+                      title: Text('Stress Relief Tips',style: GoogleFonts.roboto(fontSize: screenWidth*0.038,fontWeight: FontWeight.w400),),
+                    ),
+                  ),
+                ),
+              ),
+
 
               GestureDetector(
                 onTap: (){Navigator.push(context,MaterialPageRoute(builder: (context) => const HelpAndSupport()));},

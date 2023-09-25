@@ -92,6 +92,10 @@ class TextTransitionNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -100,7 +104,7 @@ class TextTransitionNew extends StatelessWidget {
           children: [
             SpinKitThreeBounce(
               itemBuilder: (context, index) {
-                final colors = [Color.fromARGB(255, 0, 103, 36),Color.fromARGB(255, 17, 200, 0),Color.fromARGB(255, 0, 215, 107)];
+                final colors = [const Color.fromARGB(255, 1, 78, 28),const Color.fromARGB(255, 12, 133, 1),const Color.fromARGB(255, 4, 211, 107)];
                 final color = colors[index%colors.length];
                 return DecoratedBox(decoration: BoxDecoration(color: color,shape: BoxShape.circle),);
               },
@@ -111,12 +115,12 @@ class TextTransitionNew extends StatelessWidget {
             child: AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 300),
               style: GoogleFonts.arimo(
-                      color: const Color.fromARGB(255, 94, 213, 98),
+                      color: const Color.fromARGB(255, 3, 119, 7),
                       fontSize: MediaQuery.of(context).size.width*0.07,
                       fontWeight: FontWeight.w400
                     ),
               curve: Curves.easeInCubic,
-              child: const Text('Take It Easy',style: TextStyle(fontWeight: FontWeight.w600),) ,
+              child: Text('Take It Easy',style: TextStyle(fontWeight: FontWeight.w800,fontSize: screenWidth*0.08),) ,
             ),
           ),
           ],
