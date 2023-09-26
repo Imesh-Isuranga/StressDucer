@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/model/studentFirstModel.dart';
 
 class StudentDetails extends StatefulWidget {
@@ -62,26 +61,26 @@ class _StudentDetailsState extends State<StudentDetails>{
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: mainAppBarColor,
-          title: const Text("Student Details",style: TextStyle(color: appBarTextColor),),
-        ),
         body: SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.only(left: 20, right: 30),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20,),
-                    Text("User Registration",style: GoogleFonts.roboto(fontSize: 30,fontWeight: FontWeight.w800,color: Color.fromARGB(255, 1, 101, 3)),),
-                    const SizedBox(height: 10,),
+                    SizedBox(height: screenHeight*0.06,),
+                    Text("User Registration",style: GoogleFonts.roboto(fontSize: screenWidth*0.07,fontWeight: FontWeight.w800,color: Theme.of(context).primaryColor),),
+                    SizedBox(height: screenHeight*0.02,),
                     const Divider(height: 2,),
-                    const SizedBox(height: 40,),
-                    const Text(
+                    SizedBox(height: screenHeight*0.04,),
+                    Text(
                       "Enter Your Name :",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: screenWidth*0.04),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.6,
@@ -98,12 +97,12 @@ class _StudentDetailsState extends State<StudentDetails>{
                         controller: controllerStudentName,
                       ),
                     ),
-                    const SizedBox(
-                      height: 60,
+                    SizedBox(
+                      height: screenHeight*0.065,
                     ),
-                    const Text(
+                    Text(
                       "Enter Your University Name :",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: screenWidth*0.04),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.7,
@@ -120,12 +119,12 @@ class _StudentDetailsState extends State<StudentDetails>{
                         controller: controllerStudentUniName,
                       ),
                     ),
-                    const SizedBox(
-                      height: 60,
+                    SizedBox(
+                      height: screenHeight*0.065,
                     ),
-                    const Text(
+                    Text(
                       "Enter Your Current Semester :",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: screenWidth*0.04),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.2,
@@ -142,12 +141,12 @@ class _StudentDetailsState extends State<StudentDetails>{
                         controller: controllerStudentCurrentSem,
                       ),
                     ),
-                    const SizedBox(
-                      height: 60,
+                    SizedBox(
+                      height: screenHeight*0.065,
                     ),
-                    const Text(
+                    Text(
                       "Enter Number Of Subjects U have :",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: screenWidth*0.04),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.2,
@@ -164,8 +163,8 @@ class _StudentDetailsState extends State<StudentDetails>{
                         controller: controllerStudentNumOfSubjects,
                       ),
                     ),
-                    const SizedBox(
-                      height: 50,
+                    SizedBox(
+                      height: screenHeight*0.08,
                     ),
                     FilledButton(
                       onPressed: ((controllerStudentName.text.isNotEmpty) && (controllerStudentUniName.text.isNotEmpty)  && (controllerStudentCurrentSem.text.isNotEmpty)  && (controllerStudentNumOfSubjects.text.isNotEmpty)) ? 
@@ -179,12 +178,12 @@ class _StudentDetailsState extends State<StudentDetails>{
                       } : (){warningtMsg();},
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 67, 3))),
-                      child: const SizedBox(
-                        width: 100,
+                              MaterialStateProperty.all<Color>(Theme.of(context).primaryColor)),
+                      child: SizedBox(
+                        width: screenWidth*0.4,
                         child: Text(
                           'Next',
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: screenWidth*0.05),
                           textAlign: TextAlign.center,
                         ),
                       ),

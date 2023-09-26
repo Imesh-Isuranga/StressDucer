@@ -24,20 +24,20 @@ bool get isDarkMode => themeMode == ThemeMode.dark;
 class MyThemes {
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Colors.black,
-    primaryColor: const Color.fromARGB(255, 19, 189, 53),
+    primaryColor: const Color.fromARGB(255, 65, 122, 255),
     primaryColorDark:Colors.white,
     colorScheme: const ColorScheme.dark(),
-    iconTheme: const IconThemeData(color: Color.fromARGB(255, 19, 189, 53),),
+    iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 122, 255),),
     indicatorColor : Colors.white,
     cardColor: Colors.black
   );
 
   static final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    primaryColor:const  Color.fromARGB(255, 19, 189, 53),
+    primaryColor:const Color.fromARGB(255, 65, 122, 255),
     primaryColorDark:const Color.fromARGB(255, 0, 0, 0),
     colorScheme: const ColorScheme.light(),
-    iconTheme: const IconThemeData(color: Color.fromARGB(255, 19, 189, 53),),
+    iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 122, 255),),
     indicatorColor : Colors.black,
     cardColor: Colors.white
   );

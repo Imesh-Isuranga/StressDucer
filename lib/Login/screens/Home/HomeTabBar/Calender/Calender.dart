@@ -6,7 +6,6 @@ import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Calender/calenderHelp
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
 import 'package:intl/intl.dart';
-import 'package:stress_ducer/Login/constant/colors.dart';
 
 
 
@@ -96,10 +95,10 @@ class _CalenderState extends State<Calender> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                        btnBackGreen.withOpacity(0.5),
+                                        Theme.of(context).primaryColor,
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20))),
-                                child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600),),
+                                child: Text("Help",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600,color: Colors.white),),
                               ),
                       ),
                       SizedBox(height: screenHeight*0.02,)
@@ -150,19 +149,19 @@ class _CalenderState extends State<Calender> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 1, 89, 4),
-                                border: Border.all(color: Colors.white)),
+                              color: Color.fromARGB(255, 123, 123, 123),
+                                border: Border.all(color: Theme.of(context).cardColor)),
                             child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(number.toString(),style: GoogleFonts.roboto(fontSize: screenWidth*0.05,color: Colors.white),),
+                                  Text(number.toString(),style: GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: screenWidth*0.05,color: Color.fromARGB(255, 255, 255, 255)),),
                                   if (!isValidNumber)
-                                    Icon(Icons.clear,color: Colors.red,size: screenWidth*0.045,),
+                                    Icon(Icons.clear,color: Color.fromARGB(255, 255, 77, 77),size: screenWidth*0.07,),
                                   if ((flag[index] == true) && isValidNumber)
                                     Expanded(
                                       child: Icon(
-                                        Icons.flag,color: Colors.red,size: screenWidth*0.045,),)
+                                        Icons.flag,color: const Color.fromARGB(255, 255, 17, 0),size: screenWidth*0.07,),)
                                 ],
                               ),
                             ),

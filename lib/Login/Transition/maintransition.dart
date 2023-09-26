@@ -86,7 +86,7 @@ class RotationTransitionExampleState extends State<TextTransitionNew> with Ticke
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+/*
 class TextTransitionNew extends StatelessWidget {
   const TextTransitionNew({Key? key}) : super(key: key);
 
@@ -121,6 +121,79 @@ class TextTransitionNew extends StatelessWidget {
                     ),
               curve: Curves.easeInCubic,
               child: Text('Take It Easy',style: TextStyle(fontWeight: FontWeight.w800,fontSize: screenWidth*0.08),) ,
+            ),
+          ),
+          ],
+        ),
+      ),
+    );
+  }
+}*/
+
+
+class TextTransitionNew extends StatefulWidget {
+  const TextTransitionNew({super.key});
+
+  @override
+  State<TextTransitionNew> createState() => _TextTransitionNewState();
+}
+
+class _TextTransitionNewState extends State<TextTransitionNew> {
+  
+    bool animate = false;
+
+    
+    void startAnimation() {
+    Future.delayed(const Duration(milliseconds: 150), () {
+      setState(() {
+        animate = !animate; // Toggle the value of animate after the delay
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startAnimation(); // Start the animation when the widget initializes
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SpinKitThreeBounce(
+              itemBuilder: (context, index) {
+                final colors = [const Color.fromARGB(255, 6, 3, 143),const Color.fromARGB(255, 7, 18, 184),const Color.fromARGB(255, 26, 106, 235)];
+                final color = colors[index%colors.length];
+                return DecoratedBox(decoration: BoxDecoration(color: color,shape: BoxShape.circle),);
+              },
+              size: MediaQuery.of(context).size.width*0.07,
+            ),
+            const SizedBox(height: 50,),
+          Center(
+            child: AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 300),
+              style: animate
+                  ? GoogleFonts.arimo(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: screenWidth*0.07,
+                      fontWeight: FontWeight.w400
+                    )
+                  : GoogleFonts.mulish(
+                      color: const Color.fromARGB(255, 233, 1, 1),
+                      fontSize: screenWidth*0.03,
+                      fontWeight: FontWeight.w400
+                    ),
+              curve: Curves.easeInCubic,
+              child: const Text('Take It Easy') ,
             ),
           ),
           ],

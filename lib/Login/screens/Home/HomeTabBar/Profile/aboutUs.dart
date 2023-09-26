@@ -21,12 +21,11 @@ class _AboutUsState extends State<AboutUs> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 1, 69, 3),
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text("About Us",style: TextStyle(color: Colors.white),),
       ),
       body: SingleChildScrollView(
-        child: Container(child: 
-          Padding(
+        child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +62,7 @@ class _AboutUsState extends State<AboutUs> {
               ))
            ],
           ),
-        ),),
+        ),
       )
     );
   }

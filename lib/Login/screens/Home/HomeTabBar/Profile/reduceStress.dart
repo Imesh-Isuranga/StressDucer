@@ -50,6 +50,10 @@ class _ReduceStressState extends State<ReduceStress> {
   @override
   Widget build(BuildContext context) {
     return _isLoading ? const TextTransitionNew() : Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text("Tips",style: TextStyle(color: Colors.white),),
+      ),
       body: Column(
         children: <Widget>[
           Expanded(

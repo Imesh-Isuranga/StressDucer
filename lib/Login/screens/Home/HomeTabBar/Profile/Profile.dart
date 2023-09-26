@@ -348,9 +348,9 @@ class _ProfileState extends State<Profile> {
 
               SizedBox(height: screenHeight*0.08,),
               Column(children: [
-              Image.asset("assets/logo.png",width: screenHeight*0.08,height: screenHeight*0.08,),
+              Image.asset("assets/logo.png",width: screenHeight*0.06,height: screenHeight*0.06,),
               SizedBox(height: screenHeight*0.02,),
-              Text("StressDucer",style: GoogleFonts.roboto(fontSize: screenWidth*0.04,color: const Color.fromARGB(255, 143, 143, 143)),),],)
+              Text("StressDucer",style: GoogleFonts.roboto(fontSize: screenWidth*0.03,color: const Color.fromARGB(255, 143, 143, 143)),),],)
     ],
     );
   }

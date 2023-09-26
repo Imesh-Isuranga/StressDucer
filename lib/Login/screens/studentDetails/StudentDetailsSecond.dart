@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/model/studentFirstModel.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/studentDataBase.dart';
@@ -85,6 +84,10 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+
     final _authDataBase = dataAuthServices();
 
     return MaterialApp(
@@ -97,10 +100,9 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
               icon: const Icon(Icons.arrow_back_ios_new_sharp),
               color: Colors.black,
             ),
-            backgroundColor: mainAppBarColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: const Text(
               "Student Details",
-              style: TextStyle(color: appBarTextColor),
             ),
           ),
           body: SingleChildScrollView(
@@ -110,38 +112,38 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: screenHeight*0.028,
                       ),
                       Text(
                         "Enter Subjects and their Priorities respectively",
                         style: GoogleFonts.roboto(
-                            fontSize: 18, fontWeight: FontWeight.w400),
+                            fontSize: screenWidth*0.042, fontWeight: FontWeight.w400),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: screenHeight*0.045,
                       ),
                       Text(
                         "Priority 1 to 5 subjects vary from easy to difficult",
                         style: GoogleFonts.roboto(
-                            fontSize: 15, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
+                            fontSize: screenWidth*0.037, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
                         textAlign: TextAlign.center,
                       ),
                        Text(
                         "Ex :- Prioriy 1 mean it is very easy subject for you.",
                         style: GoogleFonts.roboto(
-                            fontSize: 15, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
+                            fontSize: screenWidth*0.037, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         "Ex :- Prioriy 5 mean it is very hard subject for you.",
                         style: GoogleFonts.roboto(
-                            fontSize: 15, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
+                            fontSize: screenWidth*0.037, fontWeight: FontWeight.w400,color: const Color.fromARGB(215, 244, 67, 54)),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(
-                        height: 40,
+                      SizedBox(
+                        height: screenHeight*0.065,
                       ),
                       Column(
                         children: List.generate(int.parse(widget.studentFirstModel.studentNumOfSubjects), (index) {
@@ -168,8 +170,8 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                                     },
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 50,
+                                SizedBox(
+                                  width: screenWidth*0.08,
                                 ),
                                 DropdownButton<String>(
                                   value: selectedOption[index],
@@ -193,9 +195,9 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                           );
                         }),
                       ),
-                      const SizedBox(
-                        height: 40,
-                      ),
+                      SizedBox(
+                      height: screenHeight*0.08,
+                    ),
                       FilledButton(
                         onPressed: nextEnable() ?
                         () {
@@ -220,15 +222,15 @@ class _StudentDetailsSecondState extends State<StudentDetailsSecond> {
                         } : (){warningtMsg();},
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 67, 3))),
-                        child: const SizedBox(
-                          width: 100,
-                          child: Text(
-                            'Next',
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.center,
-                          ),
+                                MaterialStateProperty.all<Color>(Theme.of(context).primaryColor)),
+                        child: SizedBox(
+                        width: screenWidth*0.4,
+                        child: Text(
+                          'Next',
+                          style: TextStyle(fontSize: screenWidth*0.05),
+                          textAlign: TextAlign.center,
                         ),
+                      )
                       )
                     ],
                   ),

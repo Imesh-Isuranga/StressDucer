@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/model/addedTasks.dart';
 import 'package:stress_ducer/Login/model/student.dart';
 import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/addedTasksCard.dart';
@@ -189,10 +188,11 @@ class TodayTasksState extends State<TodayTasks> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: btnBackGreen.withOpacity(0.5),
+                          backgroundColor:
+                                            Theme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20))),
-                      child: Text("Done All",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600),),
+                      child: Text("Done All",style: GoogleFonts.roboto(fontSize: screenWidth * 0.033,fontWeight: FontWeight.w600,color: Colors.white),),
                     ),
                   ),
                   SizedBox(
@@ -217,9 +217,9 @@ class TodayTasksState extends State<TodayTasks> {
                             iconColor: MaterialStateColor.resolveWith(
                               (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.disabled)) {
-                                  return todayTaskRed;
+                                  return Colors.red;;
                                 }
-                                return btnBackGreen;
+                                return Theme.of(context).primaryColor;
                               },
                             ),
                             // This sets text color and icon color to red when list tile is disabled and
@@ -227,9 +227,9 @@ class TodayTasksState extends State<TodayTasks> {
                             textColor: MaterialStateColor.resolveWith(
                               (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.disabled)) {
-                                  return todayTaskRed;
+                                  return Colors.red;;
                                 }
-                                return btnBackGreen;
+                                return Theme.of(context).primaryColor;
                               },
                             ),
                             leading: Icon(Icons.person,size: screenWidth*0.05),

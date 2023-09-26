@@ -26,7 +26,7 @@ void guestFunction(){
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 1, 69, 3),
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Profile",style: TextStyle(color: Colors.white),),
       ),
       body: SingleChildScrollView(

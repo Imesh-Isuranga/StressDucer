@@ -2,7 +2,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stress_ducer/Login/constant/colors.dart';
 import 'package:stress_ducer/Login/services/auth.dart';
 import 'package:stress_ducer/Login/services/error.dart';
 
@@ -73,7 +72,7 @@ class _RegisterState extends State<Register> {
                     children: [
                     Image.asset("assets/logo.png",width: screenWidth*0.1,height: screenHeight*0.1,),
                     SizedBox(width: screenWidth*0.02,),
-                    Text("REGISTER",style: GoogleFonts.roboto(fontSize: screenWidth*0.08,fontWeight: FontWeight.w800,color: const Color.fromARGB(255, 3, 110, 6),),),
+                    Text("REGISTER",style: GoogleFonts.roboto(fontSize: screenWidth*0.08,fontWeight: FontWeight.w800,color:Theme.of(context).primaryColor,),),
                   ],),
                   SizedBox(height: screenHeight*0.002,),
                   Form(
@@ -238,7 +237,7 @@ class _RegisterState extends State<Register> {
                             },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0),),
-                                backgroundColor: loginButtonColors,
+                                backgroundColor: Theme.of(context).primaryColor,
                                 padding:EdgeInsets.only(left: screenWidth*0.02, right: screenWidth*0.02),
                                 minimumSize: Size(screenWidth*0.8, screenHeight*0.05),
                               ),

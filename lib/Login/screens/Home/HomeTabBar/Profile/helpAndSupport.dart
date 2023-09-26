@@ -21,12 +21,11 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 1, 69, 3),
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text("Help And Support",style: TextStyle(color: Colors.white),),
       ),
       body: SingleChildScrollView(
-        child: Container(child: 
-          Padding(
+        child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +69,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
               }, icon: const Icon(Icons.help_center), label: Text("Contact Support",style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.025),))
            ],
           ),
-        ),),
+        ),
       )
     );
   }
