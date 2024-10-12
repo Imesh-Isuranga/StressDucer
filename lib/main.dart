@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:stress_ducer/Login/Theme/myTheme.dart';
-import 'package:stress_ducer/Login/model/UserModel.dart';
-import 'package:stress_ducer/Login/screens/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
-import 'package:stress_ducer/Login/services/auth.dart';
-import 'package:stress_ducer/Login/wrapper.dart';
+import 'package:stress_ducer/Theme/myTheme.dart';
+import 'package:stress_ducer/model/UserModel.dart';
+import 'package:stress_ducer/Home/HomeTabBar/Home/AddTasks/Notification/notification_service.dart';
+import 'package:stress_ducer/services/auth.dart';
+import 'package:stress_ducer/wrapper.dart';
 
 
 

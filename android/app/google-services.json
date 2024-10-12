@@ -14,7 +14,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "649572822721-sm8fusbhq2tcrmbhn3j4dj3a47gg4b46.apps.googleusercontent.com",
+          "client_id": "649572822721-8bej9nu7lohmos63kk3rmlv2rrknuh9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stress_ducer",
+            "certificate_hash": "b995004ca9f1a3c9c41c0754c0ccfbec0a899900"
+          }
+        },
+        {
+          "client_id": "649572822721-etivljta34h1vn810f1fcmr81klq1141.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stress_ducer",
+            "certificate_hash": "0dd63ef2c9843106577de2fa492cf0e468c8ae4f"
+          }
+        },
+        {
+          "client_id": "649572822721-4aboavrbk3a6sim0kkg78cjg32fr6l2s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +43,52 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "649572822721-sm8fusbhq2tcrmbhn3j4dj3a47gg4b46.apps.googleusercontent.com",
+              "client_id": "649572822721-4aboavrbk3a6sim0kkg78cjg32fr6l2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649572822721:android:c0f579384c5f8c3e8bae40",
+        "android_client_info": {
+          "package_name": "com.stressDucer.stress_ducer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "649572822721-ra901hra2fdm8n7aahnj4i9poej7lnje.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stressDucer.stress_ducer",
+            "certificate_hash": "208bfddd2c73f38cc85b9c39a6860ec3775ae77e"
+          }
+        },
+        {
+          "client_id": "649572822721-v1moqh7cvfolhg1ua871ogpobb549am9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stressDucer.stress_ducer",
+            "certificate_hash": "b995004ca9f1a3c9c41c0754c0ccfbec0a899900"
+          }
+        },
+        {
+          "client_id": "649572822721-4aboavrbk3a6sim0kkg78cjg32fr6l2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxv2b6152xzz_rSwhNJCk-EpEuXkzCbKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "649572822721-4aboavrbk3a6sim0kkg78cjg32fr6l2s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
