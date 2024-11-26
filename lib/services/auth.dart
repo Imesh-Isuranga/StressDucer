@@ -34,7 +34,7 @@ class AuthServices {
   }
 
 //check only google sign in emails
- /* Future checkIfEmailExists(String email) async {
+  /* Future checkIfEmailExists(String email) async {
     print('0000000000000000000000000000000000000000000000000');
     try {
       List<String> signInMethods =
@@ -52,40 +52,37 @@ class AuthServices {
     }
   }*/
 
-Future<String> checkIfEmailExists(String email) async {
-  print('Checking if email exists: $email');
-  try {
-    List<String> signInMethods = await _auth.fetchSignInMethodsForEmail(email);
+  Future<String> checkIfEmailExists(String email) async {
+    print('Checking if email exists: $email');
+    try {
+      List<String> signInMethods =
+          await _auth.fetchSignInMethodsForEmail(email);
 
-    if (signInMethods.isNotEmpty) {
-      if (signInMethods.contains("google.com")) {
-        print("Email is already associated with a Google Sign-In account.");
-        return "0"; 
+      if (signInMethods.isNotEmpty) {
+        if (signInMethods.contains("google.com")) {
+          print("Email is already associated with a Google Sign-In account.");
+          return "0";
+        } else {
+          print("Email is already associated with another account.");
+          return "1";
+        }
       } else {
-        print("Email is already associated with another account.");
-        return "1"; 
+        print("Email is not associated with any account.");
+        return "2";
       }
-    } else {
-      print("Email is not associated with any account.");
-      return "2"; 
+    } catch (error) {
+      print("Error checking email existence: $error");
+      return "Error checking email existence: $error";
     }
-  } catch (error) {
-    print("Error checking email existence: $error");
-    return "Error checking email existence: $error";
   }
-}
-
 
 //This is for google sign in
   Future handleGoogleSignIn() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
-      print('1111111111111111==============================');
       List<String> signInMethods =
           await _auth.fetchSignInMethodsForEmail(googleSignInAccount!.email);
-      print('2222222222222222==============================');
-      print('3333333333333333==============================');
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -95,7 +92,6 @@ Future<String> checkIfEmailExists(String email) async {
 
       final UserCredential authResult =
           await _auth.signInWithCredential(credential);
-          print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
       if (signInMethods.contains("google.com")) {
         print("Email is already associated with a Google Sign-In account.");
         return "0";
@@ -136,13 +132,9 @@ Future<String> checkIfEmailExists(String email) async {
   //signin using email and password
   Future signInUsingEmailAndPassword(String email, String password) async {
     try {
-      print('12312312312312331231231223--------------12');
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      print('12312312312312331231231223');
-      print(result);
       User? user = result.user;
-      print(user);
       return _userWithFirebaseUserUid(user);
     } catch (err) {
       Error().setError(err.toString());
